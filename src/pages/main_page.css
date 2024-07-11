@@ -1,0 +1,27 @@
+#alertion{
+    color: coral;
+    font-weight: 800;
+    font-size: 40px;
+    text-decoration:underline;
+    animation: alertion 3s infinite;
+}
+@keyframes alertion {
+    0% {
+        color: blueviolet;
+    }
+    25% {
+        color: yellow;
+
+    }
+    50% {
+        color: yellowgreen;
+    }
+    75% {
+        color: tomato;
+
+    }
+    100% {
+        color: crimson;
+    }
+
+}
