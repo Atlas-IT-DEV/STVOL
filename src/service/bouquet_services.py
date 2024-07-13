@@ -12,6 +12,11 @@ async def get_bouquet_by_id(bouquet_id: int):
     return Bouquet(**bouquet) if bouquet else None
 
 
+async def get_bouquet_by_name(bouquet_name: str):
+    bouquet = await bouquet_repository.get_bouquet_by_name(bouquet_name)
+    return Bouquet(**bouquet) if bouquet else None
+
+
 async def create_bouquet(bouquet: Bouquet):
     bouquet_id = await bouquet_repository.create_bouquet(bouquet)
     return await get_bouquet_by_id(bouquet_id)

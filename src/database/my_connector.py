@@ -1,6 +1,5 @@
 import aiomysql
 from pymysql.err import OperationalError
-from src.database.models import User
 
 
 class Database:
@@ -20,7 +19,6 @@ class Database:
                 cursorclass=aiomysql.cursors.DictCursor
             )
             self.connected = True
-            print("Подключение к базе данных успешно установлено.")
             return True
         except OperationalError as e:
             self.connected = False
@@ -30,7 +28,6 @@ class Database:
     async def check_and_reconnect(self):
         try:
             if not self.connected or self.connection is None:
-                print("Подключение отсутствует или закрыто. Переподключаемся...")
                 await self.connect()
             else:
                 await self.connection.ping(reconnect=True)
