@@ -13,21 +13,26 @@ async def get_user_by_id(user_id: int):
     return await db.fetch_one(query, (user_id,))
 
 
+async def get_user_by_telegram_id(user_telegram_id: int):
+    query = "SELECT * FROM Users WHERE telegram_id=%s"
+    return await db.fetch_one(query, (user_telegram_id,))
+
+
 async def get_user_by_phone(user_phone: str):
     query = "SELECT * FROM Users WHERE phone=%s"
     return await db.fetch_one(query, (user_phone,))
 
 
 async def create_user(user: User):
-    query = "INSERT INTO users (name, phone, count_bonus, referal) VALUES (%s, %s, %s, %s)"
-    params = (user.Name, user.Phone, user.CountBonus, user.Ref)
+    query = "INSERT INTO users (name, telegram_id, phone, count_bonus, referal) VALUES (%s, %s, %s, %s, %s)"
+    params = (user.Name, user.TelegramID, user.Phone, user.CountBonus, user.Ref)
     cursor = await db.execute_query(query, params)
     return cursor.lastrowid
 
 
 async def update_user(user_id: int, user: User):
-    query = "UPDATE users SET name=%s, phone=%s, count_bonus=%s, referal=%s WHERE id=%s"
-    params = (user.Name, user.Phone, user.CountBonus, user.Ref, user_id)
+    query = "UPDATE users SET name=%s, telegram_id=%s, phone=%s, count_bonus=%s, referal=%s WHERE id=%s"
+    params = (user.Name, user.TelegramID, user.Phone, user.CountBonus, user.Ref, user_id)
     await db.execute_query(query, params)
 
 

@@ -10,7 +10,7 @@ from src.service import (user_services, adress_services, order_services, bouquet
                          company_services, refcode_services, image_services)
 from src.database.models import (User, Adress, Order, Bouquet,
                                  CompanyData, RefCodes, Image, BouquetsID, OrderBouquets, OrderHistory)
-from src.utils.refcode import hash_phone, check_refcode
+from src.utils.refcode import hash_telegram_id, check_refcode
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
@@ -82,9 +82,9 @@ async def get_user_by_id(user_id: int):
     return await user_services.get_user_by_id(user_id)
 
 
-@app.get("/users/phone/{user_phone}", response_model=User, tags=["User"])
-async def get_user_by_phone(user_phone: str):
-    return await user_services.get_user_by_phone(user_phone)
+@app.get("/users/phone/{user_telegram_id}", response_model=User, tags=["User"])
+async def get_user_by_telegram_id(user_telegram_id: int):
+    return await user_services.get_user_by_telegram_id(user_telegram_id)
 
 
 @app.post("/users/", response_model=User, tags=["User"])
@@ -287,11 +287,17 @@ async def delete_image(image_id):
 @app.post("/register/", response_model=User, tags=["Auth"])
 async def register(user: User, refcode: str = None):
     try:
-        existing_user = await user_services.get_user_by_phone(user.Phone)
-        if existing_user:
+        if not user.Name:
+            raise HTTPException(status_code=404, detail="User name not valid")
+        existing_user_telegram_id = await user_services.get_user_by_telegram_id(user.TelegramID)
+        if existing_user_telegram_id:
             raise HTTPException(status_code=404, detail="User already exist")
+        if user.Phone:
+            existing_user_phone = await user_services.get_user_by_phone(user.Phone)
+            if existing_user_phone:
+                raise HTTPException(status_code=404, detail="User already exist")
         new_user = await user_services.create_user(user)
-        refcodes = RefCodes(user_id=new_user.ID, code=hash_phone(new_user.Phone))
+        refcodes = RefCodes(user_id=new_user.ID, code=hash_telegram_id(new_user.TelegramID))
         await refcode_services.create_refcode(refcodes)
         if refcode:
             ref_user = await refcode_services.get_user_by_refcode(refcode)
@@ -300,16 +306,24 @@ async def register(user: User, refcode: str = None):
         return user
     except Exception as ex:
         print(f"Error {ex}")
-
+        raise HTTPException(status_code=500, detail=f"User not register. Error: {ex}")
 
 
 @app.post("/login/", response_model=User, tags=["Auth"])
 async def login(user: User):
-    existing_user = await user_services.get_user_by_phone(user.Phone)
-    if not existing_user:
-        raise HTTPException(status_code=404, detail="User not exist")
-    else:
-        return existing_user
+    try:
+        existing_user_telegram_id = await user_services.get_user_by_telegram_id(user.TelegramID)
+        if not existing_user_telegram_id:
+            raise HTTPException(status_code=404, detail="User not exist")
+        if user.Phone:
+            existing_user_phone = await user_services.get_user_by_phone(user.Phone)
+            if not existing_user_phone:
+                raise HTTPException(status_code=404, detail="User not exist")
+        else:
+            return existing_user_telegram_id
+    except Exception as ex:
+        print(f"Error {ex}")
+        raise HTTPException(status_code=500, detail=f"User not login. Error: {ex}")
 
 
 @app.post("/uploadfile/create_bouquet/{name_bouquet}", response_model=Bouquet, tags=["BouquetFile"])

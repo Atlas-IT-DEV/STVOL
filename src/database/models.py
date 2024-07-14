@@ -20,8 +20,9 @@ class CompanyData(BaseModel):
 class User(BaseModel):
     """Модель пользователя"""
     ID: Optional[int] = Field(None, alias="id")
-    Name: StrictStr = Field(..., alias="name")
-    Phone: StrictStr = Field(..., alias="phone")
+    Name: Optional[StrictStr] = Field(None, alias="name")
+    TelegramID: StrictInt = Field(..., alias="telegram_id")
+    Phone: Optional[StrictStr] = Field(None, alias="phone")
     CountBonus: Optional[StrictInt] = Field(0, alias="count_bonus")
     Ref: Optional[StrictInt] = Field(0, alias="referal")
 

@@ -12,6 +12,11 @@ async def get_user_by_id(user_id: int):
     return User(**user) if user else None
 
 
+async def get_user_by_telegram_id(user_telegram_id: int):
+    user = await user_repository.get_user_by_telegram_id(user_telegram_id)
+    return User(**user) if user else None
+
+
 async def get_user_by_phone(user_phone: str):
     user = await user_repository.get_user_by_phone(user_phone)
     return User(**user) if user else None
