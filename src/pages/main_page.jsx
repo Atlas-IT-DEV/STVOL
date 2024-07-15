@@ -1,20 +1,23 @@
 import {
   VStack,
-  Heading,
   Grid,
   GridItem,
   Text,
   Button,
   Image,
   Stack,
+  Link,
 } from "@chakra-ui/react";
 import "./main_page.css";
 import LakePhoto from "../images/lake.jpg";
 import MountainPhoto from "../images/mountain.jpg";
 import RiverPhoto from "../images/river.jpg";
 import WeatherPhoto from "../images/weather.jpg";
+import ProfilePage from "./profile_page";
+import { useNavigate } from "react-router";
 
 const MainPage = () => {
+  const navigate = useNavigate();
   return (
     <VStack width={"100%"} bgColor={"black"}>
       <Grid
@@ -160,14 +163,26 @@ const MainPage = () => {
           justifyContent={"space-evenly"}
           alignItems={"center"}
         >
-          <Button width={"80%"} fontSize={"26px"}>
+          <Button
+            width={"80%"}
+            fontSize={"26px"}
+            onClick={() => navigate("/about")}
+          >
             что такое stvol?
           </Button>
-          <Button width={"80%"} fontSize={"26px"}>
+          <Button
+            width={"80%"}
+            fontSize={"26px"}
+            onClick={() => navigate("/constructor")}
+          >
             конструктор
           </Button>
-          <Button width={"80%"} fontSize={"26px"}>
-            профиль
+          <Button
+            width={"80%"}
+            fontSize={"26px"}
+            onClick={() => navigate("/profile")}
+          >
+            Профиль
           </Button>
         </GridItem>
         <GridItem
@@ -197,7 +212,7 @@ const MainPage = () => {
         >
           <Button
             color={"black"}
-            fontSize={"26px"}
+            fontSize={[20, 25, 30, 35, 40]}
             textAlign={"center"}
             height={"auto"}
           >

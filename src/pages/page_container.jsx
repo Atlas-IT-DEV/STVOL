@@ -2,8 +2,8 @@ import { VStack } from "@chakra-ui/react";
 
 const PageContainer = ({ children }) => {
   return (
-    <VStack maxWidth={"600px"} minH={"100vh"}>
-      {children}
+    <VStack minH={"100vh"} MaxWidth={"600px"} align={"center"}>
+      <VStack width={"100%"}>{children}</VStack>
     </VStack>
   );
 };
