@@ -16,6 +16,18 @@ IF NOT EXIST venv (
 :: Создание папки logs.
 mkdir ".\logs\setup" > nul 2>&1
 
+:: Установка стандартных настроек конфигурации
+python.exe config_file.py
+
+:: Чтение значения переменной UPLOAD_DIR_BOUQUET из config.json
+for /f "delims=" %%i in ('python read_config.py') do set "UPLOAD_DIR_BOUQUET=%%i"
+
+:: Вывод значения переменной UPLOAD_DIR_BOUQUET (для отладки)
+echo UPLOAD_DIR_BOUQUET is %UPLOAD_DIR_BOUQUET%
+
+:: Создание папки по пути переменной UPLOAD_DIR_BOUQUET
+mkdir "%UPLOAD_DIR_BOUQUET%" > nul 2>&1
+
 :: Деактивация активной среды.
 call .\venv\Scripts\deactivate.bat
 

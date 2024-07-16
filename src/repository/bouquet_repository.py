@@ -34,3 +34,4 @@ async def update_bouquet(bouquet_id: int, bouquet: Bouquet):
 async def delete_bouquet(bouquet_id: int):
     query = "DELETE FROM Bouquet WHERE id=%s"
     await db.execute_query(query, (bouquet_id,))
+

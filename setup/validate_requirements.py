@@ -16,7 +16,7 @@ if "setup" in project_directory:
 # Добавление каталога проекта в начало пути поиска Python.
 sys.path.insert(0, project_directory)
 
-from library.custom_logging import setup_logging
+from src.utils.custom_logging import setup_logging
 
 # Настройка ведения журнала
 log = setup_logging()

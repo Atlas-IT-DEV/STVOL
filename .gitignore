@@ -3,3 +3,7 @@
 /logs/
 /.idea/
 /.pytest_cache/
+/.git
+/__pycache__
+/setup.log
+/config.json

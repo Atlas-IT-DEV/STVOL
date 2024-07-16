@@ -22,7 +22,6 @@ class Database:
             return True
         except OperationalError as e:
             self.connected = False
-            print(f"Ошибка подключения: {e}")
             return False
 
     async def check_and_reconnect(self):
@@ -32,7 +31,6 @@ class Database:
             else:
                 await self.connection.ping(reconnect=True)
         except OperationalError as e:
-            print(f"Ошибка при проверке подключения: {e}")
             await self.connect()
 
     async def execute_query(self, query, params=None):
