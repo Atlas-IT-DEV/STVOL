@@ -4,7 +4,7 @@ from src.utils.refcode import hashinf
 from fastapi import HTTPException
 
 
-async def signon(user: User, refcode: str):
+async def signup(user: User, refcode: str):
     # Проверяем ввдено ли имя
     if not user.Name:
         raise HTTPException(status_code=404, detail="User name not valid")
@@ -33,13 +33,16 @@ async def signon(user: User, refcode: str):
 
 
 async def signin(user: User):
+    # Проверяем существование пользователя по телеграмм айди
     existing_user_telegram_id = await user_services.get_user_by_telegram_id(user.TelegramID)
     if not existing_user_telegram_id:
         raise HTTPException(status_code=404, detail="User not exist")
+    # Если передам номер телефона, проверить есть ли такой
     if user.Phone:
         existing_user_phone = await user_services.get_user_by_phone(user.Phone)
         if not existing_user_phone:
             raise HTTPException(status_code=404, detail="User not exist")
     else:
+        # Возвращаем пользователя
         return existing_user_telegram_id
 

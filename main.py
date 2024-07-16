@@ -754,7 +754,7 @@ async def delete_image(image_id):
 
 
 @app.post("/signon/", response_model=User, tags=["Auth"])
-async def signon(user: User, refcode: str = None):
+async def signup(user: User, refcode: str = None):
     """
     Route for user registration.
 
@@ -765,7 +765,7 @@ async def signon(user: User, refcode: str = None):
     :return: response model User.
     """
     try:
-        return await auth_services.signon(user, refcode)
+        return await auth_services.signup(user, refcode)
     except Exception as ex:
         print(f"Error {ex}")
         raise HTTPException(status_code=500, detail=f"User not register. Error: {ex}")
