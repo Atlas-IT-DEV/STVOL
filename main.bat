@@ -13,13 +13,10 @@ set PATH=%PATH%;%~dp0venv\Lib\site-packages\torch\lib
 :: Валидация requirements
 python.exe .\setup\validate_requirements.py
 
-:: Установка стандартных настроек конфигурации
-python.exe config_file.py
-
 :: Очистка setup.log
 python.exe clear_setup_log.py
 
-:: Запускает webui.py скрипт c веб интерфейсом.
+:: Запускает сервер main.py.
 if %errorlevel% equ 0 (
     REM Был ли запущен батник двойным кликом?
     IF /i "%comspec% /c %~0 " equ "%cmdcmdline:"=%" (

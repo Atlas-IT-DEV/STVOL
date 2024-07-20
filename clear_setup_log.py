@@ -3,10 +3,9 @@ from src.utils.custom_logging import setup_logging
 log = setup_logging()
 
 
-def clear_setup_log(script_path):
+def clear_setup_log():
     # Собираем полный путь к файлу setup.log
-    script_path, _ = os.path.split(script_path)
-    log_file_path = os.path.join(script_path, 'setup.log')
+    log_file_path = os.path.join(os.path.dirname(__file__), "setup.log")
 
     try:
         # Проверяем существование файла
@@ -19,3 +18,7 @@ def clear_setup_log(script_path):
             log.warning(f"Файл setup.log не существует в указанной директории {log_file_path}.")
     except Exception as e:
         log.error(f"Произошла ошибка при очистке файла setup.log: {e}")
+
+
+if __name__ == "__main__":
+    clear_setup_log()

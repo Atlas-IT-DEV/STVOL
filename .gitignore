@@ -6,4 +6,4 @@
 /.git
 /__pycache__
 /setup.log
-/config.json
+/.env

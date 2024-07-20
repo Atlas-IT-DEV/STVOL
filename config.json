@@ -1,7 +1,0 @@
-{
-    "UPLOAD_DIR_BOUQUET": "./src/public/bouquet",
-    "DISCOUNT_INVITE": 15,
-    "DISCOUNT_BONUS_LIMIT_FOR_PURCHASE": 50,
-    "PERCENTAGE_BONUS_FOR_ORDER": 2,
-    "script_path": "C:\\App\\ReactProject\\domains\\stvol\\server"
-}

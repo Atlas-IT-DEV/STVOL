@@ -1,5 +1,14 @@
+import os
+
 import aiomysql
 from pymysql.err import OperationalError
+from dotenv import load_dotenv
+load_dotenv()
+HOST = os.getenv("HOST")
+PORT = int(os.getenv("PORT"))
+USER = os.getenv("USER")
+PASSWORD = os.getenv("PASSWORD")
+DB = os.getenv("DB")
 
 
 class Database:
@@ -10,11 +19,11 @@ class Database:
     async def connect(self):
         try:
             self.connection = await aiomysql.connect(
-                host='localhost',
-                port=3306,
-                user='root',
-                password='',
-                db='stvol',
+                host=HOST,
+                port=PORT,
+                user=USER,
+                password=PASSWORD,
+                db=DB,
                 charset='utf8mb4',
                 cursorclass=aiomysql.cursors.DictCursor
             )

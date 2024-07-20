@@ -1,9 +1,13 @@
+import os
 from src.repository import order_repository
 from src.service import user_services, bouquet_services
 from src.database.models import Order, OrderBouquets, OrderHistory
 from fastapi import HTTPException
-from config_file import load_config
-CONFIG = load_config()
+from dotenv import load_dotenv
+load_dotenv()
+DISCOUNT_INVITE = int(os.getenv('DISCOUNT_INVITE'))
+DISCOUNT_BONUS_LIMIT_FOR_PURCHASE = int(os.getenv('DISCOUNT_BONUS_LIMIT_FOR_PURCHASE'))
+PERCENTAGE_BONUS_FOR_ORDER = int(os.getenv('PERCENTAGE_BONUS_FOR_ORDER'))
 
 
 async def get_all_orders():
@@ -96,23 +100,23 @@ async def buy_create_order(user_id, bouquetsID, off_bonus):
         bouquets.append({"bouquet": bouquet, "quantity": quantity})
     # Если пользователь реферальный, то делаем скидку за приглашение друга
     if user.Ref == 1:
-        total_price = int((1 - CONFIG["DISCOUNT_INVITE"] / 100) * total_price)
+        total_price = int((1 - DISCOUNT_INVITE / 100) * total_price)
         user.Ref = 0
     # Если пользователь не реферальный и хочет списать бонусы, уменьшаем стоимость заказа на количество бонусов
     elif user.Ref != 1 and off_bonus is True:
         count_bonus = user.CountBonus
         # Если количество бонусов меньше, чем нижняя планка стоимости заказа, просто вычитаем бонусы
-        if count_bonus < total_price * CONFIG["DISCOUNT_BONUS_LIMIT_FOR_PURCHASE"] / 100:
+        if count_bonus < total_price * DISCOUNT_BONUS_LIMIT_FOR_PURCHASE / 100:
             total_price = total_price - count_bonus
             user.CountBonus -= count_bonus
         else:
             # Если же бонусов больше, чем стоимость заказа, уменьшаем стоиомость до нижней планки
-            half = int(total_price / CONFIG["DISCOUNT_BONUS_LIMIT_FOR_PURCHASE"] / 100)
+            half = int(total_price / DISCOUNT_BONUS_LIMIT_FOR_PURCHASE / 100)
             total_price = total_price - half
             user.CountBonus -= half
     # Если пользователь не реферальный и не хочет списывать бонусы, начисляем бонусы за заказ
     elif user.Ref != 1 and off_bonus is False:
-        count_bonus = int(total_price * CONFIG["PERCENTAGE_BONUS_FOR_ORDER"] / 100)
+        count_bonus = int(total_price * PERCENTAGE_BONUS_FOR_ORDER / 100)
         user.CountBonus += count_bonus
     # Обновляем пользователя
     await user_services.update_user(user_id, user)
