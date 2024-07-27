@@ -731,7 +731,7 @@ async def update_image(image_id, image: Image):
     :return: response model dict.
     """
     try:
-        return await rimage_services.update_image(image_id, image)
+        return await image_services.update_image(image_id, image)
     except Exception as ex:
         print(f"Error {ex}")
         raise HTTPException(status_code=500, detail=f"Image not updated. Error: {ex}")
