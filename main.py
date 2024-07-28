@@ -1,5 +1,4 @@
-import os
-from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi import FastAPI, HTTPException, File, UploadFile, Form
 from src.database.my_connector import Database
 from typing import Dict
 from fastapi.openapi.models import Tag
@@ -7,10 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.service import (user_services, adress_services, order_services, bouquet_services,
                          company_services, refcode_services, image_services, uploadfile_services, auth_services)
 from src.database.models import (User, Adress, Order, Bouquet,
-                                 CompanyData, RefCodes, Image, BouquetsID, OrderBouquets, OrderHistory)
-from src.utils.refcode import hashinf, check_refcode
-from fastapi.responses import FileResponse
-
+                                 CompanyData, RefCodes, Image, BouquetsID, OrderHistory)
+from src.utils.custom_logging import setup_logging
+log = setup_logging()
 
 db = Database()
 app = FastAPI()
@@ -49,13 +47,6 @@ app.openapi_tags = [
 ]
 
 
-@app.on_event("startup")
-async def startup_event():
-    connected = await db.connect()
-    if connected is False:
-        await db.check_and_reconnect()
-
-
 @app.get("/users/", response_model=list[User], tags=["User"])
 async def get_all_users():
     """
@@ -65,9 +56,9 @@ async def get_all_users():
     """
     try:
         return await user_services.get_all_users()
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Users not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/users/id/{user_id}", response_model=User, tags=["User"])
@@ -81,9 +72,9 @@ async def get_user_by_id(user_id: int):
     """
     try:
         return await user_services.get_user_by_id(user_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"User not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/users/telegram_id/{user_telegram_id}", response_model=User, tags=["User"])
@@ -97,9 +88,9 @@ async def get_user_by_telegram_id(user_telegram_id: int):
     """
     try:
         return await user_services.get_user_by_telegram_id(user_telegram_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"User not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/users/", response_model=User, tags=["User"])
@@ -113,9 +104,9 @@ async def create_user(user: User):
     """
     try:
         return await user_services.create_user(user)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"User not created. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.put("/users/{user_id}", response_model=Dict, tags=["User"])
@@ -131,9 +122,9 @@ async def update_user(user_id, user: User):
     """
     try:
         return await user_services.update_user(user_id, user)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"User not updated. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.delete("/users/{user_id}", response_model=Dict, tags=["User"])
@@ -147,9 +138,9 @@ async def delete_user(user_id):
     """
     try:
         return await user_services.delete_user(user_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"User not deleted. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/adresses/", response_model=list[Adress], tags=["Adress"])
@@ -161,9 +152,9 @@ async def get_all_adresses():
     """
     try:
         return await adress_services.get_all_adresses()
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Adresses not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/adresses/id/{adress_id}", response_model=Adress, tags=["Adress"])
@@ -177,9 +168,9 @@ async def get_adress_by_id(adress_id: int):
     """
     try:
         return await adress_services.get_adress_by_id(adress_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Adress not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/adresses/user/{user_id}", response_model=list[Adress], tags=["Adress"])
@@ -193,9 +184,9 @@ async def get_adress_by_user_id(user_id: int):
     """
     try:
         return await adress_services.get_adress_by_user_id(user_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Adress not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/adresses/", response_model=Adress, tags=["Adress"])
@@ -209,9 +200,9 @@ async def create_adress(adress: Adress):
     """
     try:
         return await adress_services.create_adress(adress)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Adress not created. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.put("/adresses/{adress_id}", response_model=Dict, tags=["Adress"])
@@ -227,9 +218,9 @@ async def update_adress(adress_id, adress: Adress):
     """
     try:
         return await adress_services.update_adress(adress_id, adress)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Adress not updated. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.delete("/adresses/{adress_id}", response_model=Dict, tags=["Adress"])
@@ -243,9 +234,9 @@ async def delete_adress(adress_id):
     """
     try:
         return await adress_services.delete_adress(adress_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Adress not deleted. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/orders/", response_model=list[Order], tags=["Order"])
@@ -257,9 +248,9 @@ async def get_all_orders():
     """
     try:
         return await order_services.get_all_orders()
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Orders not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/orders/id/{order_id}", response_model=Order, tags=["Order"])
@@ -273,9 +264,9 @@ async def get_order_by_id(order_id: int):
     """
     try:
         return await order_services.get_order_by_id(order_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Orders not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/orders/user/{user_id}", response_model=list[Order], tags=["Order"])
@@ -289,9 +280,9 @@ async def get_order_by_user_id(user_id: int):
     """
     try:
         return await order_services.get_order_by_user_id(user_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Orders not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/orders/", response_model=Order, tags=["Order"])
@@ -305,9 +296,9 @@ async def create_order(order: Order):
     """
     try:
         return await order_services.create_order(order)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Orders not created. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.put("/orders/{order_id}", response_model=Dict, tags=["Order"])
@@ -323,9 +314,9 @@ async def update_order(order_id, order: Order):
     """
     try:
         return await order_services.update_order(order_id, order)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Orders not updated. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.delete("/orders/{order_id}", response_model=Dict, tags=["Order"])
@@ -339,9 +330,9 @@ async def delete_order(order_id):
     """
     try:
         return await order_services.delete_order(order_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Orders not deleted. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/orders/purchase", response_model=None, tags=["Order"])
@@ -360,9 +351,9 @@ async def buy_create_order(user_id: int, bouquetsID: list[BouquetsID], off_bonus
     """
     try:
         await order_services.buy_create_order(user_id, bouquetsID, off_bonus)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Order not created {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/orders/history/{user_id}", response_model=list[OrderHistory], tags=["Order"])
@@ -376,9 +367,9 @@ async def buy_history_order(user_id: int):
     """
     try:
         return await order_services.buy_history_order(user_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Order not found {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/bouquets/", response_model=list[Bouquet], tags=["Bouquet"])
@@ -390,9 +381,9 @@ async def get_all_bouquets():
     """
     try:
         return await bouquet_services.get_all_bouquets()
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Bouquets not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/bouquets/id/{bouquet_id}", response_model=Bouquet, tags=["Bouquet"])
@@ -406,9 +397,9 @@ async def get_bouquet_by_id(bouquet_id: int):
     """
     try:
         return await bouquet_services.get_bouquet_by_id(bouquet_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Bouquet not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/bouquets/name/{bouquet_name}", response_model=Bouquet, tags=["Bouquet"])
@@ -422,9 +413,9 @@ async def get_bouquet_by_name(bouquet_name: str):
     """
     try:
         return await bouquet_services.get_bouquet_by_name(bouquet_name)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Bouquet not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/bouquets/", response_model=Bouquet, tags=["Bouquet"])
@@ -438,9 +429,9 @@ async def create_bouquet(bouquet: Bouquet):
     """
     try:
         return await bouquet_services.create_bouquet(bouquet)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Bouquet not created. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.put("/bouquets/{bouquet_id}", response_model=Dict, tags=["Bouquet"])
@@ -456,9 +447,9 @@ async def update_bouquet(bouquet_id, bouquet: Bouquet):
     """
     try:
         return await bouquet_services.update_bouquet(bouquet_id, bouquet)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Bouquet not updated. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.delete("/bouquets/{bouquet_id}", response_model=Dict, tags=["Bouquet"])
@@ -472,9 +463,9 @@ async def delete_bouquet(bouquet_id):
     """
     try:
         return await bouquet_services.delete_bouquet(bouquet_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Bouquet not deleted. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/download/get_bouquet/{bouquet_id}", response_model=None, tags=["UploadFile"])
@@ -488,9 +479,9 @@ async def download_bouquet(bouquet_id: int):
     """
     try:
         return await uploadfile_services.download_bouquet(bouquet_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Bouquet not downloaded. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/companys/", response_model=list[CompanyData], tags=["Company"])
@@ -502,9 +493,9 @@ async def get_all_companys():
     """
     try:
         return await company_services.get_all_companys()
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Companys not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/companys/id/{company_id}", response_model=CompanyData, tags=["Company"])
@@ -518,9 +509,9 @@ async def get_company_by_id(company_id: int):
     """
     try:
         return await company_services.get_company_by_id(company_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Company not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/companys/", response_model=CompanyData, tags=["Company"])
@@ -534,9 +525,9 @@ async def create_company(company: CompanyData):
     """
     try:
         return await company_services.create_company(company)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Company not created. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.put("/companys/{company_id}", response_model=Dict, tags=["Company"])
@@ -552,9 +543,9 @@ async def update_company(company_id, company: CompanyData):
     """
     try:
         return await company_services.update_company(company_id, company)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Company not updated. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.delete("/companys/{company_id}", response_model=Dict, tags=["Company"])
@@ -568,9 +559,9 @@ async def delete_company(company_id):
     """
     try:
         return await company_services.delete_company(company_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Company not deleted. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/refcodes/", response_model=list[RefCodes], tags=["RefCode"])
@@ -582,9 +573,9 @@ async def get_all_refcodes():
     """
     try:
         return await refcode_services.get_all_refcodes()
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Refcodes not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/refcodes/user/{user_id}", response_model=RefCodes, tags=["RefCode"])
@@ -598,9 +589,9 @@ async def get_refcode_by_user_id(user_id: int):
     """
     try:
         return await refcode_services.get_refcode_by_user_id(user_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Refcode not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/refcodes/refcode/{refcode}", response_model=User, tags=["RefCode"])
@@ -614,9 +605,9 @@ async def get_user_by_refcode(refcode: str):
     """
     try:
         return await refcode_services.get_user_by_refcode(refcode)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Refcode not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/refcodes/", response_model=RefCodes, tags=["RefCode"])
@@ -630,9 +621,9 @@ async def create_refcode(refcodes: RefCodes):
     """
     try:
         return await refcode_services.create_refcode(refcodes)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Refcode not created. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.put("/refcodes/{user_id}", response_model=Dict, tags=["RefCode"])
@@ -648,9 +639,9 @@ async def update_refcode(user_id, refcodes: RefCodes):
     """
     try:
         return await refcode_services.update_refcode(user_id, refcodes)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Refcode not updated. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.delete("/refcodes/{user_id}", response_model=Dict, tags=["RefCode"])
@@ -664,9 +655,9 @@ async def delete_refcode(user_id):
     """
     try:
         return await refcode_services.delete_refcode(user_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Refcode not deleted. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/images/", response_model=list[Image], tags=["Image"])
@@ -678,9 +669,9 @@ async def get_all_images():
     """
     try:
         return await image_services.get_all_images()
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Images not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.get("/images/image/{image_id}", response_model=Image, tags=["Image"])
@@ -696,9 +687,9 @@ async def get_image_by_id(image_id: int):
     """
     try:
         return await image_services.get_image_by_id(image_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Image not get. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/images/", response_model=Image, tags=["Image"])
@@ -714,9 +705,9 @@ async def create_image(image: Image):
     """
     try:
         return await image_services.create_image(image)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Image not created. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.put("/images/{image_id}", response_model=Dict, tags=["Image"])
@@ -732,9 +723,9 @@ async def update_image(image_id, image: Image):
     """
     try:
         return await image_services.update_image(image_id, image)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Image not updated. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.delete("/images/{image_id}", response_model=Dict, tags=["Image"])
@@ -748,9 +739,9 @@ async def delete_image(image_id):
     """
     try:
         return await image_services.delete_image(image_id)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"Image not deleted. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/signon/", response_model=User, tags=["Auth"])
@@ -766,9 +757,9 @@ async def signup(user: User, refcode: str = None):
     """
     try:
         return await auth_services.signup(user, refcode)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"User not register. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/signin/", response_model=User, tags=["Auth"])
@@ -782,13 +773,13 @@ async def signin(user: User):
     """
     try:
         return await auth_services.signin(user)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"User not login. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
 
 
 @app.post("/uploadfile/create_bouquet", response_model=Bouquet, tags=["UploadFile"])
-async def uploadfile_bouquet(file: UploadFile = File(...), bouquet_name: str = None, bouquet_price: int = None):
+async def uploadfile_bouquet(file: UploadFile = File(...), bouquet_name: str = Form(...), bouquet_price: int = Form(...)):
     """
     Route for uploading an image of a bouquet and transferring it to the server,
      followed by creating a bouquet in the database with a link to the image of the bouquet.
@@ -803,11 +794,27 @@ async def uploadfile_bouquet(file: UploadFile = File(...), bouquet_name: str = N
     """
     try:
         return await uploadfile_services.uploadfile_bouquet(file, bouquet_name, bouquet_price)
-    except Exception as ex:
-        print(f"Error {ex}")
-        raise HTTPException(status_code=500, detail=f"File not save. Error: {ex}")
+    except HTTPException as ex:
+        log.error(f"Error {ex}")
+        raise ex
+
+
+def run_server():
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
+
+def run_bot():
+    from src.telegram_bot.main import StvolBot
+    bot = StvolBot()
+    bot.start_bot()
 
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    import multiprocessing
+    server_process = multiprocessing.Process(target=run_server)
+    server_process.start()
+    bot_process = multiprocessing.Process(target=run_bot)
+    bot_process.start()
+    server_process.join()
+    bot_process.join()

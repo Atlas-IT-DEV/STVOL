@@ -1,5 +1,4 @@
 import os
-
 import aiomysql
 from pymysql.err import OperationalError
 from dotenv import load_dotenv
