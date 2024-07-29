@@ -3,23 +3,27 @@ from telegram.ext import ConversationHandler, CallbackContext
 from src.utils.base_hendlers import BaseCommandHandler, _check, _cancel, _get_param, _inf_response
 from src.utils.custom_logging import setup_logging
 import requests
+
 log = setup_logging()
 
 
 class CreateBouquetHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-
+    FORMA = ("<code>/create_bouquet</code>\n"
+             "<code>name=&lt;Название&gt;</code>    <i>обязательный</i>\n"
+             "<code>price=&lt;Цена&gt;</code>    <i>обязательный</i>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command create_bouquet")
         try:
             if await self.check_authorized(update, context):
-                await update.message.reply_text(
-                    'Сначала напиши команду в формате:'
-                    ' (/create_bouquet bouquet_name=<Название> ... \n bouquet_price=<Цена>) \n'
-                    'Затем отправь следующим сообщением изображение.\n'
-                    '{Не прикрепляй фото через File -> через Photo or Video}'
+                instructions = (
+                    "<b>Сначала напиши команду в формате:</b>\n"
+                    f"{CreateBouquetHandler.FORMA}"
+                    "<b>Затем отправь следующим сообщением изображение.</b>\n"
+                    "<i>Не прикрепляй фото через File -&gt; через Photo or Video</i>"
                 )
+                await update.message.reply_text(instructions, parse_mode='HTML')
                 return self.CHOOSING
         except Exception as ex:
             log.error(f"Failed method: {ex}")
@@ -34,28 +38,34 @@ class CreateBouquetHandler(BaseCommandHandler):
                 return await self.cancel(update, context)
 
             if not text.startswith('/create_bouquet'):
-                await update.message.reply_text(
-                    'Некорректный формат команды. Используй команду в формате:'
-                    ' /create_bouquet bouquet_name=<Название> bouquet_price=<Цена>.')
+                instructions = (
+                    "<b>Некорректный ввод команды. Используй команду в формате: </b>\n"
+                    f"{CreateBouquetHandler.FORMA}"
+                    "<i>Может передохнуть?</i>"
+                )
+                await update.message.reply_text(instructions, parse_mode="HTML")
                 return self.CHOOSING
 
             self.DATA[user_id] = _get_param(text, {
-                "bouquet_name": "str",
-                "bouquet_price": "int"
+                "name": "str",
+                "price": "int"
             })
 
             if self.DATA[user_id]:
-                await update.message.reply_text('Отправь изображение букета.')
+                await update.message.reply_text('<b>Отправь изображение букета.</b>', parse_mode="HTML")
                 log.debug(f"Current data for user {user_id}: {self.DATA[user_id]}")
                 return self.WAITING_FOR_PHOTO
             else:
-                await update.message.reply_text(
-                    'Некорректные данные. Убедись, что отправил данные в формате:'
-                    ' /create_bouquet bouquet_name=<Название> bouquet_price=<Цена>.')
+                instructions = (
+                    "<b>Некорректный ввод команды. Используй команду в формате: </b>\n"
+                    f"{CreateBouquetHandler.FORMA}"
+                    "<i>Попробуй еще раз?</i>"
+                )
+                await update.message.reply_text(instructions, parse_mode="HTML")
                 return self.CHOOSING
         except Exception as ex:
             log.error(f"Failed to handle message: {ex}")
-            await update.message.reply_text('Произошла ошибка при обработке информации.')
+            await update.message.reply_text('<b>Произошла ошибка при обработке информации.</b>', parse_mode="HTML")
             return self.CHOOSING
 
     async def handle_photo(self, update: Update, context: CallbackContext) -> int:
@@ -72,16 +82,15 @@ class CreateBouquetHandler(BaseCommandHandler):
                 file = await photo.get_file()
                 file_data = await file.download_as_bytearray()
 
-                for param in self.DATA[user_id]:
-                    if param is None:
-                        log.error("Bouquet_name or Bouquet_price is None")
-                    else:
-                        log.debug(f"Param: {param}")
+                bouquet_data = {
+                    "bouquet_name": self.DATA.get(user_id, {}).get("name"),
+                    "bouquet_price": self.DATA.get(user_id, {}).get("price")
+                }
 
                 response = requests.post(
-                    f'http://{self.HOST}:{self.SERVER_PORT}/uploadfile/create_bouquet',
+                    f'http://{self.HOST}:{self.SERVER_PORT}/uploadfile/create_bouquet/',
                     files={'file': ('bouquet.jpg', file_data)},
-                    data=self.DATA[user_id]
+                    data=bouquet_data
                 )
 
                 await _inf_response(update, response,
@@ -91,11 +100,11 @@ class CreateBouquetHandler(BaseCommandHandler):
                 del self.DATA[user_id]
                 return ConversationHandler.END
             else:
-                await update.message.reply_text('Отправь изображение букета.')
+                await update.message.reply_text('<b>Отправь изображение букета.</b>', parse_mode="HTML")
                 return self.WAITING_FOR_PHOTO
         except Exception as ex:
             log.error(f"Failed to handle photo: {ex}")
-            await update.message.reply_text('Произошла ошибка при обработке фото.')
+            await update.message.reply_text('<b>Произошла ошибка при обработке фото.</b>', parse_mode="HTML")
             return self.WAITING_FOR_PHOTO
 
     async def cancel(self, update: Update, context: CallbackContext) -> int:
@@ -103,4 +112,3 @@ class CreateBouquetHandler(BaseCommandHandler):
 
     async def check_authorized(self, update: Update, context: CallbackContext) -> bool:
         return await _check(update, self.AUTHORIZED_USERS)
-

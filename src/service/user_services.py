@@ -1,5 +1,6 @@
 from src.repository import user_repository
 from src.database.models import User
+from fastapi import HTTPException
 
 
 async def get_all_users():
@@ -23,11 +24,23 @@ async def get_user_by_phone(user_phone: str):
 
 
 async def create_user(user: User):
+    existing_user = await get_user_by_telegram_id(user.TelegramID)
+    if existing_user.TelegramID == user.TelegramID:
+        raise HTTPException(status_code=404, detail="User already exist")
+    existing_user = await get_user_by_phone(user.Phone)
+    if existing_user.Phone == user.Phone:
+        raise HTTPException(status_code=404, detail="User already exist")
     user_id = await user_repository.create_user(user)
     return await get_user_by_id(user_id)
 
 
 async def update_user(user_id: int, user: User):
+    existing_user = await get_user_by_telegram_id(user.TelegramID)
+    if existing_user.TelegramID == user.TelegramID:
+        raise HTTPException(status_code=404, detail="TelegramID already use")
+    existing_user = await get_user_by_phone(user.Phone)
+    if existing_user.Phone == user.Phone:
+        raise HTTPException(status_code=404, detail="Phone already use")
     await user_repository.update_user(user_id, user)
     return {"message": "User updated successfully"}
 

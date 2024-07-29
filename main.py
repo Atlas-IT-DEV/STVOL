@@ -110,7 +110,7 @@ async def create_user(user: User):
 
 
 @app.put("/users/{user_id}", response_model=Dict, tags=["User"])
-async def update_user(user_id, user: User):
+async def update_user(user: User, user_id: int):
     """
     Route for update user in basedata.
 
@@ -128,7 +128,7 @@ async def update_user(user_id, user: User):
 
 
 @app.delete("/users/{user_id}", response_model=Dict, tags=["User"])
-async def delete_user(user_id):
+async def delete_user(user_id: int):
     """
     Route for delete user from basedata.
 
@@ -206,7 +206,7 @@ async def create_adress(adress: Adress):
 
 
 @app.put("/adresses/{adress_id}", response_model=Dict, tags=["Adress"])
-async def update_adress(adress_id, adress: Adress):
+async def update_adress(adress: Adress, adress_id: int):
     """
     Route for update adress in basedata.
 
@@ -224,7 +224,7 @@ async def update_adress(adress_id, adress: Adress):
 
 
 @app.delete("/adresses/{adress_id}", response_model=Dict, tags=["Adress"])
-async def delete_adress(adress_id):
+async def delete_adress(adress_id: int):
     """
     Route for delete adress from basedata.
 
@@ -302,7 +302,7 @@ async def create_order(order: Order):
 
 
 @app.put("/orders/{order_id}", response_model=Dict, tags=["Order"])
-async def update_order(order_id, order: Order):
+async def update_order(order: Order, order_id: int):
     """
     Route for update order in basedata.
 
@@ -320,7 +320,7 @@ async def update_order(order_id, order: Order):
 
 
 @app.delete("/orders/{order_id}", response_model=Dict, tags=["Order"])
-async def delete_order(order_id):
+async def delete_order(order_id: int):
     """
     Route for delete order from basedata.
 
@@ -336,7 +336,7 @@ async def delete_order(order_id):
 
 
 @app.post("/orders/purchase", response_model=None, tags=["Order"])
-async def buy_create_order(user_id: int, bouquetsID: list[BouquetsID], off_bonus: bool = False):
+async def buy_create_order(bouquetsID: list[BouquetsID], user_id: int = Form(...), off_bonus: bool = False):
     """
     Route for creating an order using the user ID,
      transmitted information about bouquets with a bonus accounting mechanism.
@@ -435,7 +435,7 @@ async def create_bouquet(bouquet: Bouquet):
 
 
 @app.put("/bouquets/{bouquet_id}", response_model=Dict, tags=["Bouquet"])
-async def update_bouquet(bouquet_id, bouquet: Bouquet):
+async def update_bouquet(bouquet: Bouquet, bouquet_id: int):
     """
     Route for update bouquet in basedata.
 
@@ -453,7 +453,7 @@ async def update_bouquet(bouquet_id, bouquet: Bouquet):
 
 
 @app.delete("/bouquets/{bouquet_id}", response_model=Dict, tags=["Bouquet"])
-async def delete_bouquet(bouquet_id):
+async def delete_bouquet(bouquet_id: int):
     """
     Route for delete bouquet from basedata.
 
@@ -531,7 +531,7 @@ async def create_company(company: CompanyData):
 
 
 @app.put("/companys/{company_id}", response_model=Dict, tags=["Company"])
-async def update_company(company_id, company: CompanyData):
+async def update_company(company: CompanyData, company_id: int):
     """
     Route for update company in basedata.
 
@@ -549,7 +549,7 @@ async def update_company(company_id, company: CompanyData):
 
 
 @app.delete("/companys/{company_id}", response_model=Dict, tags=["Company"])
-async def delete_company(company_id):
+async def delete_company(company_id: int):
     """
     Route for delete company from basedata.
 
@@ -627,7 +627,7 @@ async def create_refcode(refcodes: RefCodes):
 
 
 @app.put("/refcodes/{user_id}", response_model=Dict, tags=["RefCode"])
-async def update_refcode(user_id, refcodes: RefCodes):
+async def update_refcode(refcodes: RefCodes, user_id: int):
     """
     Route for update referal code in basedata.
 
@@ -645,7 +645,7 @@ async def update_refcode(user_id, refcodes: RefCodes):
 
 
 @app.delete("/refcodes/{user_id}", response_model=Dict, tags=["RefCode"])
-async def delete_refcode(user_id):
+async def delete_refcode(user_id: int):
     """
     Route for delete referal code from basedata.
 
@@ -711,7 +711,7 @@ async def create_image(image: Image):
 
 
 @app.put("/images/{image_id}", response_model=Dict, tags=["Image"])
-async def update_image(image_id, image: Image):
+async def update_image(image: Image, image_id: int):
     """
     Route for update image in basedata.
 
@@ -729,7 +729,7 @@ async def update_image(image_id, image: Image):
 
 
 @app.delete("/images/{image_id}", response_model=Dict, tags=["Image"])
-async def delete_image(image_id):
+async def delete_image(image_id: int):
     """
     Route for delete image from basedata.
 
@@ -745,7 +745,7 @@ async def delete_image(image_id):
 
 
 @app.post("/signon/", response_model=User, tags=["Auth"])
-async def signup(user: User, refcode: str = None):
+async def signup(user: User, refcode: str = Form(...)):
     """
     Route for user registration.
 
@@ -778,7 +778,7 @@ async def signin(user: User):
         raise ex
 
 
-@app.post("/uploadfile/create_bouquet", response_model=Bouquet, tags=["UploadFile"])
+@app.post("/uploadfile/create_bouquet/", response_model=Bouquet, tags=["UploadFile"])
 async def uploadfile_bouquet(file: UploadFile = File(...), bouquet_name: str = Form(...), bouquet_price: int = Form(...)):
     """
     Route for uploading an image of a bouquet and transferring it to the server,
