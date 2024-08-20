@@ -57,7 +57,7 @@ class User(BaseModel):
     Phone: Optional[StrictStr] = Field(None, alias="phone")
     CountBonus: Optional[StrictInt] = Field(0, alias="count_bonus")
     Ref: Optional[StrictInt] = Field(0, alias="referal")
-
+    
 
 class RefCodes(BaseModel):
     """

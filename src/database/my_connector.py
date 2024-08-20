@@ -1,5 +1,5 @@
 import os
-import aiomysql
+import pymysql
 from pymysql.err import OperationalError
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,50 +12,39 @@ DB = os.getenv("DB")
 
 class Database:
     def __init__(self):
-        self.connection = None
-        self.connected = False
+        self.connection = pymysql.connect(
+            host=HOST,
+            port=PORT,
+            user=USER,
+            password=PASSWORD,
+            db=DB,
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
+        )
 
-    async def connect(self):
+    def check_and_reconnect(self):
         try:
-            self.connection = await aiomysql.connect(
-                host=HOST,
-                port=PORT,
-                user=USER,
-                password=PASSWORD,
-                db=DB,
-                charset='utf8mb4',
-                cursorclass=aiomysql.cursors.DictCursor
-            )
-            self.connected = True
-            return True
+            if self.connection is None:
+                self.connection.ping(reconnect=True)
         except OperationalError as e:
-            self.connected = False
-            return False
+            print(e)
 
-    async def check_and_reconnect(self):
-        try:
-            if not self.connected or self.connection is None:
-                await self.connect()
-            else:
-                await self.connection.ping(reconnect=True)
-        except OperationalError as e:
-            await self.connect()
-
-    async def execute_query(self, query, params=None):
-        await self.check_and_reconnect()
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(query, params)
-            await self.connection.commit()
+    def execute_query(self, query, params=None):
+        self.check_and_reconnect()
+        with self.connection.cursor() as cursor:
+            cursor.execute(query, params)
+            self.connection.commit()
             return cursor
 
-    async def fetch_one(self, query, params=None):
-        await self.check_and_reconnect()
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(query, params)
-            return await cursor.fetchone()
+    def fetch_one(self, query, params=None):
+        self.check_and_reconnect()
+        with self.connection.cursor() as cursor:
+            cursor.execute(query, params)
+            return cursor.fetchone()
 
-    async def fetch_all(self, query, params=None):
-        await self.check_and_reconnect()
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(query, params)
-            return await cursor.fetchall()
+    def fetch_all(self, query, params=None):
+        self.check_and_reconnect()
+        with self.connection.cursor() as cursor:
+            cursor.execute(query, params)
+            return cursor.fetchall()
+

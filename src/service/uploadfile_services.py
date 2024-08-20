@@ -10,7 +10,7 @@ UPLOAD_DIR_BOUQUET = os.getenv('UPLOAD_DIR_BOUQUET')
 
 
 
-async def uploadfile_bouquet(file, bouquet_name: str, bouquet_price: int):
+def uploadfile_bouquet(file, bouquet_name: str, bouquet_price: int):
     # Проверяем введено ли имя букета
     if not bouquet_name:
         raise HTTPException(status_code=404, detail=f"Name bouquet not define")
@@ -18,7 +18,7 @@ async def uploadfile_bouquet(file, bouquet_name: str, bouquet_price: int):
     if not bouquet_price:
         raise HTTPException(status_code=404, detail=f"Price bouquet not define")
     # Проверяем существует ли букет с таким же именем
-    bouquet = await bouquet_services.get_bouquet_by_name(bouquet_name)
+    bouquet = bouquet_services.get_bouquet_by_name(bouquet_name)
     if bouquet:
         raise HTTPException(status_code=404, detail="Bouquet already exist")
     else:
@@ -32,22 +32,22 @@ async def uploadfile_bouquet(file, bouquet_name: str, bouquet_price: int):
         os.makedirs(UPLOAD_DIR_BOUQUET, exist_ok=True)
         # Открывааем файл и записываем данные изображения
         with open(file_location, "wb") as buffer:
-            buffer.write(await file.read())
+            buffer.write(file.read())
         # Создаем информацию в базе данных о пути изображения
-        image = await image_services.create_image(Image(url=file_location))
+        image = image_services.create_image(Image(url=file_location))
         # Создаем и возвращаем букет
-        return await bouquet_services.create_bouquet(Bouquet(name=bouquet_name,
+        return bouquet_services.create_bouquet(Bouquet(name=bouquet_name,
                                                              price=bouquet_price,
                                                              image_id=image.ID))
 
 
-async def download_bouquet(bouquet_id: int):
+def download_bouquet(bouquet_id: int):
     # Проверяем существование букета
-    bouquet = await bouquet_services.get_bouquet_by_id(bouquet_id)
+    bouquet = bouquet_services.get_bouquet_by_id(bouquet_id)
     if not bouquet:
         raise HTTPException(status_code=404, detail="Bouquet not exist")
     # Проверяем данные в таблице со ссылками на изображения для букета
-    image = await image_services.get_image_by_id(bouquet.ImageID)
+    image = image_services.get_image_by_id(bouquet.ImageID)
     if not image:
         raise HTTPException(status_code=404, detail="Image not exist")
     # Проверяем существование файла в папке
