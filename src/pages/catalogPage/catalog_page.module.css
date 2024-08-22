@@ -31,6 +31,8 @@
 }
 
 .mainContent {
+  display: flex;
+  flex-direction: column;
   margin-left: 22px;
   margin-right: 22px;
 }
@@ -43,15 +45,19 @@
 }
 
 .filters {
-  display: flex;
-  gap: 10px;
   overflow: scroll;
   overflow-y: hidden;
   scrollbar-width: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 5px;
+  row-gap: 5px;
   margin-top: 20px;
 }
 .filterButton {
   display: flex;
+  flex-direction: column;
   align-items: center;
   height: 35px;
   background-color: rgba(61, 61, 61, 1);
@@ -59,4 +65,12 @@
   padding: 0 16px 0 16px;
   font-size: 20px;
   color: rgba(255, 255, 255, 1);
+}
+
+.filterBlocks {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  margin-bottom: 100px;
+  gap: 30px;
 }

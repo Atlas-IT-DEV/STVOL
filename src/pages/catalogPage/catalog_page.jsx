@@ -7,7 +7,8 @@ import {
   sortedIcon,
   telezhkaIcon,
 } from "../../images/images";
-import { filter } from "@chakra-ui/react";
+import Flowers from "../../components/flowers";
+import Filters from "../../components/filters";
 
 const CatalogPage = () => {
   return (
@@ -28,12 +29,20 @@ const CatalogPage = () => {
         <div className={styles.filters}>
           <p className={styles.filterButton}>Популярные</p>
           <p className={styles.filterButton}>Акция</p>
-          <p className={styles.filterButton}>Сезонные цветы</p>
+          <p className={styles.filterButton}>Сезонные</p>
           <p className={styles.filterButton}>Розы</p>
           <p className={styles.filterButton}>Тюльпаны</p>
           <p className={styles.filterButton}>Пионы</p>
           <p className={styles.filterButton}>Орхидеи</p>
           <p className={styles.filterButton}>Герберы</p>
+          <p className={styles.filterButton}>Тюльпаны</p>
+          <p className={styles.filterButton}>Пионы</p>
+          <p className={styles.filterButton}>Орхидеи</p>
+          <p className={styles.filterButton}>Герберы</p>
+        </div>
+        <div className={styles.filterBlocks}>
+          <Filters />
+          <Filters />
         </div>
       </main>
       <BottomMenu />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { catalogIcon, profileIcon } from "../images/images";
 import constructorIcon from "../images/constructor_icon.png";
 import logo from "../images/logo.png";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import styles from "../components/bottomMenu.module.css";
 
 const BottomMenu = () => {
@@ -22,7 +22,7 @@ const BottomMenu = () => {
         <img src={constructorIcon} width={43} />
         <p>Конструктор</p>
       </div>
-      <div className={styles.button}>
+      <div className={styles.button} onClick={() => navigate("/info")}>
         <img src={logo} width={97} />
         <p>О нас</p>
       </div>
