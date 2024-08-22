@@ -2,23 +2,23 @@ import os
 import re
 from abc import ABC, abstractmethod
 from telegram import Update
-from src.utils.custom_logging import setup_logging
 from telegram.ext import CallbackContext, ConversationHandler
-from dotenv import load_dotenv
-load_dotenv()
+from config import Config
+from src.utils.custom_logging import setup_logging
 log = setup_logging()
+config = Config()
 
 
 class BaseCommandHandler(ABC):
 
     def __init__(self):
         self.DATA = {}
-        self.HOST = os.getenv("HOST")
-        self.PORT = int(os.getenv("PORT"))
-        self.SERVER_PORT = int(os.getenv("SERVER_PORT"))
-        self.AUTHORIZED_USERS = self.__list__(os.getenv("AUTHORIZED_USERS"))
+        self.HOST = config.__getattr__("HOST")
+        self.SERVER_PORT = config.__getattr__("SERVER_PORT")
+        self.AUTHORIZED_USERS = self.__list__(config.__getattr__("AUTHORIZED_USERS"))
 
-    def __list__(self, s: str):
+    @staticmethod
+    def __list__(s: str):
         return list(map(int, s.split(',')))
 
     @abstractmethod
@@ -43,12 +43,11 @@ async def _check(update: Update, AUTHORIZED_USERS: list):
         return False
 
 
-async def _cancel(self, update: Update, context: CallbackContext) -> int:
+async def _cancel(self, update: Update) -> int:
     user_id = update.message.from_user.id
     if user_id in self.DATA:
         del self.DATA[user_id]
     await update.message.reply_text('<b>Операция отменена.</b>', parse_mode="HTML")
-    log.info(f"Cancelled the operation.")
     return ConversationHandler.END
 
 
@@ -130,4 +129,3 @@ def format_data_to_html(data, max_width=4000, max_value_length=11):
     messages.append(html_content)
 
     return messages
-

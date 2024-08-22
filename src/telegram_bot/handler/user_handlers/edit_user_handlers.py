@@ -1,10 +1,9 @@
 from telegram import Update
-from src.database.models import User
 from telegram.ext import ConversationHandler, CallbackContext
-from src.utils.base_hendlers import BaseCommandHandler, _check, _cancel, _get_param, _inf_response
-from src.utils.custom_logging import setup_logging
+from src.telegram_bot.handler.base_hendlers import BaseCommandHandler, _check, _cancel, _get_param, _inf_response
 import requests
-
+from src.database.models import User
+from src.utils.custom_logging import setup_logging
 log = setup_logging()
 
 
@@ -21,7 +20,7 @@ class EditUserHandler(BaseCommandHandler):
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command edit_user")
         try:
-            if await self.check_authorized(update, context):
+            if await self.check_authorized(update):
                 instructions = (
                     "<b>Сначала напиши команду в формате:</b>\n"
                     f"{EditUserHandler.FORMA}"
@@ -30,7 +29,7 @@ class EditUserHandler(BaseCommandHandler):
                 await update.message.reply_text(instructions, parse_mode='HTML')
                 return self.CHOOSING
         except Exception as ex:
-            log.error(f"Failed method: {ex}")
+            log.exception(f"Failed method: {ex}")
 
     async def handle_message(self, update: Update, context: CallbackContext) -> int:
         log.info(f"Handling message from user {update.message.from_user.id}")
@@ -39,7 +38,7 @@ class EditUserHandler(BaseCommandHandler):
             text = update.message.text
 
             if text.startswith('/cancel'):
-                return await self.cancel(update, context)
+                return await self.cancel(update)
 
             if not text.startswith('/edit_user'):
                 instructions = (
@@ -60,14 +59,12 @@ class EditUserHandler(BaseCommandHandler):
             })
 
             if self.DATA[user_id]:
-                log.debug(f"Current data for user {user_id}: {self.DATA[user_id]}")
+                log.info(f"Current data for user {user_id}: {self.DATA[user_id]}")
 
                 user = requests.get(
-                    f'http://{self.HOST}:{self.SERVER_PORT}/users/id/{self.DATA[user_id]["user_id"]}'
+                    f'https://{self.HOST}:{self.SERVER_PORT}/users/id/{self.DATA[user_id]["user_id"]}'
                 )
                 user = User(**user.json()).dict(by_alias=True)
-
-                print(user)
 
                 user_data = {
                     "id": None,
@@ -77,8 +74,6 @@ class EditUserHandler(BaseCommandHandler):
                     "count_bonus": self.DATA.get(user_id, {}).get("count_bonus", user.get("count_bonus")),
                     "referal": self.DATA.get(user_id, {}).get("referal", user.get("referal")),
                 }
-
-                print(user)
 
                 response = requests.put(
                     f'http://{self.HOST}:{self.SERVER_PORT}/users/{self.DATA[user_id]["user_id"]}',
@@ -100,15 +95,15 @@ class EditUserHandler(BaseCommandHandler):
                 await update.message.reply_text(instructions, parse_mode="HTML")
                 return self.CHOOSING
         except Exception as ex:
-            log.error(f"Failed to handle message: {ex}")
+            log.exception(f"Failed to handle message: {ex}")
             await update.message.reply_text('<b>Произошла ошибка при обработке информации.</b>', parse_mode="HTML")
             return self.CHOOSING
 
     async def handle_photo(self, update: Update, context: CallbackContext) -> int:
         return ConversationHandler.END
 
-    async def cancel(self, update: Update, context: CallbackContext) -> int:
-        return await _cancel(self, update, context)
+    async def cancel(self, update: Update) -> int:
+        return await _cancel(self, update)
 
-    async def check_authorized(self, update: Update, context: CallbackContext) -> bool:
+    async def check_authorized(self, update: Update) -> bool:
         return await _check(update, self.AUTHORIZED_USERS)

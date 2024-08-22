@@ -1,4 +1,5 @@
 import os
+from src.utils.custom_logging import setup_logging
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ConversationHandler
 from src.telegram_bot.handler.bouquet_handlers.get_bouquets_list_handlers import GetBouquetsListHandler
 from src.telegram_bot.handler.bouquet_handlers.create_bouquet_handlers import CreateBouquetHandler
@@ -9,16 +10,15 @@ from src.telegram_bot.handler.user_handlers.get_users_list_handlers import GetUs
 from src.telegram_bot.handler.bouquet_handlers.del_bouquet_handlers import DelBouquetHandler
 from src.telegram_bot.handler.user_handlers.edit_user_handlers import EditUserHandler
 from src.telegram_bot.handler.user_handlers.del_user_handlers import DelUserHandler
-from src.utils.custom_logging import setup_logging
-from dotenv import load_dotenv
-load_dotenv()
+from config import Config
+config = Config()
 log = setup_logging()
 
 
 class StvolBot:
 
     def __init__(self):
-        self.TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+        self.TELEGRAM_TOKEN = config.__getattr__("TELEGRAM_TOKEN")
 
     @staticmethod
     def _application_add_handler(class_method, command_name):
@@ -65,5 +65,5 @@ class StvolBot:
             log.info("Bot handler added. Starting polling")
             application.run_polling()
         except Exception as ex:
-            log.error(f"{ex}")
+            log.exception(f"{ex}")
         log.info("Bot startup complete")

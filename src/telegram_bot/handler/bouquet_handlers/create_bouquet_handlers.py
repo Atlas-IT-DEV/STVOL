@@ -1,9 +1,8 @@
 from telegram import Update
 from telegram.ext import ConversationHandler, CallbackContext
-from src.utils.base_hendlers import BaseCommandHandler, _check, _cancel, _get_param, _inf_response
-from src.utils.custom_logging import setup_logging
+from src.telegram_bot.handler.base_hendlers import BaseCommandHandler, _check, _cancel, _get_param, _inf_response
 import requests
-
+from src.utils.custom_logging import setup_logging
 log = setup_logging()
 
 
@@ -16,7 +15,7 @@ class CreateBouquetHandler(BaseCommandHandler):
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command create_bouquet")
         try:
-            if await self.check_authorized(update, context):
+            if await self.check_authorized(update):
                 instructions = (
                     "<b>Сначала напиши команду в формате:</b>\n"
                     f"{CreateBouquetHandler.FORMA}"
@@ -26,16 +25,16 @@ class CreateBouquetHandler(BaseCommandHandler):
                 await update.message.reply_text(instructions, parse_mode='HTML')
                 return self.CHOOSING
         except Exception as ex:
-            log.error(f"Failed method: {ex}")
+            log.exception(f"Failed method: {ex}")
 
     async def handle_message(self, update: Update, context: CallbackContext) -> int:
-        log.info(f"Handling message from user {update.message.from_user.id}")
+        log.debug(f"Handling message from user {update.message.from_user.id}")
         try:
             user_id = update.message.from_user.id
             text = update.message.text
 
             if text.startswith('/cancel'):
-                return await self.cancel(update, context)
+                return await self.cancel(update)
 
             if not text.startswith('/create_bouquet'):
                 instructions = (
@@ -64,18 +63,18 @@ class CreateBouquetHandler(BaseCommandHandler):
                 await update.message.reply_text(instructions, parse_mode="HTML")
                 return self.CHOOSING
         except Exception as ex:
-            log.error(f"Failed to handle message: {ex}")
+            log.exception(f"Failed to handle message: {ex}")
             await update.message.reply_text('<b>Произошла ошибка при обработке информации.</b>', parse_mode="HTML")
             return self.CHOOSING
 
     async def handle_photo(self, update: Update, context: CallbackContext) -> int:
         try:
-            log.info(f"Handling photo from user {update.message.from_user.id}")
+            log.debug(f"Handling photo from user {update.message.from_user.id}")
             user_id = update.message.from_user.id
             text = update.message.text
 
             if text and text.startswith('/cancel'):
-                return await self.cancel(update, context)
+                return await self.cancel(update)
 
             if user_id in self.DATA and update.message.photo:
                 photo = update.message.photo[-1]
@@ -103,12 +102,12 @@ class CreateBouquetHandler(BaseCommandHandler):
                 await update.message.reply_text('<b>Отправь изображение букета.</b>', parse_mode="HTML")
                 return self.WAITING_FOR_PHOTO
         except Exception as ex:
-            log.error(f"Failed to handle photo: {ex}")
+            log.exception(f"Failed to handle photo: {ex}")
             await update.message.reply_text('<b>Произошла ошибка при обработке фото.</b>', parse_mode="HTML")
             return self.WAITING_FOR_PHOTO
 
-    async def cancel(self, update: Update, context: CallbackContext) -> int:
-        return await _cancel(self, update, context)
+    async def cancel(self, update: Update) -> int:
+        return await _cancel(self, update)
 
-    async def check_authorized(self, update: Update, context: CallbackContext) -> bool:
+    async def check_authorized(self, update: Update) -> bool:
         return await _check(update, self.AUTHORIZED_USERS)
