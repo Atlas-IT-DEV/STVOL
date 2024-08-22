@@ -11,7 +11,15 @@ const Order = ({
     >
       <img src={flower} alt="" />
       <p style={{ fontSize: 20, color: "rgba(67, 67, 67, 1)" }}>{date}</p>
-      <p style={{ fontSize: 22, color: "rgba(175, 175, 175, 1)", borderBottom: "1px solid rgba(167, 167, 167, 1)"}}>{name}</p>
+      <p
+        style={{
+          fontSize: 22,
+          color: "rgba(175, 175, 175, 1)",
+          borderBottom: "1px solid rgba(167, 167, 167, 1)",
+        }}
+      >
+        {name}
+      </p>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import BottomBenu from "../../components/bottomMenu";
+import BottomMenu from "../../components/bottomMenu";
 import { notificationIcon, telezhkaIcon } from "../../images/images";
 import styles from "./profile_page.module.css";
 import logo from "./../../images/logo.png";
@@ -89,7 +89,7 @@ const ProfilePage = ({
           </div>
         </div>
       </main>
-      <BottomBenu />
+      <BottomMenu />
     </div>
   );
 };

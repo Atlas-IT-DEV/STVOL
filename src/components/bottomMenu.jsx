@@ -5,7 +5,7 @@ import logo from "../images/logo.png";
 import { useNavigate } from "react-router";
 import styles from "../components/bottomMenu.module.css";
 
-const BottomBenu = () => {
+const BottomMenu = () => {
   const [isActive, setIsActive] = useState([0, 0, 1, 0]);
   const navigate = useNavigate();
   return (
@@ -14,7 +14,7 @@ const BottomBenu = () => {
         {profileIcon}
         <p>Профиль</p>
       </div>
-      <div className={styles.button}>
+      <div className={styles.button} onClick={() => navigate("/catalog")}>
         {catalogIcon}
         <p>Каталог</p>
       </div>
@@ -30,4 +30,4 @@ const BottomBenu = () => {
   );
 };
 
-export default BottomBenu;
+export default BottomMenu;

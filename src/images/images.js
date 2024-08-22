@@ -113,3 +113,36 @@ export const arrowRight = (
     />
   </svg>
 );
+
+export const sortedIcon = (
+  <svg
+    width="38"
+    height="38"
+    viewBox="0 0 38 38"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M4.75 28.5V25.3333H14.25V28.5H4.75ZM4.75 20.5833V17.4167H23.75V20.5833H4.75ZM4.75 12.6667V9.5H33.25V12.6667H4.75Z"
+      fill="#AFAFAF"
+    />
+  </svg>
+);
+
+export const filterIcon = (
+  <svg
+    width="33"
+    height="33"
+    viewBox="0 0 33 33"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M30.25 4.125H2.75L13.75 17.1325V26.125L19.25 28.875V17.1325L30.25 4.125Z"
+      stroke="#AFAFAF"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
