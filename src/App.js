@@ -1,10 +1,7 @@
 import { createMemoryRouter, RouterProvider } from "react-router";
-import MainPage from "./pages/main_page";
-import ProfilePage from "./pages/profile_page";
+import MainPage from "./pages/mainPage/main_page";
 import PageContainer from "./pages/page_container";
-import InfoPage from "./pages/info_page";
-import ConstructorPage from "./pages/constructor_page";
-
+import ProfilePage from "./pages/profilePage/profile_page";
 
 const router = createMemoryRouter([
   {
@@ -22,22 +19,6 @@ const router = createMemoryRouter([
       </PageContainer>
     ),
     path: "/profile",
-  },
-  {
-    element: (
-      <PageContainer>
-        <InfoPage/>
-      </PageContainer>
-    ),
-    path: "/about",
-  },
-  {
-    element: (
-      <PageContainer>
-        <ConstructorPage/>
-      </PageContainer>
-    ),
-    path: "/constructor",
   },
 ]);
 function App() {

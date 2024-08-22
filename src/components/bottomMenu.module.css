@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 25%;
+  border-right: 1px solid rgba(35, 35, 35, 1);
+  border-top: 1px solid rgba(35, 35, 35, 1);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.button p {
+  font: 18px;
+  color: rgba(175, 175, 175, 1);
+}
