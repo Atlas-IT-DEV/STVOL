@@ -783,7 +783,7 @@ async def signin(user: User):
 
 @app.post("/uploadfile/create_bouquet/", response_model=Bouquet, tags=["UploadFile"])
 async def uploadfile_bouquet(file: UploadFile = File(...),
-                             bouquet_name: str = Form(...), bouquet_price: int = Form(...)):
+                             bouquet_name: str = None, bouquet_price: int = None):
     """
     Route for uploading an image of a bouquet and transferring it to the server,
      followed by creating a bouquet in the database with a link to the image of the bouquet.
