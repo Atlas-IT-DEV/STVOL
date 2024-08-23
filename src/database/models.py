@@ -1,7 +1,6 @@
-from pydantic import BaseModel, Field, StrictStr, StrictInt
-from enum import Enum
-from typing import Optional, List, Dict
 from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, Field, StrictStr, StrictInt
 
 
 class Image(BaseModel):
@@ -67,7 +66,6 @@ class OrderBouquets(BaseModel):
 class OrderHistory(BaseModel):
     """
     Model of order history
-    }
     """
     OrderID: StrictInt = Field(..., alias="order_id", examples=[2])
     UserID: StrictInt = Field(..., alias="user_id", examples=[2])

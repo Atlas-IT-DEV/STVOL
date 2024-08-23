@@ -1,8 +1,8 @@
-import os
 import pymysql
 from pymysql.err import OperationalError
-from src.utils.custom_logging import setup_logging
 from config import Config
+from src.utils.custom_logging import setup_logging
+
 config = Config()
 log = setup_logging()
 

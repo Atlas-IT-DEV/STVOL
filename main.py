@@ -105,7 +105,7 @@ async def create_user(user: User):
     """
     Route for create user in basedata.
 
-    :param order: Model user. [User]
+    :param user: Model user. [User]
 
     :return: response model User.
     """
@@ -201,7 +201,7 @@ async def create_adress(adress: Adress):
     """
     Route for create adress in basedata.
 
-    :param order: Model adress. [Adress]
+    :param adress: Model adress. [Adress]
 
     :return: response model Adress.
     """
@@ -448,7 +448,7 @@ async def update_bouquet(bouquet: Bouquet, bouquet_id: int):
 
     :param bouquet_id: ID by bouquet. [int]
 
-    :param company: Model bouquet. [Bouquet]
+    :param bouquet: Model bouquet. [Bouquet]
 
     :return: response model dict.
     """
@@ -560,7 +560,7 @@ async def delete_company(company_id: int):
     """
     Route for delete company from basedata.
 
-    :param user_id: ID by User. [int]
+    :param company_id: ID by Company. [int]
 
     :return: response model dict.
     """
@@ -688,8 +688,6 @@ async def get_image_by_id(image_id: int):
 
     :param image_id: ID by image. [int]
 
-    :param image: Model image. [Image]
-
     :return: response model Image.
     """
     try:
@@ -703,8 +701,6 @@ async def get_image_by_id(image_id: int):
 async def create_image(image: Image):
     """
     Route for create image in basedata.
-
-    :param image_id: ID by image. [int]
 
     :param image: Model image. [Image]
 
