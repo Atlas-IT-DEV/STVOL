@@ -45,3 +45,4 @@ class Database:
             cursor.execute(query, params)
             return cursor.fetchall()
 
+

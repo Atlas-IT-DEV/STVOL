@@ -1,5 +1,4 @@
-import os.path
-
+import os
 from fastapi import FastAPI, HTTPException, File, UploadFile, Form
 from fastapi.params import Query
 from fastapi.staticfiles import StaticFiles
@@ -823,6 +822,13 @@ def run_bot():
 
 
 if __name__ == "__main__":
+
+    # Создание датабазы и таблиц, если они не существуют
+    from create_sql import CreateSQL
+    create_sql = CreateSQL()
+    create_sql.read_sql()
+
+    # Запуск сервера и бота
     import multiprocessing
     server_process = multiprocessing.Process(target=run_server)
     server_process.start()
