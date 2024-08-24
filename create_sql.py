@@ -14,7 +14,7 @@ class CreateSQL:
         # Используем файл с расширением .sql
         self.path_to_sql = os.path.join(os.path.dirname(__file__), f"{config.__getattr__('DB')}.sql")
         self.connection = pymysql.connect(
-            host=config.__getattr__("HOST"),
+            host=config.__getattr__("DB_HOST"),
             port=int(config.__getattr__("DB_PORT")),
             user=config.__getattr__("DB_USER"),
             password=config.__getattr__("DB_PASSWORD"),

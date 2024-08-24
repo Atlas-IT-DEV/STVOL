@@ -10,7 +10,7 @@ log = setup_logging()
 class Database:
     def __init__(self):
         self.connection = pymysql.connect(
-            host=config.__getattr__("HOST"),
+            host=config.__getattr__("DB_HOST"),
             db=config.__getattr__("DB"),
             port=int(config.__getattr__("DB_PORT")),
             user=config.__getattr__("DB_USER"),
