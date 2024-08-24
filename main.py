@@ -15,7 +15,6 @@ from config import Config
 
 config = Config()
 log = setup_logging()
-db = Database()
 app = FastAPI()
 
 app.mount("/bouquet", StaticFiles(directory=os.path.join(config.__getattr__("UPLOAD_DIR"))), name="bouquet")
@@ -64,7 +63,7 @@ async def get_all_users():
     try:
         return user_services.get_all_users()
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -80,7 +79,7 @@ async def get_user_by_id(user_id: int):
     try:
         return user_services.get_user_by_id(user_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -96,7 +95,7 @@ async def get_user_by_telegram_id(telegram_id: int):
     try:
         return user_services.get_user_by_telegram_id(telegram_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -112,7 +111,7 @@ async def create_user(user: User):
     try:
         return user_services.create_user(user)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -130,7 +129,7 @@ async def update_user(user_id: int, user: User):
     try:
         return user_services.update_user(user_id, user)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -146,7 +145,7 @@ async def delete_user(user_id: int):
     try:
         return user_services.delete_user(user_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -160,7 +159,7 @@ async def get_all_adresses():
     try:
         return adress_services.get_all_adresses()
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -176,7 +175,7 @@ async def get_adress_by_id(adress_id: int):
     try:
         return adress_services.get_adress_by_id(adress_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -192,7 +191,7 @@ async def get_adress_by_user_id(user_id: int):
     try:
         return adress_services.get_adress_by_user_id(user_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -208,7 +207,7 @@ async def create_adress(adress: Adress):
     try:
         return adress_services.create_adress(adress)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -226,7 +225,7 @@ async def update_adress(adress_id: int, adress: Adress):
     try:
         return adress_services.update_adress(adress_id, adress)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -242,7 +241,7 @@ async def delete_adress(adress_id: int):
     try:
         return adress_services.delete_adress(adress_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -256,7 +255,7 @@ async def get_all_orders():
     try:
         return order_services.get_all_orders()
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -272,7 +271,7 @@ async def get_order_by_id(order_id: int):
     try:
         return order_services.get_order_by_id(order_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -288,7 +287,7 @@ async def get_order_by_user_id(user_id: int):
     try:
         return order_services.get_order_by_user_id(user_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -304,7 +303,7 @@ async def create_order(order: Order):
     try:
         return order_services.create_order(order)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -322,7 +321,7 @@ async def update_order(order: Order, order_id: int):
     try:
         return order_services.update_order(order_id, order)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -338,7 +337,7 @@ async def delete_order(order_id: int):
     try:
         return order_services.delete_order(order_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -359,7 +358,7 @@ async def buy_create_order(bouquetsID: list[BouquetsID], user_id: int = Form(...
     try:
         return order_services.buy_create_order(user_id, bouquetsID, off_bonus)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -375,7 +374,7 @@ async def buy_history_order(user_id: int):
     try:
         return order_services.buy_history_order(user_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -389,7 +388,7 @@ async def get_all_bouquets():
     try:
         return bouquet_services.get_all_bouquets()
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -405,7 +404,7 @@ async def get_bouquet_by_id(bouquet_id: int):
     try:
         return bouquet_services.get_bouquet_by_id(bouquet_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -421,7 +420,7 @@ async def get_bouquet_by_name(bouquet_name: str):
     try:
         return bouquet_services.get_bouquet_by_name(bouquet_name)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -437,7 +436,7 @@ async def create_bouquet(bouquet: Bouquet):
     try:
         return bouquet_services.create_bouquet(bouquet)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -455,7 +454,7 @@ async def update_bouquet(bouquet: Bouquet, bouquet_id: int):
     try:
         return bouquet_services.update_bouquet(bouquet_id, bouquet)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -471,7 +470,7 @@ async def delete_bouquet(bouquet_id: int):
     try:
         return bouquet_services.delete_bouquet(bouquet_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -487,7 +486,7 @@ async def download_bouquet(bouquet_id: int):
     try:
         return uploadfile_services.download_bouquet(bouquet_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -501,7 +500,7 @@ async def get_all_companys():
     try:
         return company_services.get_all_companys()
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -517,7 +516,7 @@ async def get_company_by_id(company_id: int):
     try:
         return company_services.get_company_by_id(company_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -533,7 +532,7 @@ async def create_company(company: CompanyData):
     try:
         return company_services.create_company(company)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -551,7 +550,7 @@ async def update_company(company: CompanyData, company_id: int):
     try:
         return company_services.update_company(company_id, company)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -567,7 +566,7 @@ async def delete_company(company_id: int):
     try:
         return company_services.delete_company(company_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -581,7 +580,7 @@ async def get_all_refcodes():
     try:
         return refcode_services.get_all_refcodes()
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -597,7 +596,7 @@ async def get_refcode_by_user_id(user_id: int):
     try:
         return refcode_services.get_refcode_by_user_id(user_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -613,7 +612,7 @@ async def get_user_by_refcode(refcode: str):
     try:
         return refcode_services.get_user_by_refcode(refcode)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -629,7 +628,7 @@ async def create_refcode(refcodes: RefCodes):
     try:
         return refcode_services.create_refcode(refcodes)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -647,7 +646,7 @@ async def update_refcode(refcodes: RefCodes, user_id: int):
     try:
         return refcode_services.update_refcode(user_id, refcodes)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -663,7 +662,7 @@ async def delete_refcode(user_id: int):
     try:
         return refcode_services.delete_refcode(user_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -677,7 +676,7 @@ async def get_all_images():
     try:
         return image_services.get_all_images()
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -693,7 +692,7 @@ async def get_image_by_id(image_id: int):
     try:
         return image_services.get_image_by_id(image_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -709,7 +708,7 @@ async def create_image(image: Image):
     try:
         return image_services.create_image(image)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -727,7 +726,7 @@ async def update_image(image: Image, image_id: int):
     try:
         return image_services.update_image(image_id, image)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -743,7 +742,7 @@ async def delete_image(image_id: int):
     try:
         image_services.delete_image(image_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -761,7 +760,7 @@ async def signup(user: User, refcode: str = Query(None)):
     try:
         return auth_services.signup(user, refcode)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -777,7 +776,7 @@ async def signin(telegram_id: str):
     try:
         return auth_services.signin(telegram_id)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
@@ -799,7 +798,7 @@ async def uploadfile_bouquet(file: UploadFile = File(...),
     try:
         return await uploadfile_services.uploadfile_bouquet(file, bouquet_name, bouquet_price)
     except HTTPException as ex:
-        log.exception(f"Error {ex}")
+        log.exception(f"Error", exc_info=ex)
         raise ex
 
 
