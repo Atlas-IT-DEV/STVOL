@@ -474,7 +474,7 @@ async def delete_bouquet(bouquet_id: int):
         raise ex
 
 
-@app.get("/download/get_bouquet/{bouquet_id}", response_model=None, tags=["UploadFile"])
+@app.get("/download/get_bouquet/{bouquet_id}", response_model=Dict, tags=["UploadFile"])
 async def download_bouquet(bouquet_id: int):
     """
     Route for download image from server on fronted by bouquetID.
@@ -823,11 +823,13 @@ def run_bot():
 if __name__ == "__main__":
 
     # Создание датабазы и таблиц, если они не существуют
+    log.info("Start create/update database")
     from create_sql import CreateSQL
     create_sql = CreateSQL()
     create_sql.read_sql()
 
     # Запуск сервера и бота
+    log.info("Start run server and bot")
     import multiprocessing
     server_process = multiprocessing.Process(target=run_server)
     server_process.start()

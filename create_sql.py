@@ -15,7 +15,6 @@ class CreateSQL:
         self.path_to_sql = os.path.join(os.path.dirname(__file__), f"{config.__getattr__('DB')}.sql")
         self.connection = pymysql.connect(
             host=config.__getattr__("HOST"),
-            db=config.__getattr__("DB"),
             port=int(config.__getattr__("DB_PORT")),
             user=config.__getattr__("DB_USER"),
             password=config.__getattr__("DB_PASSWORD"),
@@ -27,6 +26,11 @@ class CreateSQL:
         try:
             # Создание базы данных, если она не существует
             with self.connection.cursor() as cursor:
+                # TODO При запуске main.py основного приложения идет импорт репозиториев,
+                #  в которых инициализируется класс Database, он пытается соединиться с
+                #  базой данной раньше, чем выполняется это часть кода. (класс CreateSQL
+                #  инициализируется в iif __name__ == "__main__":, это приводит к конфликту,
+                #  в случае, когда база данных еще не создана в SQL)
                 cursor.execute(f"CREATE DATABASE IF NOT EXISTS `{config.__getattr__('DB')}`")
                 cursor.execute(f"USE `{config.__getattr__('DB')}`")
 
