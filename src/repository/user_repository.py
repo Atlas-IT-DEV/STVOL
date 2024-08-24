@@ -13,9 +13,9 @@ def get_user_by_id(user_id: int):
     return db.fetch_one(query, (user_id,))
 
 
-def get_user_by_telegram_id(user_telegram_id: int):
+def get_user_by_telegram_id(telegram_id: int):
     query = "SELECT * FROM Users WHERE telegram_id=%s"
-    return db.fetch_one(query, (user_telegram_id,))
+    return db.fetch_one(query, (telegram_id,))
 
 
 def get_user_by_phone(user_phone: str):

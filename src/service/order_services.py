@@ -9,58 +9,62 @@ config = Config()
 log = setup_logging()
 
 
-async def get_all_orders():
+def get_all_orders():
     orders = order_repository.get_all_orders()
     return [Order(**order) for order in orders]
 
 
-async def get_order_by_id(order_id: int):
+def get_order_by_id(order_id: int):
     order = order_repository.get_order_by_id(order_id)
+    if not order:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Order not found')
     return Order(**order) if order else None
 
 
-async def get_orderbouquets_by_order_id(order_id: int):
+def get_orderbouquets_by_order_id(order_id: int):
+    existing_order = get_order_by_id(order_id)
     orderbouquets = order_repository.get_orderbouquets_by_order_id(order_id)
     return [OrderBouquets(**orderbouquet) for orderbouquet in orderbouquets]
 
 
-async def get_order_by_user_id(user_id: int):
+def get_order_by_user_id(user_id: int):
+    existing_user = user_services.get_user_by_id(user_id)
     orders = order_repository.get_order_by_user_id(user_id)
     return [Order(**order) for order in orders]
 
 
-async def create_order(order: Order):
+def create_order(order: Order):
     order_id = order_repository.create_order(order)
-    return await get_order_by_id(order_id)
+    return get_order_by_id(order_id)
 
 
-async def create_orderbouquets(orderbouquets: OrderBouquets):
+def create_orderbouquets(orderbouquets: OrderBouquets):
     order_id = order_repository.create_orderbouquets(orderbouquets)
-    return await get_order_by_id(order_id)
+    return get_order_by_id(order_id)
 
 
-async def update_order(order_id: int, order: Order):
+def update_order(order_id: int, order: Order):
+    existing_order = get_order_by_id(order_id)
     order_repository.update_order(order_id, order)
     return {"message": "Order updated successfully"}
 
 
-async def delete_order(order_id: int):
+def delete_order(order_id: int):
+    existing_order = get_order_by_id(order_id)
     order_repository.delete_order(order_id)
     return {"message": "Order deleted successfully"}
 
 
-async def buy_history_order(user_id: int):
+def buy_history_order(user_id: int):
     # Проверяем существоние пользователя
-    user = await user_services.get_user_by_id(user_id)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not exist")
+    user = user_services.get_user_by_id(user_id)
     # Получаем заказы пользователя
-    orders = await get_order_by_user_id(user_id)
+    orders = get_order_by_user_id(user_id)
     history = []
     # Проходим по всем заказам
     for order in orders:
         # Получаем информацию о букетах и их количестве для заказа
-        orderbouquets = await get_orderbouquets_by_order_id(order.ID)
+        orderbouquets = get_orderbouquets_by_order_id(order.ID)
         # Создаем и записываем в модель историю заказа
         orderhistory = OrderHistory(order_id=order.ID,
                                     user_id=order.UserID,
@@ -72,19 +76,15 @@ async def buy_history_order(user_id: int):
     return history
 
 
-async def buy_create_order(user_id, bouquetsID, off_bonus):
+def buy_create_order(user_id, bouquetsID, off_bonus):
     # Проверяем существоание пользователя
-    user = await user_services.get_user_by_id(user_id)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not exist")
+    user = user_services.get_user_by_id(user_id)
     bouquets = []
     total_price = 0
     # Проходим по каждому букету в переданном листе.
     for bouquetID in bouquetsID:
         # Проверяем существование букета
-        bouquet = await bouquet_services.get_bouquet_by_id(bouquetID.BouquetID)
-        if not bouquet:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Bouquet not exist")
+        bouquet = bouquet_services.get_bouquet_by_id(bouquetID.BouquetID)
         # Сохраняем информацию о букете
         price = bouquet.Price
         quantity = bouquetID.Quantity
@@ -118,12 +118,13 @@ async def buy_create_order(user_id, bouquetsID, off_bonus):
         count_bonus = int(total_price * config.__getattr__("PERCENTAGE_BONUS_FOR_ORDER") / 100)
         user.CountBonus += count_bonus
     # Обновляем пользователя
-    await user_services.update_user(user_id, user)
+    user_services.update_user(user_id, user)
     # Создаем и передаем данные о заказе
-    order = await create_order(Order(user_id=user_id, total_price=total_price))
+    order = create_order(Order(user_id=user_id, total_price=total_price))
     # Проходим по каждому виду букетов
     for bite in bouquets:
         # Создаем и записываем информацию о купленных букетах в базу данных
-        await create_orderbouquets(OrderBouquets(order_id=order.ID,
-                                                 bouquet_id=bite["bouquet"].ID,
-                                                 quantity=bite["quantity"]))
+        create_orderbouquets(OrderBouquets(order_id=order.ID,
+                                           bouquet_id=bite["bouquet"].ID,
+                                           quantity=bite["quantity"]))
+    return order

@@ -1,6 +1,7 @@
 import os.path
 
 from fastapi import FastAPI, HTTPException, File, UploadFile, Form
+from fastapi.params import Query
 from fastapi.staticfiles import StaticFiles
 from src.database.my_connector import Database
 from typing import Dict
@@ -62,13 +63,13 @@ async def get_all_users():
     :return: response model List[User].
     """
     try:
-        return await user_services.get_all_users()
+        return user_services.get_all_users()
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/users/id/{user_id}", response_model=User, tags=["User"])
+@app.get("/users/user_id/{user_id}", response_model=User, tags=["User"])
 async def get_user_by_id(user_id: int):
     """
     Route for get user by UserID.
@@ -78,23 +79,23 @@ async def get_user_by_id(user_id: int):
     :return: response model User.
     """
     try:
-        return await user_services.get_user_by_id(user_id)
+        return user_services.get_user_by_id(user_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/users/telegram_id/{user_telegram_id}", response_model=User, tags=["User"])
-async def get_user_by_telegram_id(user_telegram_id: int):
+@app.get("/users/telegram_id/{telegram_id}", response_model=User, tags=["User"])
+async def get_user_by_telegram_id(telegram_id: int):
     """
     Route for get user by TelegramID.
 
-    :param user_telegram_id: TelegramID by user. [int]
+    :param telegram_id: TelegramID by user. [int]
 
     :return: response model Order.
     """
     try:
-        return await user_services.get_user_by_telegram_id(user_telegram_id)
+        return user_services.get_user_by_telegram_id(telegram_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -110,14 +111,14 @@ async def create_user(user: User):
     :return: response model User.
     """
     try:
-        return await user_services.create_user(user)
+        return user_services.create_user(user)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
 @app.put("/users/{user_id}", response_model=Dict, tags=["User"])
-async def update_user(user: User, user_id: int):
+async def update_user(user_id: int, user: User):
     """
     Route for update user in basedata.
 
@@ -128,7 +129,7 @@ async def update_user(user: User, user_id: int):
     :return: response model dict.
     """
     try:
-        return await user_services.update_user(user_id, user)
+        return user_services.update_user(user_id, user)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -144,7 +145,7 @@ async def delete_user(user_id: int):
     :return: response model dict.
     """
     try:
-        return await user_services.delete_user(user_id)
+        return user_services.delete_user(user_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -158,13 +159,13 @@ async def get_all_adresses():
     :return: response model List[Adress].
     """
     try:
-        return await adress_services.get_all_adresses()
+        return adress_services.get_all_adresses()
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/adresses/id/{adress_id}", response_model=Adress, tags=["Adress"])
+@app.get("/adresses/adress_id/{adress_id}", response_model=Adress, tags=["Adress"])
 async def get_adress_by_id(adress_id: int):
     """
     Route for get adress by AdressID.
@@ -174,13 +175,13 @@ async def get_adress_by_id(adress_id: int):
     :return: response model Adress.
     """
     try:
-        return await adress_services.get_adress_by_id(adress_id)
+        return adress_services.get_adress_by_id(adress_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/adresses/user/{user_id}", response_model=list[Adress], tags=["Adress"])
+@app.get("/adresses/user_id/{user_id}", response_model=list[Adress], tags=["Adress"])
 async def get_adress_by_user_id(user_id: int):
     """
     Route for get adress by UserID.
@@ -190,7 +191,7 @@ async def get_adress_by_user_id(user_id: int):
     :return: response model List[Adress].
     """
     try:
-        return await adress_services.get_adress_by_user_id(user_id)
+        return adress_services.get_adress_by_user_id(user_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -206,14 +207,14 @@ async def create_adress(adress: Adress):
     :return: response model Adress.
     """
     try:
-        return await adress_services.create_adress(adress)
+        return adress_services.create_adress(adress)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
 @app.put("/adresses/{adress_id}", response_model=Dict, tags=["Adress"])
-async def update_adress(adress: Adress, adress_id: int):
+async def update_adress(adress_id: int, adress: Adress):
     """
     Route for update adress in basedata.
 
@@ -224,7 +225,7 @@ async def update_adress(adress: Adress, adress_id: int):
     :return: response model dict.
     """
     try:
-        return await adress_services.update_adress(adress_id, adress)
+        return adress_services.update_adress(adress_id, adress)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -240,7 +241,7 @@ async def delete_adress(adress_id: int):
     :return: response model dict.
     """
     try:
-        return await adress_services.delete_adress(adress_id)
+        return adress_services.delete_adress(adress_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -254,13 +255,13 @@ async def get_all_orders():
     :return: response model List[Order].
     """
     try:
-        return await order_services.get_all_orders()
+        return order_services.get_all_orders()
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/orders/id/{order_id}", response_model=Order, tags=["Order"])
+@app.get("/orders/order_id/{order_id}", response_model=Order, tags=["Order"])
 async def get_order_by_id(order_id: int):
     """
     Route for get order by OrderID.
@@ -270,13 +271,13 @@ async def get_order_by_id(order_id: int):
     :return: response model Order.
     """
     try:
-        return await order_services.get_order_by_id(order_id)
+        return order_services.get_order_by_id(order_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/orders/user/{user_id}", response_model=list[Order], tags=["Order"])
+@app.get("/orders/user_id/{user_id}", response_model=list[Order], tags=["Order"])
 async def get_order_by_user_id(user_id: int):
     """
     Route for get order by UserID.
@@ -286,7 +287,7 @@ async def get_order_by_user_id(user_id: int):
     :return: response model list[Order].
     """
     try:
-        return await order_services.get_order_by_user_id(user_id)
+        return order_services.get_order_by_user_id(user_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -302,7 +303,7 @@ async def create_order(order: Order):
     :return: response model Order.
     """
     try:
-        return await order_services.create_order(order)
+        return order_services.create_order(order)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -320,7 +321,7 @@ async def update_order(order: Order, order_id: int):
     :return: response model dict.
     """
     try:
-        return await order_services.update_order(order_id, order)
+        return order_services.update_order(order_id, order)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -336,13 +337,13 @@ async def delete_order(order_id: int):
     :return: response model dict.
     """
     try:
-        return await order_services.delete_order(order_id)
+        return order_services.delete_order(order_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.post("/orders/purchase", response_model=None, tags=["Order"])
+@app.post("/orders/purchase", response_model=Order, tags=["Order"])
 async def buy_create_order(bouquetsID: list[BouquetsID], user_id: int = Form(...), off_bonus: bool = False):
     """
     Route for creating an order using the user ID,
@@ -357,7 +358,7 @@ async def buy_create_order(bouquetsID: list[BouquetsID], user_id: int = Form(...
     :return: response model None.
     """
     try:
-        await order_services.buy_create_order(user_id, bouquetsID, off_bonus)
+        return order_services.buy_create_order(user_id, bouquetsID, off_bonus)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -373,7 +374,7 @@ async def buy_history_order(user_id: int):
     :return: response model List[OrderHistory].
     """
     try:
-        return await order_services.buy_history_order(user_id)
+        return order_services.buy_history_order(user_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -387,13 +388,13 @@ async def get_all_bouquets():
     :return: response model List[Bouquet].
     """
     try:
-        return await bouquet_services.get_all_bouquets()
+        return bouquet_services.get_all_bouquets()
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/bouquets/id/{bouquet_id}", response_model=Bouquet, tags=["Bouquet"])
+@app.get("/bouquets/bouquet_id/{bouquet_id}", response_model=Bouquet, tags=["Bouquet"])
 async def get_bouquet_by_id(bouquet_id: int):
     """
     Route for get bouquet by BouquetID.
@@ -403,13 +404,13 @@ async def get_bouquet_by_id(bouquet_id: int):
     :return: response model Bouquet.
     """
     try:
-        return await bouquet_services.get_bouquet_by_id(bouquet_id)
+        return bouquet_services.get_bouquet_by_id(bouquet_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/bouquets/name/{bouquet_name}", response_model=Bouquet, tags=["Bouquet"])
+@app.get("/bouquets/bouquet_name/{bouquet_name}", response_model=Bouquet, tags=["Bouquet"])
 async def get_bouquet_by_name(bouquet_name: str):
     """
     Route for get bouquet by name.
@@ -419,7 +420,7 @@ async def get_bouquet_by_name(bouquet_name: str):
     :return: response model Bouquet.
     """
     try:
-        return await bouquet_services.get_bouquet_by_name(bouquet_name)
+        return bouquet_services.get_bouquet_by_name(bouquet_name)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -435,7 +436,7 @@ async def create_bouquet(bouquet: Bouquet):
     :return: response model Bouquet.
     """
     try:
-        return await bouquet_services.create_bouquet(bouquet)
+        return bouquet_services.create_bouquet(bouquet)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -453,7 +454,7 @@ async def update_bouquet(bouquet: Bouquet, bouquet_id: int):
     :return: response model dict.
     """
     try:
-        return await bouquet_services.update_bouquet(bouquet_id, bouquet)
+        return bouquet_services.update_bouquet(bouquet_id, bouquet)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -469,7 +470,7 @@ async def delete_bouquet(bouquet_id: int):
     :return: response model dict.
     """
     try:
-        return await bouquet_services.delete_bouquet(bouquet_id)
+        return bouquet_services.delete_bouquet(bouquet_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -485,7 +486,7 @@ async def download_bouquet(bouquet_id: int):
     :return: response model None.
     """
     try:
-        return await uploadfile_services.download_bouquet(bouquet_id)
+        return uploadfile_services.download_bouquet(bouquet_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -499,13 +500,13 @@ async def get_all_companys():
     :return: response model List[CompanyData].
     """
     try:
-        return await company_services.get_all_companys()
+        return company_services.get_all_companys()
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/companys/id/{company_id}", response_model=CompanyData, tags=["Company"])
+@app.get("/companys/company_id/{company_id}", response_model=CompanyData, tags=["Company"])
 async def get_company_by_id(company_id: int):
     """
     Route for get company by CompanyID.
@@ -515,7 +516,7 @@ async def get_company_by_id(company_id: int):
     :return: response model CompanyData.
     """
     try:
-        return await company_services.get_company_by_id(company_id)
+        return company_services.get_company_by_id(company_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -531,7 +532,7 @@ async def create_company(company: CompanyData):
     :return: response model CompanyData.
     """
     try:
-        return await company_services.create_company(company)
+        return company_services.create_company(company)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -549,7 +550,7 @@ async def update_company(company: CompanyData, company_id: int):
     :return: response model dict.
     """
     try:
-        return await company_services.update_company(company_id, company)
+        return company_services.update_company(company_id, company)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -565,7 +566,7 @@ async def delete_company(company_id: int):
     :return: response model dict.
     """
     try:
-        return await company_services.delete_company(company_id)
+        return company_services.delete_company(company_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -579,13 +580,13 @@ async def get_all_refcodes():
     :return: response model List[Image].
     """
     try:
-        return await refcode_services.get_all_refcodes()
+        return refcode_services.get_all_refcodes()
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/refcodes/user/{user_id}", response_model=RefCodes, tags=["RefCode"])
+@app.get("/refcodes/user_id/{user_id}", response_model=RefCodes, tags=["RefCode"])
 async def get_refcode_by_user_id(user_id: int):
     """
     Route for get referal code by UserID.
@@ -595,7 +596,7 @@ async def get_refcode_by_user_id(user_id: int):
     :return: response model RefCodes.
     """
     try:
-        return await refcode_services.get_refcode_by_user_id(user_id)
+        return refcode_services.get_refcode_by_user_id(user_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -611,7 +612,7 @@ async def get_user_by_refcode(refcode: str):
     :return: response model User.
     """
     try:
-        return await refcode_services.get_user_by_refcode(refcode)
+        return refcode_services.get_user_by_refcode(refcode)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -627,7 +628,7 @@ async def create_refcode(refcodes: RefCodes):
     :return: response model RefCodes.
     """
     try:
-        return await refcode_services.create_refcode(refcodes)
+        return refcode_services.create_refcode(refcodes)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -645,7 +646,7 @@ async def update_refcode(refcodes: RefCodes, user_id: int):
     :return: response model dict.
     """
     try:
-        return await refcode_services.update_refcode(user_id, refcodes)
+        return refcode_services.update_refcode(user_id, refcodes)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -661,7 +662,7 @@ async def delete_refcode(user_id: int):
     :return: response model dict.
     """
     try:
-        return await refcode_services.delete_refcode(user_id)
+        return refcode_services.delete_refcode(user_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -675,13 +676,13 @@ async def get_all_images():
     :return: response model List[Image].
     """
     try:
-        return await image_services.get_all_images()
+        return image_services.get_all_images()
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
-@app.get("/images/image/{image_id}", response_model=Image, tags=["Image"])
+@app.get("/images/image_id/{image_id}", response_model=Image, tags=["Image"])
 async def get_image_by_id(image_id: int):
     """
     Route for get image by imageID.
@@ -691,7 +692,7 @@ async def get_image_by_id(image_id: int):
     :return: response model Image.
     """
     try:
-        return await image_services.get_image_by_id(image_id)
+        return image_services.get_image_by_id(image_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -707,7 +708,7 @@ async def create_image(image: Image):
     :return: response model Image.
     """
     try:
-        return await image_services.create_image(image)
+        return image_services.create_image(image)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -725,7 +726,7 @@ async def update_image(image: Image, image_id: int):
     :return: response model dict.
     """
     try:
-        return await image_services.update_image(image_id, image)
+        return image_services.update_image(image_id, image)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -741,14 +742,14 @@ async def delete_image(image_id: int):
     :return: response model dict.
     """
     try:
-        return await image_services.delete_image(image_id)
+        image_services.delete_image(image_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
 @app.post("/signup/", response_model=User, tags=["Auth"])
-async def signup(user: User, refcode: str = Form(...)):
+async def signup(user: User, refcode: str = Query(None)):
     """
     Route for user registration.
 
@@ -759,23 +760,23 @@ async def signup(user: User, refcode: str = Form(...)):
     :return: response model User.
     """
     try:
-        return await auth_services.signup(user, refcode)
+        return auth_services.signup(user, refcode)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
 
 
 @app.post("/signin/", response_model=User, tags=["Auth"])
-async def signin(user: User):
+async def signin(telegram_id: str):
     """
     Route for user authorization.
 
-    :param user: Model User. [User]
+    :param telegram_id: telegramID of user. [int]
 
     :return: response model User.
     """
     try:
-        return await auth_services.signin(user)
+        return auth_services.signin(telegram_id)
     except HTTPException as ex:
         log.exception(f"Error {ex}")
         raise ex
@@ -783,7 +784,7 @@ async def signin(user: User):
 
 @app.post("/uploadfile/create_bouquet/", response_model=Bouquet, tags=["UploadFile"])
 async def uploadfile_bouquet(file: UploadFile = File(...),
-                             bouquet_name: str = None, bouquet_price: int = None):
+                             bouquet_name: str = Form(...), bouquet_price: int = Form(...)):
     """
     Route for uploading an image of a bouquet and transferring it to the server,
      followed by creating a bouquet in the database with a link to the image of the bouquet.

@@ -1,33 +1,39 @@
-from src.repository import refcode_repository, user_repository
+from src.repository import refcode_repository
+from src.service import user_services
 from src.database.models import RefCodes, User
+from fastapi import HTTPException, status
 
 
-async def get_all_refcodes():
+def get_all_refcodes():
     refcodes = refcode_repository.get_all_refcodes()
     return [RefCodes(**refcode) for refcode in refcodes]
 
 
-async def get_refcode_by_user_id(user_id: int):
+def get_refcode_by_user_id(user_id: int):
     refcode = refcode_repository.get_refcode_by_user_id(user_id)
+    if not refcode:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Refcode not found')
     return RefCodes(**refcode) if refcode else None
 
 
-async def get_user_by_refcode(refcode: str):
+def get_user_by_refcode(refcode: str):
     refcodes = refcode_repository.get_user_id_by_refcode(refcode)
-    user = user_repository.get_user_by_id(refcodes["user_id"])
+    user = user_services.get_user_by_id(refcodes["user_id"])
     return User(**user) if user else None
 
 
-async def create_refcode(refcodes: RefCodes):
+def create_refcode(refcodes: RefCodes):
     user_id = refcode_repository.create_refcode(refcodes)
-    return await get_refcode_by_user_id(user_id)
+    return get_refcode_by_user_id(user_id)
 
 
-async def update_refcode(user_id: int, refcodes: RefCodes):
-    await refcode_repository.update_refcode(user_id, refcodes)
+def update_refcode(user_id: int, refcodes: RefCodes):
+    existing_user = user_services.get_user_by_id(user_id)
+    refcode_repository.update_refcode(user_id, refcodes)
     return {"message": "RefCode updated successfully"}
 
 
-async def delete_refcode(user_id: int):
-    await refcode_repository.delete_refcode(user_id)
+def delete_refcode(user_id: int):
+    existing_user = user_services.get_user_by_id(user_id)
+    refcode_repository.delete_refcode(user_id)
     return {"message": "RefCode deleted successfully"}
