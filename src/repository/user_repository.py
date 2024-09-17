@@ -4,22 +4,22 @@ from src.database.my_connector import db
 
 
 def get_all_users():
-    query = "SELECT * FROM Users"
+    query = "SELECT * FROM users"
     return db.fetch_all(query)
 
 
 def get_user_by_id(user_id: int):
-    query = "SELECT * FROM Users WHERE id=%s"
+    query = "SELECT * FROM users WHERE id=%s"
     return db.fetch_one(query, (user_id,))
 
 
 def get_user_by_telegram_id(telegram_id: int):
-    query = "SELECT * FROM Users WHERE telegram_id=%s"
+    query = "SELECT * FROM users WHERE telegram_id=%s"
     return db.fetch_one(query, (telegram_id,))
 
 
 def get_user_by_phone(user_phone: str):
-    query = "SELECT * FROM Users WHERE phone=%s"
+    query = "SELECT * FROM users WHERE phone=%s"
     return db.fetch_one(query, (user_phone,))
 
 
