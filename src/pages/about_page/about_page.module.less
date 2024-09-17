@@ -32,45 +32,71 @@
       font-family: @font400;
     }
   }
-  .buttonShowHide {
-    color: white;
-    font-size: 24px;
-    font-family: @font700;
-    margin: 50px 0 0 36px;
-    display: flex;
-    align-items: end;
-    gap: 10px;
-    cursor: pointer;
-    width: max-content;
-  }
-  .arrowDown {
-    transform: rotate(180deg);
-    transition: 0.3s;
-  }
-  .arrowUp {
-    transform: rotate(0);
-    transition: 0.3s;
-  }
-  .viewClose {
-    display: none;
-  }
-  .viewOpen {
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    animation: fadeIn 0.5s forwards;
-    margin: 12px 36px 0 36px;
-  }
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
+  main {
+    margin-bottom: 150px;
+    .buttonShowHide {
+      color: white;
+      font-size: 24px;
+      font-family: @font700;
+      margin: 50px 0 0 36px;
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      cursor: pointer;
+      width: max-content;
     }
-  }
-  .deliveryView {
-    p {
-      color: rgba(156, 156, 156, 1);
-      font-size: 22px;
-      font-family: @font400;
+    .arrowDown {
+      transform: rotate(180deg);
+      transition: 0.3s;
+    }
+    .arrowUp {
+      transform: rotate(0);
+      transition: 0.3s;
+    }
+    .viewClose {
+      display: none;
+    }
+    .viewOpen {
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+      margin: 12px 36px 0 36px;
+
+      .priceText {
+        font-size: 20px;
+        color: rgba(106, 106, 106, 1);
+        font-family: @font400;
+      }
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    .deliveryView {
+      p {
+        color: rgba(156, 156, 156, 1);
+        font-size: 22px;
+        font-family: @font400;
+      }
+    }
+    .loyalityView {
+      margin-bottom: 140px;
+      .descriptionLoyality {
+        display: flex;
+        .nameText {
+          color: rgba(156, 156, 156, 1);
+          font-size: 22px;
+          font-family: @font400;
+          width: 270px;
+        }
+        .discountText {
+          color: rgba(156, 156, 156, 1);
+          font-size: 22px;
+          font-family: @font400;
+        }
+      }
     }
   }
 }
