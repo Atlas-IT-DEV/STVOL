@@ -15,11 +15,13 @@
   color: white;
   font-size: 20px;
   font-family: TTNorms400;
+  margin-top: 10px;
 }
 .container .priceView {
   display: flex;
   gap: 8px;
   align-items: center;
+  margin-top: 10px;
 }
 .container .priceView .priceText {
   color: #c81768;
@@ -39,4 +41,17 @@
   height: 25px;
   padding: 0 6px 0 6px;
   border-radius: 16px;
+}
+.container .addButtonText {
+  height: 40px;
+  color: black;
+  background-color: white;
+  padding: 0 16px 0 16px;
+  font-family: TTNorms800;
+  font-size: 18px;
+  width: max-content;
+  align-content: center;
+  border-radius: 16px;
+  margin-top: 20px;
+  cursor: pointer;
 }

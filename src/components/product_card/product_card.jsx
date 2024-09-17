@@ -42,6 +42,7 @@ const ProductCard = () => {
         <p className={styles.oldPriceText}>3050₽</p>
         <p className={styles.discountText}>-15%</p>
       </div>
+      <p className={styles.addButtonText}>В корзину</p>
     </div>
   );
 };
