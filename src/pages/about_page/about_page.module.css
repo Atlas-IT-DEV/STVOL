@@ -9,6 +9,9 @@
   justify-content: space-between;
   margin: 30px 36px 0 36px;
 }
+.container .header .cartButton {
+  cursor: pointer;
+}
 .container .infoBlock {
   margin: 18px 36px 0 36px;
 }
@@ -27,9 +30,6 @@
   color: #9c9c9c;
   font-size: 22px;
   font-family: TTNorms400;
-}
-.container main {
-  margin-bottom: 150px;
 }
 .container main .buttonShowHide {
   color: white;
@@ -75,9 +75,6 @@
   font-size: 22px;
   font-family: TTNorms400;
 }
-.container main .loyalityView {
-  margin-bottom: 140px;
-}
 .container main .loyalityView .descriptionLoyality {
   display: flex;
 }
@@ -88,6 +85,73 @@
   width: 270px;
 }
 .container main .loyalityView .descriptionLoyality .discountText {
+  color: #9c9c9c;
+  font-size: 22px;
+  font-family: TTNorms400;
+}
+.container main .rulesText {
+  color: #6a6a6a;
+  font-family: TTNorms400;
+  font-size: 20px;
+  margin-top: 22px;
+  border-bottom: 1px solid #6a6a6a;
+  width: max-content;
+  cursor: pointer;
+}
+.container .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin: 52px 36px 150px 36px;
+}
+.container .footer .aboutCompany {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.container .footer .aboutCompany .attributeCompanyText {
+  font-size: 22px;
+  color: #9c9c9c;
+  font-family: TTNorms400;
+}
+.container .footer .aboutCompany .valueCompanyText {
+  font-size: 20px;
+  color: #9c9c9c;
+  font-family: TTNorms400;
+}
+.container .footer .aboutCompany .tgButton {
+  height: 45px;
+  display: flex;
+  background-color: white;
+  align-items: center;
+  border-radius: 61px;
+  padding: 0 10px 0 10px;
+  cursor: pointer;
+  width: max-content;
+}
+.container .footer .aboutCompany .tgButton p {
+  color: black;
+  font-family: TTNorms700;
+  font-size: 22px;
+}
+.container .footer .aboutCompany .phoneButton {
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.container .footer .aboutCompany .phoneButton p {
+  color: #9c9c9c;
+  font-size: 22px;
+  font-family: TTNorms400;
+}
+.container .footer .aboutCompany .emailButton {
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.container .footer .aboutCompany .emailButton p {
   color: #9c9c9c;
   font-size: 22px;
   font-family: TTNorms400;

@@ -12,6 +12,9 @@
     display: flex;
     justify-content: space-between;
     margin: 30px 36px 0 36px;
+    .cartButton {
+      cursor: pointer;
+    }
   }
   .infoBlock {
     margin: 18px 36px 0 36px;
@@ -33,7 +36,6 @@
     }
   }
   main {
-    margin-bottom: 150px;
     .buttonShowHide {
       color: white;
       font-size: 24px;
@@ -82,7 +84,6 @@
       }
     }
     .loyalityView {
-      margin-bottom: 140px;
       .descriptionLoyality {
         display: flex;
         .nameText {
@@ -92,6 +93,74 @@
           width: 270px;
         }
         .discountText {
+          color: rgba(156, 156, 156, 1);
+          font-size: 22px;
+          font-family: @font400;
+        }
+      }
+    }
+    .rulesText {
+      color: rgba(106, 106, 106, 1);
+      font-family: @font400;
+      font-size: 20px;
+      margin-top: 22px;
+      border-bottom: 1px solid rgba(106, 106, 106, 1);
+      width: max-content;
+      cursor: pointer;
+    }
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin: 52px 36px 150px 36px;
+    .aboutCompany {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      .attributeCompanyText {
+        font-size: 22px;
+        color: rgba(156, 156, 156, 1);
+        font-family: @font400;
+      }
+      .valueCompanyText {
+        font-size: 20px;
+        color: rgba(156, 156, 156, 1);
+        font-family: @font400;
+      }
+
+      .tgButton {
+        height: 45px;
+        display: flex;
+        background-color: white;
+        align-items: center;
+        border-radius: 61px;
+        padding: 0 10px 0 10px;
+        cursor: pointer;
+        width: max-content;
+        p {
+          color: black;
+          font-family: @font700;
+          font-size: 22px;
+        }
+      }
+      .phoneButton {
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        p {
+          color: rgba(156, 156, 156, 1);
+          font-size: 22px;
+          font-family: @font400;
+        }
+      }
+      .emailButton {
+        cursor: pointer;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        p {
           color: rgba(156, 156, 156, 1);
           font-size: 22px;
           font-family: @font400;

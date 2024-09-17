@@ -3,12 +3,18 @@ import styles from "./about_page.module.css";
 import logo from "../../images/logo.png";
 import cartIcon from "../../images/cart_icon.svg";
 import arrowWhite from "../../images/arrow_white.svg";
+import tgIcon from "../../images/tg_icon.svg";
+import whatsappIcon from "../../images/whatsapp_icon.svg";
+import emaiIcon from "../../images/mail_icon.svg";
+
 import { useState } from "react";
 import BottomMenu from "../../components/bottom_menu/bottomMenu";
+import { useNavigate } from "react-router";
 
 const AboutPage = () => {
   const [isHide, setIsHide] = useState([false, false, false]);
   let copyIsHide = Array.from(isHide);
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -179,8 +185,44 @@ const AboutPage = () => {
             </div>
             <p className={styles.priceText}>75 000 ₽ - 100 000 ₽</p>
           </div>
+          <p
+            className={styles.rulesText}
+            onClick={() => navigate("/loyality_rules")}
+          >
+            Правила лояльности
+          </p>
         </div>
       </main>
+      <div className={styles.footer}>
+        <div className={styles.aboutCompany}>
+          <div>
+            <p className={styles.attributeCompanyText}>ИП</p>
+            <p className={styles.valueCompanyText}>ИП Алиев Али Рауф Оглы</p>
+          </div>
+          <div>
+            <p className={styles.attributeCompanyText}>ОКВЭД</p>
+            <p className={styles.valueCompanyText}>ИП STVOL букет</p>
+          </div>
+          <div>
+            <p className={styles.attributeCompanyText}>ИНН</p>
+            <p className={styles.valueCompanyText}>34567865436</p>
+          </div>
+        </div>
+        <div className={styles.aboutCompany}>
+          <div className={styles.tgButton}>
+            <img src={tgIcon} alt="" />
+            <p>@STVOL</p>
+          </div>
+          <div className={styles.phoneButton}>
+            <img src={whatsappIcon} alt="" />
+            <p>+7 927 927 43 53</p>
+          </div>
+          <div className={styles.emailButton}>
+            <img src={emaiIcon} alt="" />
+            <p>bhewfj@jfj.ru</p>
+          </div>
+        </div>
+      </div>
 
       <BottomMenu />
     </div>
