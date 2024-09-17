@@ -4,12 +4,12 @@ from src.database.my_connector import db
 
 
 def get_all_orders():
-    query = "SELECT * FROM Orders"
+    query = "SELECT * FROM orders"
     return db.fetch_all(query)
 
 
 def get_order_by_id(order_id: int):
-    query = "SELECT * FROM Orders WHERE id=%s"
+    query = "SELECT * FROM orders WHERE id=%s"
     return db.fetch_one(query, (order_id,))
 
 
