@@ -44,7 +44,7 @@ const LoyalityRulesPage = () => {
         сайта.
       </p>
 
-      <div className={styles.backButton} onClick={() => navigate("/about")}>
+      <div className={styles.backButton} onClick={() => navigate(-1)}>
         <img src={whiteArrow} alt="" />
         <p>Назад</p>
       </div>

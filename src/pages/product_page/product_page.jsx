@@ -4,17 +4,19 @@ import arrowGray from "../../images/gray_right_arrow.svg";
 import arrowWhite from "../../images/arrow_white.svg";
 import bouqet from "../../images/buket1.png";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const ProductPage = () => {
   const [count, setCount] = useState(1);
   const [isOpen, setIsOpen] = useState([false, false, false, false]);
   const copyIsOpen = Array.from(isOpen);
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <Header />
       </div>
-      <div className={styles.backButton}>
+      <div className={styles.backButton} onClick={() => navigate(-1)}>
         <img src={arrowGray} alt="" />
       </div>
       <div className={styles.imageProduct}>
