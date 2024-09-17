@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container .imageProduct {
+  object-fit: cover;
+  width: 85px;
+  height: 85px;
+}
+.container .nameFlowerText {
+  margin-top: 12px;
+  font-size: 18px;
+  color: #afafaf;
+}
+.container .priceText {
+  font-size: 18px;
+  font-weight: 500;
+  color: #afafaf;
+}

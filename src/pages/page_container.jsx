@@ -1,4 +1,4 @@
-import { Stack, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 
 const PageContainer = ({ children }) => {
   return (

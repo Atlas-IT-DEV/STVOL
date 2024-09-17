@@ -28,6 +28,7 @@
 .container .bouquetContainer p {
   font-size: 20px;
   font-weight: 500;
+  color: #505050;
 }
 .container .addButton {
   height: 45px;
@@ -43,4 +44,17 @@
   font-weight: 800;
   font-size: 22px;
   color: black;
+}
+.container .flowerSelect {
+  width: 100%;
+  margin-top: 52px;
+}
+.container .helpText {
+  margin-bottom: 110px;
+  margin-top: 40px;
+  color: #505050;
+  font-size: 20px;
+}
+.container .helpText span {
+  font-weight: 500;
 }

@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  padding: 0 42px 0 42px !important;
+}
+.container .slideTrack {
+  display: grid;
+}
+.container .slideTrack .slider {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
