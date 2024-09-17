@@ -23,7 +23,7 @@ const BottomMenu = () => {
         <img src={constructorIcon} width={43} />
         <p>Конструктор</p>
       </div>
-      <div className={styles.button} onClick={() => navigate("/info")}>
+      <div className={styles.button} onClick={() => navigate("/about")}>
         <img src={logo} width={97} />
         <p>О нас</p>
       </div>
