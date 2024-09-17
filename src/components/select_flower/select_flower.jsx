@@ -6,7 +6,6 @@ import "swiper/css/grid";
 
 // import "swiper/css/navigation";
 import { FreeMode, Navigation, Grid } from "swiper/modules";
-import { useState } from "react";
 import FlowerCard from "../flower_card/flower_card";
 
 const SelectFlower = () => {
