@@ -46,7 +46,27 @@ const AboutPage = () => {
           className={isHide[0] == false ? styles.arrowDown : styles.arrowUp}
         />
       </div>
-      {/* сюда */}
+      <div className={isHide[0] ? styles.viewOpen : styles.viewClose}>
+        <table>
+          <tr>
+            <th>Интервал</th>
+            <th>Москва</th>
+            <th>За МКАД</th>
+          </tr>
+          
+          <tr>
+            <th>Трехчасовой</th>
+            <th>Бесплатно</th>
+            <th>399+40₽/км</th>
+          </tr>
+          <tr>
+            <th>Часовой</th>
+          </tr>
+          <tr>
+            <th>Точное время</th>
+          </tr>
+        </table>
+      </div>
       <div
         className={styles.buttonShowHide}
         onClick={() => {
@@ -54,14 +74,35 @@ const AboutPage = () => {
           setIsHide(copyIsHide);
         }}
       >
-        <p>Доставка</p>
+        <p>Возврат</p>
         <img
           src={arrowWhite}
           alt=""
           className={isHide[1] == false ? styles.arrowDown : styles.arrowUp}
         />
       </div>
-      {/* сюда */}
+      <div
+        className={`${isHide[1] ? styles.viewOpen : styles.viewClose} ${
+          styles.deliveryView
+        }`}
+      >
+        <p>
+          В соответствии с Законом Российской Федерации «О защите прав
+          потребителей» от 07.02.1992 2300-1 (в ред. от 25.10.2007г.) и
+          Постановлением Правительства Российской Федерации от 19.01.1998 № 55
+          (в ред. 27.03.2007г.) срезанные цветы и горшечные растения обмену и
+          возврату не подлежат (Перечень непродовольственных товаров надлежащего
+          качества, не подлежащих возврату или обмену). <br />
+          <br />
+          Покупатель Интернет-магазина имеет право отказаться от получения
+          товара в момент его доставки, если доставленный товар ненадлежащего
+          качества (на основании п.3 ст. 497 ГК РФ, статья 21 Закона "О защите
+          прав потребителей"). Мы заботимся о повышении качества заказов и
+          рассматриваем все поступающие претензии в течение 24 часов с момента
+          доставки товара. По вопросам, касающимся выполнения заказов, вы можете
+          обращаться по электронной почте: ---- или к нам в телеграм: ----
+        </p>
+      </div>
       <div
         className={styles.buttonShowHide}
         onClick={() => {
@@ -69,14 +110,21 @@ const AboutPage = () => {
           setIsHide(copyIsHide);
         }}
       >
-        <p>Доставка</p>
+        <p>Программа лояльности</p>
         <img
           src={arrowWhite}
           alt=""
           className={isHide[2] == false ? styles.arrowDown : styles.arrowUp}
         />
       </div>
-      {/* сюда */}
+      <div className={isHide[2] ? styles.viewOpen : styles.viewClose}>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat
+          doloremque doloribus error architecto nostrum, nobis quos delectus,
+          nemo soluta aut possimus obcaecati hic eveniet assumenda, animi
+          numquam eaque debitis omnis.
+        </p>
+      </div>
     </div>
   );
 };
