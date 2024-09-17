@@ -8,11 +8,14 @@ import "swiper/css/pagination";
 
 // import "swiper/css/navigation";
 import { FreeMode, Pagination } from "swiper/modules";
+import { useNavigate } from "react-router";
 
 const ProductCard = () => {
+  const navigate = useNavigate()
   return (
     <div className={styles.container}>
       <Swiper
+      onClick={()=> navigate("/product")}
         style={{
           "--swiper-pagination-color": "rgba(237, 237, 237, 1)",
           "--swiper-pagination-bullet-inactive-color": "rgba(131, 131, 131, 1)",

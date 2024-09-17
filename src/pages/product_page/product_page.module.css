@@ -1,0 +1,146 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.container .header {
+  margin-top: 30px;
+}
+.container .backButton {
+  margin: 27px 0 0 52px;
+  cursor: pointer;
+  width: max-content;
+}
+.container .backButton img {
+  transform: rotate(180deg);
+  height: 24px;
+}
+.container .imageProduct {
+  display: flex;
+  justify-content: center;
+}
+.container main {
+  margin: 30px;
+}
+.container main .nameProductText {
+  color: #9c9c9c;
+  font-family: TTNorms800;
+  font-size: 24px;
+}
+.container main .sumView {
+  margin-top: 18px;
+  display: flex;
+  gap: 35px;
+}
+.container main .sumView .sumText {
+  color: white;
+  font-size: 33px;
+  font-family: TTNorms700;
+  width: 150px;
+}
+.container main .sumView .countView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.container main .sumView .countView p {
+  color: white;
+  font-size: 22px;
+  font-family: TTNorms800;
+  padding: 5px;
+  cursor: pointer;
+}
+.container main .sumView .countView .countText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  color: black;
+  background-color: white;
+  border-radius: 16px;
+  width: 60px;
+}
+.container main .orderButtons {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+.container main .orderButtons .addCartText {
+  background-color: white;
+  color: black;
+  font-family: TTNorms800;
+  font-size: 24px;
+  padding: 0 16px 0 16px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.container main .orderButtons .fastOrderText {
+  border: 1px solid white;
+  color: white;
+  font-family: TTNorms800;
+  font-size: 24px;
+  padding: 0 16px 0 16px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.container main .subheaderText {
+  color: white;
+  font-family: TTNorms700;
+  font-size: 24px;
+}
+.container main .descriptionHeader {
+  margin-top: 45px;
+}
+.container main .descriptionText {
+  color: white;
+  font-size: 22px;
+  font-family: TTNorms400;
+}
+.container main .descriptionText span {
+  color: #9c9c9c;
+}
+.container main .hideButtons {
+  margin-top: 50px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+.container main .arrowDown {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+.container main .arrowUp {
+  transform: rotate(0);
+  transition: 0.3s;
+}
+.container main .viewClose {
+  display: none;
+}
+.container main .viewOpen {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+.container main .detailsText {
+  margin-top: 12px;
+  color: white;
+  font-family: TTNorms400;
+  font-size: 22px;
+}
+.container main .detailsText span {
+  color: #9c9c9c;
+}
+.container main .saveText {
+  color: #9c9c9c;
+  font-family: TTNorms400;
+  font-size: 22px;
+  margin-top: 12px;
+}

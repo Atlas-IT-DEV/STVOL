@@ -5,6 +5,7 @@ import ProfilePage from "./pages/profile_page/profile_page";
 import AboutPage from "./pages/about_page/about_page";
 import CatalogPage from "./pages/catalog_page/catalog_page";
 import LoyalityRulesPage from "./pages/rules_loyality_page/loyality_rules_page";
+import ProductPage from "./pages/product_page/product_page";
 
 const router = createMemoryRouter([
   {
@@ -46,6 +47,14 @@ const router = createMemoryRouter([
       </PageContainer>
     ),
     path: "/loyality_rules",
+  },
+  {
+    element: (
+      <PageContainer>
+        <ProductPage/>
+      </PageContainer>
+    ),
+    path: "/product",
   },
 ]);
 function App() {
