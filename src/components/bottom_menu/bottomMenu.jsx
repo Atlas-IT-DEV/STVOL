@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { catalogIcon, profileIcon } from "../images/images";
-import constructorIcon from "../images/constructor_icon.png";
-import logo from "../images/logo.png";
+import constructorIcon from "../../images/constructor_icon.png";
+import profileIcon from "../../images/profile_icon.svg";
+import catalogIcon from "../../images/catalog_icon.svg";
+import logo from "../../images/logo.png";
 import { useNavigate } from "react-router";
-import styles from "../components/bottomMenu.module.css";
+import styles from "./bottomMenu.module.css";
 
 const BottomMenu = () => {
   const [isActive, setIsActive] = useState([0, 0, 1, 0]);
@@ -11,11 +12,11 @@ const BottomMenu = () => {
   return (
     <div className={styles.container}>
       <div className={styles.button} onClick={() => navigate("/profile")}>
-        {profileIcon}
+        <img src={profileIcon} alt="" />
         <p>Профиль</p>
       </div>
       <div className={styles.button} onClick={() => navigate("/catalog")}>
-        {catalogIcon}
+        <img src={catalogIcon} alt="" />
         <p>Каталог</p>
       </div>
       <div className={styles.button} onClick={() => navigate("/")}>
