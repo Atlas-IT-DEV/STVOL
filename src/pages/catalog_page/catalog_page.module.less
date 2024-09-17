@@ -1,3 +1,8 @@
+@font400: TTNorms400;
+@font500: TTNorms500;
+@font700: TTNorms700;
+@font800: TTNorms800;
+
 .container {
   width: 100%;
   height: 100vh;
@@ -5,5 +10,86 @@
   overflow-x: hidden;
   .header {
     margin-top: 30px;
+  }
+  .namePageText {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 27px;
+    color: rgba(175, 175, 175, 1);
+    font-family: @font800;
+  }
+  .SortFilterButtons {
+    margin-top: 20px;
+    margin-right: 26px;
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    gap: 10px;
+    .sortButton {
+      cursor: pointer;
+    }
+    .filterButton {
+      cursor: pointer;
+    }
+  }
+  .filtersOpen {
+    display: grid;
+    gap: 10px;
+    opacity: 0;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 20px 26px 0 26px;
+    animation: fadeIn 0.5s forwards;
+
+    .filterButtons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 35px;
+      cursor: pointer;
+      border-radius: 16px;
+    }
+    .inActiveFilterButton {
+      background-color: rgba(61, 61, 61, 1);
+      color: white;
+      font-size: 20px;
+      font-family: @font400;
+    }
+    .activeFilterButton {
+      background-color: white;
+      color: black;
+      font-size: 20px;
+      font-family: @font400;
+    }
+  }
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  .filtersClose {
+    display: none;
+  }
+  .products {
+    margin-top: 25px;
+    margin-left: 26px;
+    gap: 30px;
+    .typeOfBouqets {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      .nameFilterText {
+        color: rgba(175, 175, 175, 1);
+        font-family: @font800;
+        font-size: 27px;
+      }
+      .productsView {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        gap: 50px;
+        margin-bottom: 140px;
+      }
+    }
   }
 }
