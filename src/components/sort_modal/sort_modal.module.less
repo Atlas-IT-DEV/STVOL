@@ -1,0 +1,85 @@
+@font400: TTNorms400;
+@font500: TTNorms500;
+@font700: TTNorms700;
+@font800: TTNorms800;
+
+.sortButton {
+  cursor: pointer;
+}
+
+.modalView {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  top: 0;
+  z-index: 1000000;
+  animation: slideUp 0.15s linear;
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    .typesSort {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(61, 61, 61, 1);
+      border-radius: 15px;
+      width: 80%;
+      padding: 0 15px 0 15px;
+      .nameModalText {
+        padding: 26px 0 26px 0;
+        font-size: 16px;
+        color: rgba(149, 149, 149, 1);
+        font-family: @font400;
+      }
+      .divideLine {
+        height: 1px;
+        width: 100%;
+        background-color: rgba(80, 80, 80, 1);
+      }
+      .buttonText {
+        color: white;
+        font-size: 20px;
+        font-family: @font400;
+        padding: 26px 0 26px 0;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .cancelButton {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(61, 61, 61, 1);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      width: 80%;
+      padding: 0 15px 0 15px;
+      .buttonText {
+        color: white;
+        font-size: 20px;
+        font-family: @font400;
+        padding: 15px 0 15px 0;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
+@keyframes slideUp {
+  from {
+    top: 100%;
+  }
+  to {
+    bottom: 5%;
+  }
+}

@@ -5,6 +5,7 @@ import filterIcon from "../../images/filter_icon.svg";
 import { useState } from "react";
 import BottomMenu from "../../components/bottom_menu/bottomMenu";
 import ProductCard from "../../components/product_card/product_card";
+import SortModal from "../../components/sort_modal/sort_modal";
 
 const CatalogPage = () => {
   const [isPressed, setIsPressed] = useState([
@@ -20,9 +21,7 @@ const CatalogPage = () => {
       <p className={styles.namePageText}>Каталог</p>
 
       <div className={styles.SortFilterButtons}>
-        <div className={styles.sortButton}>
-          <img src={sortIcon} alt="" />
-        </div>
+        <SortModal />
         <div
           className={styles.filterButton}
           onClick={() => {
