@@ -1,6 +1,6 @@
 from src.database.my_connector import Database
 from src.database.models import Order, OrderBouquets
-db = Database()
+from src.database.my_connector import db
 
 
 def get_all_orders():
@@ -24,8 +24,8 @@ def get_orderbouquets_by_order_id(order_id: int):
 
 
 def create_order(order: Order):
-    query = "INSERT INTO Orders (user_id, total_price) VALUES (%s, %s)"
-    params = (order.UserID, order.TotalPrice)
+    query = "INSERT INTO Orders (user_id, date, total_price) VALUES (%s, %s, %s)"
+    params = (order.UserID, order.Date, order.TotalPrice)
     cursor = db.execute_query(query, params)
     return cursor.lastrowid
 
@@ -38,8 +38,8 @@ def create_orderbouquets(orderbouquets: OrderBouquets):
 
 
 def update_order(order_id: int, order: Order):
-    query = "UPDATE Orders SET user_id=%s, total_price=%s WHERE id=%s"
-    params = (order.UserID, order.TotalPrice, order_id)
+    query = "UPDATE Orders SET user_id=%s, date=%s, total_price=%s WHERE id=%s"
+    params = (order.UserID, order.Date, order.TotalPrice, order_id)
     db.execute_query(query, params)
 
 

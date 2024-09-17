@@ -9,6 +9,13 @@ def get_all_refcodes():
     return [RefCodes(**refcode) for refcode in refcodes]
 
 
+def get_refcode_by_id(refcode_id: int):
+    refcode = refcode_repository.get_refcode_by_id(refcode_id)
+    if not refcode:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Refcode not found')
+    return RefCodes(**refcode) if refcode else None
+
+
 def get_refcode_by_user_id(user_id: int):
     refcode = refcode_repository.get_refcode_by_user_id(user_id)
     if not refcode:
@@ -23,17 +30,17 @@ def get_user_by_refcode(refcode: str):
 
 
 def create_refcode(refcodes: RefCodes):
-    user_id = refcode_repository.create_refcode(refcodes)
-    return get_refcode_by_user_id(user_id)
+    refcode_id = refcode_repository.create_refcode(refcodes)
+    return get_refcode_by_id(refcode_id)
 
 
-def update_refcode(user_id: int, refcodes: RefCodes):
-    existing_user = user_services.get_user_by_id(user_id)
-    refcode_repository.update_refcode(user_id, refcodes)
+def update_refcode(refcode_id: int, refcodes: RefCodes):
+    refcode_id = refcode_repository.get_refcode_by_id(refcode_id)
+    refcode_repository.update_refcode(refcode_id, refcodes)
     return {"message": "RefCode updated successfully"}
 
 
-def delete_refcode(user_id: int):
-    existing_user = user_services.get_user_by_id(user_id)
-    refcode_repository.delete_refcode(user_id)
+def delete_refcode(refcode_id: int):
+    get_refcode_by_id(refcode_id)
+    refcode_repository.delete_refcode(refcode_id)
     return {"message": "RefCode deleted successfully"}

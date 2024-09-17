@@ -10,7 +10,7 @@ class Image(BaseModel):
     ID: Optional[int] = Field(None,
                               alias="id")
     Url: Optional[StrictStr] = Field(...,
-                                     alias=["url"],
+                                     alias="url",
                                      examples=["./src/public/bouquet\76f9f862-8202-493a-a753-fcde4..."])
 
 
@@ -64,6 +64,8 @@ class RefCodes(BaseModel):
     """
     Model of refcodes
     """
+    ID: Optional[int] = Field(None,
+                              alias="id")
     UserID: StrictInt = Field(...,
                               alias="user_id",
                               examples=[2],
@@ -86,7 +88,7 @@ class Order(BaseModel):
                               description="ID пользователя")
     Date: Optional[datetime] = Field(None,
                                      alias="date",
-                                     examples=[datetime.now()],
+                                     examples=[f"{datetime.now()}"],
                                      description="Дата и время создания заказа")
     TotalPrice: StrictInt = Field(...,
                                   alias="total_price",
@@ -98,6 +100,8 @@ class OrderBouquets(BaseModel):
     """
     Model of bouquet into the order
     """
+    ID: Optional[int] = Field(None,
+                              alias="id")
     OrderID: StrictInt = Field(...,
                                alias="order_id",
                                examples=[2],
@@ -126,7 +130,7 @@ class OrderHistory(BaseModel):
                               description="ID пользователя")
     Date: Optional[datetime] = Field(...,
                                      alias="date",
-                                     examples=[datetime.now()],
+                                     examples=[f"{datetime.now()}"],
                                      description="Дата и время создания заказа")
     TotalPrice: StrictInt = Field(...,
                                   alias="total_price",
@@ -167,10 +171,10 @@ class Bouquet(BaseModel):
                              alias="price",
                              examples=[230],
                              description="Цена букета")
-    ImageID: StrictInt = Field(...,
-                               alias="image_id",
-                               examples=[2],
-                               description="ID изображения букета")
+    ImageID: Optional[StrictInt] = Field(None,
+                                         alias="image_id",
+                                         examples=[2],
+                                         description="ID изображения букета")
 
 
 class Adress(BaseModel):

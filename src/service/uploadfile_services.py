@@ -1,44 +1,51 @@
 import os
-import uuid
-from fastapi.responses import FileResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi import HTTPException, status, Depends
-from src.service import bouquet_services, image_services
-from src.database.models import Bouquet, Image
-from src.utils.return_url_object import return_url_object
+from fastapi import HTTPException, status, UploadFile
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from src.utils.write_file_into_server import write_file_into_server
-from aiofiles import open as aio_open
+from src.utils.return_url_object import return_url_object
+from src.service.image_services import get_image_by_id, update_image
 from src.utils.custom_logging import setup_logging
 from config import Config
+
 config = Config()
 log = setup_logging()
 
 
-async def uploadfile_bouquet(file, bouquet_name: str, bouquet_price: int):
-    if not bouquet_name:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Bouquet name not define")
-    if not bouquet_price:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Price not defined")
-    # Проверяем существует ли букет с таким же именем
-    bouquet = bouquet_services.get_bouquet_by_name(bouquet_name)
-    # Записываем файл на сервер
-    unique_filename = await write_file_into_server("bouquet", file)
-    # Создаем информацию в базе данных о пути изображения
-    image = image_services.create_image(Image(url=f"/bouquet/{unique_filename}"))
-    # Создаем и возвращаем букет
-    return bouquet_services.create_bouquet(Bouquet(name=bouquet_name,
-                                                   price=bouquet_price,
-                                                   image_id=image.ID))
+async def upload_images(entity_type: str, file: UploadFile,
+                        entity_id: int, get_entity_by_id, update_entity):
+    # Проверяем, существует ли сущность
+    existing_entity = get_entity_by_id(entity_id)
+    if not existing_entity:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"{entity_type.capitalize()} with ID {entity_id} not found")
+    unique_filename = await write_file_into_server(entity_type, file)
+    url = return_url_object(f"/{entity_type}/{unique_filename}")
+    image = get_image_by_id(existing_entity.ImageID)
+    image.Url = url
+    update_image(image.ID, image)
+    return get_entity_by_id(entity_id)
 
 
-def download_bouquet(bouquet_id: int):
-    # Проверяем существование букета
-    bouquet = bouquet_services.get_bouquet_by_id(bouquet_id)
-    # Проверяем данные в таблице со ссылками на изображения для букета
-    image = image_services.get_image_by_id(bouquet.ImageID)
-    # Проверяем существование файла в папке
-    log.debug(config.__getattr__("UPLOAD_DIR") + "bouquet" + image.Url.split("/")[-1])
-    if not os.path.exists(os.path.join(config.__getattr__("UPLOAD_DIR"),"bouquet",image.Url.split("/")[-1])):
-        HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not exists")
-    # return FileResponse(image.Url)
-    return return_url_object(image, "bouquet", bouquet.dict())
+def delete_images(entity_type: str, entity_id: int,
+                  get_entity_by_id, update_entity):
+    existing_entity = get_entity_by_id(entity_id)
+    image = get_image_by_id(existing_entity.ImageID)
+    url = image.Url
+    if not existing_entity:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Entity with ID {entity_id} not found")
+    if not url:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Image {entity_type} with ID {entity_id} not exist")
+    file_path = os.path.join(config.__getattr__("UPLOAD_DIR"), entity_type, url.split("/")[-1])
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        log.info(f"File {file_path} deleted successfully.")
+    else:
+        log.warning(f"File {file_path} does not exist.")
+    image.Url = None
+    update_image(image.ID, image)
+    log.info(f"Image entity record with ID {entity_id} deleted from database.")
+    return {
+        "status": "success"
+    }

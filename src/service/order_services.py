@@ -1,4 +1,6 @@
 import os
+from datetime import datetime
+
 from src.repository import order_repository
 from src.service import user_services, bouquet_services
 from src.database.models import Order, OrderBouquets, OrderHistory
@@ -22,13 +24,13 @@ def get_order_by_id(order_id: int):
 
 
 def get_orderbouquets_by_order_id(order_id: int):
-    existing_order = get_order_by_id(order_id)
+    get_order_by_id(order_id)
     orderbouquets = order_repository.get_orderbouquets_by_order_id(order_id)
     return [OrderBouquets(**orderbouquet) for orderbouquet in orderbouquets]
 
 
 def get_order_by_user_id(user_id: int):
-    existing_user = user_services.get_user_by_id(user_id)
+    user_services.get_user_by_id(user_id)
     orders = order_repository.get_order_by_user_id(user_id)
     return [Order(**order) for order in orders]
 
@@ -44,20 +46,20 @@ def create_orderbouquets(orderbouquets: OrderBouquets):
 
 
 def update_order(order_id: int, order: Order):
-    existing_order = get_order_by_id(order_id)
+    get_order_by_id(order_id)
     order_repository.update_order(order_id, order)
     return {"message": "Order updated successfully"}
 
 
 def delete_order(order_id: int):
-    existing_order = get_order_by_id(order_id)
+    get_order_by_id(order_id)
     order_repository.delete_order(order_id)
     return {"message": "Order deleted successfully"}
 
 
 def buy_history_order(user_id: int):
     # Проверяем существоние пользователя
-    user = user_services.get_user_by_id(user_id)
+    user_services.get_user_by_id(user_id)
     # Получаем заказы пользователя
     orders = get_order_by_user_id(user_id)
     history = []
@@ -120,7 +122,7 @@ def buy_create_order(user_id, bouquetsID, off_bonus):
     # Обновляем пользователя
     user_services.update_user(user_id, user)
     # Создаем и передаем данные о заказе
-    order = create_order(Order(user_id=user_id, total_price=total_price))
+    order = create_order(Order(user_id=user_id, date=f"{datetime.now()}", total_price=total_price))
     # Проходим по каждому виду букетов
     for bite in bouquets:
         # Создаем и записываем информацию о купленных букетах в базу данных

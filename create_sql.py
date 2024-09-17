@@ -1,7 +1,6 @@
 import os
-from src.utils.custom_logging import setup_logging
 import pymysql
-
+from src.utils.custom_logging import setup_logging
 from config import Config
 
 config = Config()
@@ -11,8 +10,10 @@ log = setup_logging()
 class CreateSQL:
 
     def __init__(self):
-        # Используем файл с расширением .sql
+        # Определение пути к SQL-файлу
         self.path_to_sql = os.path.join(os.path.dirname(__file__), f"{config.__getattr__('DB')}.sql")
+
+        # Установка соединения с базой данных
         self.connection = pymysql.connect(
             host=config.__getattr__("DB_HOST"),
             port=int(config.__getattr__("DB_PORT")),
@@ -24,28 +25,31 @@ class CreateSQL:
 
     def read_sql(self):
         try:
-            # Создание базы данных, если она не существует
             with self.connection.cursor() as cursor:
-                # TODO При запуске main.py основного приложения идет импорт репозиториев,
-                #  в которых инициализируется класс Database, он пытается соединиться с
-                #  базой данной раньше, чем выполняется это часть кода. (класс CreateSQL
-                #  инициализируется в iif __name__ == "__main__":, это приводит к конфликту,
-                #  в случае, когда база данных еще не создана в SQL)
+                # Создание базы данных, если она не существует
                 cursor.execute(f"CREATE DATABASE IF NOT EXISTS `{config.__getattr__('DB')}`")
                 cursor.execute(f"USE `{config.__getattr__('DB')}`")
 
                 # Открываем и выполняем SQL-скрипт
                 with open(self.path_to_sql, "r", encoding="utf-8") as f:
                     sql_script = f.read()
+
+                    # Разделение SQL-скрипта на отдельные запросы
+                    statements = [stmt.strip() for stmt in sql_script.split(';') if stmt.strip()]
+
                     # Выполнение всех запросов в файле
-                    for statement in sql_script.split(';'):
-                        if statement.strip():
+                    for statement in statements:
+                        try:
                             cursor.execute(statement)
+                            log.info("Executed SQL statement: %s", statement)
+                        except pymysql.MySQLError as e:
+                            log.warning("SQL Warning: %s")
+                            # Логирование неудачных запросов может помочь в отладке
 
                 self.connection.commit()
-            log.info("Database was created successfully")
+                log.info("Database was created and SQL script executed successfully")
         except Exception as ex:
-            log.warning("Error during SQL script execution")
+            log.warning("Error during SQL script execution", exc_info=ex)
         finally:
             self.connection.close()
 

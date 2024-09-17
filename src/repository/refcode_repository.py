@@ -1,11 +1,16 @@
 from src.database.my_connector import Database
 from src.database.models import RefCodes
-db = Database()
+from src.database.my_connector import db
 
 
 def get_all_refcodes():
     query = "SELECT * FROM Ref_Codes"
     return db.fetch_all(query)
+
+
+def get_refcode_by_id(refcode_id: int):
+    query = "SELECT * FROM Ref_Codes WHERE id=%s"
+    return db.fetch_one(query, (refcode_id,))
 
 
 def get_refcode_by_user_id(user_id: int):
@@ -25,12 +30,12 @@ def create_refcode(refcodes: RefCodes):
     return cursor.lastrowid
 
 
-def update_refcode(user_id: int, refcodes: RefCodes):
-    query = "UPDATE Ref_Codes SET code=%s WHERE user_id=%s"
-    params = (refcodes.Code, user_id)
+def update_refcode(refcode_id: int, refcodes: RefCodes):
+    query = "UPDATE Ref_Codes SET user_id=%s, code=%s WHERE id=%s"
+    params = (refcodes.UserID, refcodes.Code, refcode_id)
     db.execute_query(query, params)
 
 
-def delete_refcode(user_id: int):
-    query = "DELETE FROM Ref_Codes WHERE user_id=%s"
-    db.execute_query(query, (user_id,))
+def delete_refcode(refcode_id: int):
+    query = "DELETE FROM Ref_Codes WHERE id=%s"
+    db.execute_query(query, (refcode_id,))

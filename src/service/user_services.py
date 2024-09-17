@@ -1,6 +1,7 @@
 from src.repository import user_repository
 from src.database.models import User
 from fastapi import HTTPException, status
+from src.utils.exam_services import check_if_exists, check_for_duplicates
 
 
 def get_all_users():
@@ -30,26 +31,29 @@ def get_user_by_phone(user_phone: str):
 
 
 def create_user(user: User):
-    existing_user = get_user_by_telegram_id(user.TelegramID)
-    existing_user = get_user_by_phone(user.Phone)
-    if existing_user.Phone == user.Phone:
-        raise HTTPException(status_code=status.HTTP_302_FOUND, detail="User already exist")
+    check_if_exists(
+        get_all=get_all_users,
+        attr_name="TelegramID",
+        attr_value=user.TelegramID,
+        exception_detail='TelegramID already exist'
+    )
     user_id = user_repository.create_user(user)
     return get_user_by_id(user_id)
 
 
 def update_user(user_id: int, user: User):
-    existing_users = get_all_users()
-    for existing_user in existing_users:
-        if existing_user.TelegramID == user.TelegramID and existing_user.ID != user_id:
-            raise HTTPException(status_code=status.HTTP_302_FOUND, detail="TelegramID already use")
-        if existing_user.Phone == user.Phone and existing_user.ID == user_id:
-            raise HTTPException(status_code=status.HTTP_302_FOUND, detail="Phone already use")
+    check_for_duplicates(
+        get_all=get_all_users,
+        check_id=user_id,
+        attr_name="TelegramID",
+        attr_value=user.TelegramID,
+        exception_detail='TelegramID already exist'
+    )
     user_repository.update_user(user_id, user)
     return {"message": "User updated successfully"}
 
 
 def delete_user(user_id: int):
-    existing_user = get_user_by_id(user_id)
+    get_user_by_id(user_id)
     user_repository.delete_user(user_id)
     return {"message": "User deleted successfully"}

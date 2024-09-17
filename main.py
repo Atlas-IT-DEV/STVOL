@@ -17,7 +17,7 @@ config = Config()
 log = setup_logging()
 app = FastAPI()
 
-app.mount("/bouquet", StaticFiles(directory=os.path.join(config.__getattr__("UPLOAD_DIR"))), name="bouquet")
+app.mount("/public", StaticFiles(directory="public"), name="public")
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,15 +41,15 @@ ImageTag = Tag(name="Image", description="CRUD operations image")
 
 # Настройка документации с тегами
 app.openapi_tags = [
-    AuthTag.dict(),
-    UploadFileTag.dict(),
-    UserTag.dict(),
-    AdressTag.dict(),
-    OrderTag.dict(),
-    BouquetTag.dict(),
-    CompanyTag.dict(),
-    RefCodeTag.dict(),
-    ImageTag.dict()
+    AuthTag.model_dump(),
+    UploadFileTag.model_dump(),
+    UserTag.model_dump(),
+    AdressTag.model_dump(),
+    OrderTag.model_dump(),
+    BouquetTag.model_dump(),
+    CompanyTag.model_dump(),
+    RefCodeTag.model_dump(),
+    ImageTag.model_dump()
 ]
 
 
@@ -386,7 +386,21 @@ async def get_all_bouquets():
     :return: response model List[Bouquet].
     """
     try:
-        return bouquet_services.get_all_bouquets()
+        return bouquet_services.get_all_bouquets(dirs=False)
+    except HTTPException as ex:
+        log.exception(f"Error", exc_info=ex)
+        raise ex
+
+
+@app.get("/bouquets/full", response_model=list[Dict], tags=["Bouquet"])
+async def get_all_bouquets_full():
+    """
+    Route for get all bouquets from basedata.
+
+    :return: response model List[Bouquet].
+    """
+    try:
+        return bouquet_services.get_all_bouquets(dirs=True)
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
@@ -402,7 +416,23 @@ async def get_bouquet_by_id(bouquet_id: int):
     :return: response model Bouquet.
     """
     try:
-        return bouquet_services.get_bouquet_by_id(bouquet_id)
+        return bouquet_services.get_bouquet_by_id(bouquet_id, dirs=False)
+    except HTTPException as ex:
+        log.exception(f"Error", exc_info=ex)
+        raise ex
+
+
+@app.get("/bouquets/bouquet_id/full/{bouquet_id}", response_model=Dict, tags=["Bouquet"])
+async def get_bouquet_by_id_full(bouquet_id: int):
+    """
+    Route for get bouquet by BouquetID.
+
+    :param bouquet_id: ID by bouquet. [int]
+
+    :return: response model Bouquet.
+    """
+    try:
+        return bouquet_services.get_bouquet_by_id(bouquet_id, dirs=True)
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
@@ -469,22 +499,6 @@ async def delete_bouquet(bouquet_id: int):
     """
     try:
         return bouquet_services.delete_bouquet(bouquet_id)
-    except HTTPException as ex:
-        log.exception(f"Error", exc_info=ex)
-        raise ex
-
-
-@app.get("/download/get_bouquet/{bouquet_id}", response_model=Dict, tags=["UploadFile"])
-async def download_bouquet(bouquet_id: int):
-    """
-    Route for download image from server on fronted by bouquetID.
-
-    :param bouquet_id: ID by bouquet. [int]
-
-    :return: response model None.
-    """
-    try:
-        return uploadfile_services.download_bouquet(bouquet_id)
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
@@ -584,6 +598,22 @@ async def get_all_refcodes():
         raise ex
 
 
+@app.get("/refcodes/refcode_id/{refcode_id}", response_model=RefCodes, tags=["RefCode"])
+async def get_refcode_by_id(refcode_id: int):
+    """
+    Route for get referal by refcode_id.
+
+    :param refcode_id: refcodeID by refcode. [int]
+
+    :return: response model RefCodes.
+    """
+    try:
+        return refcode_services.get_refcode_by_id(refcode_id)
+    except HTTPException as ex:
+        log.exception(f"Error", exc_info=ex)
+        raise ex
+
+
 @app.get("/refcodes/user_id/{user_id}", response_model=RefCodes, tags=["RefCode"])
 async def get_refcode_by_user_id(user_id: int):
     """
@@ -632,35 +662,35 @@ async def create_refcode(refcodes: RefCodes):
         raise ex
 
 
-@app.put("/refcodes/{user_id}", response_model=Dict, tags=["RefCode"])
-async def update_refcode(refcodes: RefCodes, user_id: int):
+@app.put("/refcodes/{refcode_id}", response_model=Dict, tags=["RefCode"])
+async def update_refcode(refcodes: RefCodes, refcode_id: int):
     """
     Route for update referal code in basedata.
 
-    :param user_id: ID by User. [int]
+    :param refcode_id: ID by refcode. [int]
 
     :param refcodes: Model RefCodes. [RefCodes]
 
     :return: response model dict.
     """
     try:
-        return refcode_services.update_refcode(user_id, refcodes)
+        return refcode_services.update_refcode(refcode_id, refcodes)
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
 
 
-@app.delete("/refcodes/{user_id}", response_model=Dict, tags=["RefCode"])
-async def delete_refcode(user_id: int):
+@app.delete("/refcodes/{refcode_id}", response_model=Dict, tags=["RefCode"])
+async def delete_refcode(refcode_id: int):
     """
     Route for delete referal code from basedata.
 
-    :param user_id: ID by User. [int]
+    :param refcode_id: ID by refcode. [int]
 
     :return: response model dict.
     """
     try:
-        return refcode_services.delete_refcode(user_id)
+        return refcode_services.delete_refcode(refcode_id)
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
@@ -740,7 +770,7 @@ async def delete_image(image_id: int):
     :return: response model dict.
     """
     try:
-        image_services.delete_image(image_id)
+        return image_services.delete_image(image_id)
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
@@ -780,23 +810,37 @@ async def signin(telegram_id: str):
         raise ex
 
 
-@app.post("/uploadfile/create_bouquet/", response_model=Bouquet, tags=["UploadFile"])
-async def uploadfile_bouquet(file: UploadFile = File(...),
-                             bouquet_name: str = Form(...), bouquet_price: int = Form(...)):
+@app.post("/image_upload/bouquet", response_model=Bouquet, tags=["UploadFile"])
+async def image_upload_bouquet(file: UploadFile = File(...), bouquet_id: int = Form(...)):
     """
-    Route for uploading an image of a bouquet and transferring it to the server,
-     followed by creating a bouquet in the database with a link to the image of the bouquet.
+   Route for uploading image for a bouquet.
 
-    :param file: Binary image file. [str]
-
-    :param bouquet_name: Name by bouquet. [str]
-
-    :param bouquet_price: Price by bouquet in ruble. [int]
-
-    :return: response model Bouquet.
-    """
+   :return: response model bouquet [Bouquets].
+   """
     try:
-        return await uploadfile_services.uploadfile_bouquet(file, bouquet_name, bouquet_price)
+        return await uploadfile_services.upload_images(
+            entity_type="bouquet",
+            file=file,
+            entity_id=bouquet_id,
+            get_entity_by_id=bouquet_services.get_bouquet_by_id,
+            update_entity=bouquet_services.update_bouquet)
+    except HTTPException as ex:
+        log.exception(f"Error", exc_info=ex)
+        raise ex
+
+
+@app.delete("/image_delete/bouquet", response_model=Dict, tags=["UploadFile"])
+async def image_delete_bouquet(bouquet_id: int):
+    """
+   Route for delete bouquet into basedata.
+
+   :return: response model Dict.
+   """
+    try:
+        return uploadfile_services.delete_images(entity_type="bouquet",
+                                                 entity_id=bouquet_id,
+                                                 get_entity_by_id=bouquet_services.get_bouquet_by_id,
+                                                 update_entity=bouquet_services.update_bouquet)
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
@@ -821,16 +865,17 @@ def run_bot():
 
 
 if __name__ == "__main__":
-
     # Создание датабазы и таблиц, если они не существуют
     log.info("Start create/update database")
     from create_sql import CreateSQL
+
     create_sql = CreateSQL()
     create_sql.read_sql()
 
     # Запуск сервера и бота
     log.info("Start run server and bot")
     import multiprocessing
+
     server_process = multiprocessing.Process(target=run_server)
     server_process.start()
     bot_process = multiprocessing.Process(target=run_bot)

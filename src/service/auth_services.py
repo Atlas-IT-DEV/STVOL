@@ -11,10 +11,10 @@ def signup(user: User, refcode: str = None):
     if not user.Name:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User name not valid")
     # Проверяем существует ли пользователь с таким же телеграмм айди
-    existing_user_telegram_id = user_services.get_user_by_telegram_id(user.TelegramID)
+    user_services.get_user_by_telegram_id(user.TelegramID)
     # Если передается номер телефона, проверяется нет ли такого же
     if user.Phone:
-        existing_user_phone = user_services.get_user_by_phone(user.Phone)
+        user_services.get_user_by_phone(user.Phone)
     # Создаем нового пользователя
     new_user = user_services.create_user(user)
     # Генерируем реферальный код для пользователя на основе его телеграмм айди
