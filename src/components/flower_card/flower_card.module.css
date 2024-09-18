@@ -19,3 +19,24 @@
   font-weight: 500;
   color: #afafaf;
 }
+.container375_450 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container375_450 .imageProduct {
+  object-fit: cover;
+  width: 55px;
+  height: 55px;
+}
+.container375_450 .nameFlowerText {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #afafaf;
+}
+.container375_450 .priceText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #afafaf;
+}

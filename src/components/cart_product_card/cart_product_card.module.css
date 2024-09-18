@@ -55,3 +55,60 @@
   margin-top: 20px;
   cursor: pointer;
 }
+.container375 {
+  width: 165px;
+}
+.container375 .slideTrack {
+  display: flex;
+  padding: 0 0 30px 0 !important;
+}
+.container375 .slideTrack .slider {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.container375 .nameProductText {
+  color: white;
+  font-size: 16px;
+  font-family: TTNorms400;
+  margin-top: 10px;
+}
+.container375 .priceView {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+.container375 .priceView .priceText {
+  color: #c81768;
+  font-size: 16px;
+  font-family: TTNorms700;
+}
+.container375 .priceView .oldPriceText {
+  font-size: 14px;
+  color: #afafaf;
+  font-family: TTNorms400;
+  text-decoration: line-through;
+}
+.container375 .priceView .discountText {
+  font-family: TTNorms500;
+  color: white;
+  background-color: #c81768;
+  height: 25px;
+  padding: 0 6px 0 6px;
+  border-radius: 16px;
+}
+.container375 .addButtonText {
+  height: 40px;
+  color: black;
+  background-color: #c81768;
+  padding: 0 16px 0 16px;
+  font-family: TTNorms800;
+  font-size: 18px;
+  width: max-content;
+  align-content: center;
+  border-radius: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+}

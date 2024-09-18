@@ -7,3 +7,12 @@
   justify-content: center;
   cursor: pointer;
 }
+.container375 {
+  width: 100%;
+  padding: 0 20px 0 20px !important;
+}
+.container375 .slideTrack .slider {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}

@@ -10,13 +10,15 @@ import emaiIcon from "../../images/mail_icon.svg";
 import { useState } from "react";
 import BottomMenu from "../../components/bottom_menu/bottomMenu";
 import { useNavigate } from "react-router";
+import useWindowDimensions from "../../components/hooks/windowDimensions";
 
 const AboutPage = () => {
   const [isHide, setIsHide] = useState([false, false, false]);
   let copyIsHide = Array.from(isHide);
   const navigate = useNavigate();
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
         <img src={logo} alt="" />
         <div className={styles.cartButton} onClick={() => navigate("/cart")}>
@@ -59,8 +61,8 @@ const AboutPage = () => {
             <tr
               style={{
                 color: "rgba(55, 55, 55, 1)",
-                fontSize: 22,
-                fontFamily: "TTNorms700",
+                fontSize: 20,
+                fontFamily: "TTNorms500",
               }}
             >
               <td>Интервал</td>
@@ -72,7 +74,7 @@ const AboutPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 borderBottom: "1px solid rgba(55, 55, 55, 1)",
                 height: 45,
               }}
@@ -85,7 +87,7 @@ const AboutPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 borderBottom: "1px solid rgba(55, 55, 55, 1)",
                 height: 45,
               }}
@@ -98,7 +100,7 @@ const AboutPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 height: 45,
               }}
             >

@@ -3,11 +3,13 @@ import logo from "../../images/logo.png";
 import arrowGray from "../../images/gray_right_arrow.svg";
 import { useNavigate } from "react-router";
 import CartProductCard from "../../components/cart_product_card/cart_product_card";
+import useWindowDimensions from "../../components/hooks/windowDimensions";
 
 const CartPage = () => {
   const navigate = useNavigate();
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
         <img src={logo} alt="" />
         <div className={styles.backButton} onClick={() => navigate(-1)}>

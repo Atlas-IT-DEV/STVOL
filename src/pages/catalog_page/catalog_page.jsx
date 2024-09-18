@@ -6,6 +6,7 @@ import { useState } from "react";
 import BottomMenu from "../../components/bottom_menu/bottomMenu";
 import ProductCard from "../../components/product_card/product_card";
 import SortModal from "../../components/sort_modal/sort_modal";
+import useWindowDimensions from "../../components/hooks/windowDimensions";
 
 const CatalogPage = () => {
   const [isPressed, setIsPressed] = useState([
@@ -13,8 +14,9 @@ const CatalogPage = () => {
     [false, false, false, false, false, false],
   ]);
   let copyIsPressed = Array.from(isPressed);
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
         <Header />
       </div>

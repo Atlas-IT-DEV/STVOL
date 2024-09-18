@@ -7,10 +7,12 @@ import "swiper/css/grid";
 // import "swiper/css/navigation";
 import { FreeMode, Navigation, Grid } from "swiper/modules";
 import FlowerCard from "../flower_card/flower_card";
+import useWindowDimensions from "../hooks/windowDimensions";
 
 const SelectFlower = () => {
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <Swiper
         style={{
           "--swiper-navigation-color": "rgba(167, 167, 167, 1)",

@@ -9,13 +9,15 @@ import "swiper/css/pagination";
 // import "swiper/css/navigation";
 import { FreeMode, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router";
+import useWindowDimensions from "../hooks/windowDimensions";
 
 const ProductCard = () => {
-  const navigate = useNavigate()
+  const { width } = useWindowDimensions();
+  const navigate = useNavigate();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <Swiper
-      onClick={()=> navigate("/product")}
+        onClick={() => navigate("/product")}
         style={{
           "--swiper-pagination-color": "rgba(237, 237, 237, 1)",
           "--swiper-pagination-bullet-inactive-color": "rgba(131, 131, 131, 1)",

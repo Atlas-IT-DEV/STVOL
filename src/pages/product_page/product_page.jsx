@@ -5,14 +5,16 @@ import arrowWhite from "../../images/arrow_white.svg";
 import bouqet from "../../images/buket1.png";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import useWindowDimensions from "../../components/hooks/windowDimensions";
 
 const ProductPage = () => {
   const [count, setCount] = useState(1);
   const [isOpen, setIsOpen] = useState([false, false, false, false]);
   const copyIsOpen = Array.from(isOpen);
   const navigate = useNavigate();
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
         <Header />
       </div>
@@ -162,7 +164,7 @@ const ProductPage = () => {
             <tr
               style={{
                 color: "rgba(55, 55, 55, 1)",
-                fontSize: 22,
+                fontSize: 20,
                 fontFamily: "TTNorms700",
               }}
             >
@@ -175,7 +177,7 @@ const ProductPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 borderBottom: "1px solid rgba(55, 55, 55, 1)",
                 height: 45,
               }}
@@ -188,7 +190,7 @@ const ProductPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 borderBottom: "1px solid rgba(55, 55, 55, 1)",
                 height: 45,
               }}
@@ -201,7 +203,7 @@ const ProductPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 height: 45,
               }}
             >
@@ -230,7 +232,7 @@ const ProductPage = () => {
             <tr
               style={{
                 color: "rgba(55, 55, 55, 1)",
-                fontSize: 22,
+                fontSize: 20,
                 fontFamily: "TTNorms700",
               }}
             >
@@ -243,7 +245,7 @@ const ProductPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 borderBottom: "1px solid rgba(55, 55, 55, 1)",
                 height: 45,
               }}
@@ -256,7 +258,7 @@ const ProductPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 borderBottom: "1px solid rgba(55, 55, 55, 1)",
                 height: 45,
               }}
@@ -269,7 +271,7 @@ const ProductPage = () => {
               style={{
                 color: "rgba(156, 156, 156, 1)",
                 fontFamily: "TTNorms400",
-                fontSize: 22,
+                fontSize: 20,
                 height: 45,
               }}
             >

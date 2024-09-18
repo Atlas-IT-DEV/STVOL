@@ -28,3 +28,33 @@
   width: 6px;
   height: 12px;
 }
+.container375 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container375 img {
+  width: 205px;
+  height: 203px;
+}
+.container375 .dateText {
+  font-family: TTNorms400;
+  font-size: 20px;
+  color: #434343;
+  margin-top: 20px;
+}
+.container375 .orderButton {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.container375 .orderButton p {
+  color: #afafaf;
+  font-size: 20px;
+  font-family: TTNorms400;
+  border-bottom: 1px solid #afafaf;
+}
+.container375 .orderButton img {
+  width: 6px;
+  height: 12px;
+}

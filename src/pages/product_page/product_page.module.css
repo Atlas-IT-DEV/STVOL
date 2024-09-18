@@ -144,3 +144,152 @@
   font-size: 22px;
   margin-top: 12px;
 }
+.container375 {
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.container375 .header {
+  margin-top: 30px;
+}
+.container375 .backButton {
+  margin: 27px 0 0 52px;
+  cursor: pointer;
+  width: max-content;
+}
+.container375 .backButton img {
+  transform: rotate(180deg);
+  height: 24px;
+}
+.container375 .imageProduct {
+  display: flex;
+  justify-content: center;
+}
+.container375 .imageProduct img {
+  width: 260px;
+}
+.container375 main {
+  margin: 30px;
+}
+.container375 main .nameProductText {
+  color: #9c9c9c;
+  font-family: TTNorms800;
+  font-size: 24px;
+}
+.container375 main .sumView {
+  margin-top: 18px;
+  display: flex;
+  gap: 35px;
+}
+.container375 main .sumView .sumText {
+  color: white;
+  font-size: 29px;
+  font-family: TTNorms700;
+  width: 150px;
+}
+.container375 main .sumView .countView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.container375 main .sumView .countView p {
+  color: white;
+  font-size: 22px;
+  font-family: TTNorms800;
+  padding: 5px;
+  cursor: pointer;
+}
+.container375 main .sumView .countView .countText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  color: black;
+  background-color: white;
+  border-radius: 16px;
+  width: 60px;
+}
+.container375 main .orderButtons {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+.container375 main .orderButtons .addCartText {
+  background-color: white;
+  color: black;
+  font-family: TTNorms800;
+  font-size: 18px;
+  padding: 0 16px 0 16px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.container375 main .orderButtons .fastOrderText {
+  border: 1px solid white;
+  color: white;
+  font-family: TTNorms800;
+  font-size: 18px;
+  padding: 0 16px 0 16px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.container375 main .subheaderText {
+  color: white;
+  font-family: TTNorms700;
+  font-size: 24px;
+}
+.container375 main .descriptionHeader {
+  margin-top: 45px;
+}
+.container375 main .descriptionText {
+  color: white;
+  font-size: 22px;
+  font-family: TTNorms400;
+}
+.container375 main .descriptionText span {
+  color: #9c9c9c;
+}
+.container375 main .hideButtons {
+  margin-top: 50px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+.container375 main .arrowDown {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+.container375 main .arrowUp {
+  transform: rotate(0);
+  transition: 0.3s;
+}
+.container375 main .viewClose {
+  display: none;
+}
+.container375 main .viewOpen {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+.container375 main .detailsText {
+  margin-top: 12px;
+  color: white;
+  font-family: TTNorms400;
+  font-size: 22px;
+}
+.container375 main .detailsText span {
+  color: #9c9c9c;
+}
+.container375 main .saveText {
+  color: #9c9c9c;
+  font-family: TTNorms400;
+  font-size: 22px;
+  margin-top: 12px;
+}

@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Grid } from "swiper/modules";
 import CheckoutProductCard from "../../components/checkout_product_card/checkout_product_card";
+import useWindowDimensions from "../../components/hooks/windowDimensions";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const CheckoutPage = () => {
     [false, false],
   ]);
   const copyVisible = Array.from(visible);
+  const { width } = useWindowDimensions();
 
   const date = new Date();
   let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
@@ -185,7 +187,7 @@ const CheckoutPage = () => {
             spaceBetween={36}
             freeMode={false}
             navigation={true}
-            slidesPerView={3}
+            slidesPerView={width >= 500 ? 3 : 2}
           >
             <SwiperSlide
               className={styles.slider}
