@@ -1,0 +1,50 @@
+.container {
+  width: 100%;
+  padding: 25px;
+  background-color: white;
+  border-radius: 41px;
+  display: flex;
+  justify-content: space-between;
+}
+.container .nameProductText {
+  color: black;
+  font-family: TTNorms700;
+  font-size: 24px;
+}
+.container .descriptionProductText {
+  font-size: 22px;
+  font-family: TTNorms400;
+  color: black;
+}
+.container .sumProductText {
+  margin-top: 17px;
+  font-size: 25px;
+  font-family: TTNorms700;
+  color: black;
+}
+.container .countProduct {
+  display: flex;
+  gap: 13px;
+  margin-top: 18px;
+}
+.container .countProduct .selectCountProductText {
+  color: black;
+  font-size: 22px;
+  font-family: TTNorms800;
+  cursor: pointer;
+}
+.container .countProduct .countProductText {
+  text-align: center;
+  color: white;
+  font-size: 22px;
+  font-family: TTNorms800;
+  background-color: black;
+  height: 35px;
+  width: 55px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.container .imageProduct {
+  width: 168px;
+  height: 168px;
+}
