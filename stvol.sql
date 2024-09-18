@@ -330,9 +330,8 @@ ALTER TABLE `orders`
 -- Ограничения внешнего ключа таблицы `order_bouquets`
 --
 ALTER TABLE `order_bouquets`
-  ADD CONSTRAINT `fk_bouquet_id` FOREIGN KEY (`bouquet_id`) REFERENCES `Bouquet` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_bouquets_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_bouquets_ibfk_2` FOREIGN KEY (`bouquet_id`) REFERENCES `bouquet` (`id`);
+  ADD CONSTRAINT `order_bouquets_ibfk_2` FOREIGN KEY (`bouquet_id`) REFERENCES `Bouquet` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `ref_codes`

@@ -11,8 +11,8 @@ class EditBouquetHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
     FORMA = ("<code>/edit_bouquet</code>\n"
              "<code>bouquet_id=&lt;ID&gt;</code>    <i>обязательный</i>\n"
-             "<code>name=&lt;Название&gt;</code>    <i>необязательный</i>\n"
-             "<code>price=&lt;Цена&gt;</code>    <i>необязательный</i>\n\n")
+             "<code>name=&lt;Название&gt;</code>    <i>обязательный</i>\n"
+             "<code>price=&lt;Цена&gt;</code>    <i>обязательный</i>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command create_bouquet")
@@ -74,7 +74,7 @@ class EditBouquetHandler(BaseCommandHandler):
 
                 await _inf_response(update, response,
                                     "Букет изменен успешно.",
-                                    "Ошибка при изменении букета.")
+                                    f"Ошибка при изменении букета: \n{response.text}")
 
                 del self.DATA[user_id]
                 return ConversationHandler.END

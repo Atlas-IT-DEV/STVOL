@@ -811,7 +811,9 @@ async def signin(telegram_id: str):
 
 
 @app.post("/image_upload/bouquet", response_model=Bouquet, tags=["UploadFile"])
-async def image_upload_bouquet(file: UploadFile = File(...), bouquet_id: int = Form(...)):
+async def image_upload_bouquet(file: UploadFile = File(...),
+                               bouquet_name: str = Form(...),
+                               bouquet_price: int = Form(...)):
     """
    Route for uploading image for a bouquet.
 
@@ -819,31 +821,30 @@ async def image_upload_bouquet(file: UploadFile = File(...), bouquet_id: int = F
    """
     try:
         return await uploadfile_services.upload_images(
-            entity_type="bouquet",
             file=file,
-            entity_id=bouquet_id,
-            get_entity_by_id=bouquet_services.get_bouquet_by_id,
-            update_entity=bouquet_services.update_bouquet)
+            bouquet_name=bouquet_name,
+            bouquet_price=bouquet_price
+        )
     except HTTPException as ex:
         log.exception(f"Error", exc_info=ex)
         raise ex
 
 
-@app.delete("/image_delete/bouquet", response_model=Dict, tags=["UploadFile"])
-async def image_delete_bouquet(bouquet_id: int):
-    """
-   Route for delete bouquet into basedata.
-
-   :return: response model Dict.
-   """
-    try:
-        return uploadfile_services.delete_images(entity_type="bouquet",
-                                                 entity_id=bouquet_id,
-                                                 get_entity_by_id=bouquet_services.get_bouquet_by_id,
-                                                 update_entity=bouquet_services.update_bouquet)
-    except HTTPException as ex:
-        log.exception(f"Error", exc_info=ex)
-        raise ex
+# @app.delete("/image_delete/bouquet", response_model=Dict, tags=["UploadFile"])
+# async def image_delete_bouquet(bouquet_id: int):
+#     """
+#    Route for delete bouquet into basedata.
+#
+#    :return: response model Dict.
+#    """
+#     try:
+#         return uploadfile_services.delete_images(entity_type="bouquet",
+#                                                  entity_id=bouquet_id,
+#                                                  get_entity_by_id=bouquet_services.get_bouquet_by_id,
+#                                                  update_entity=bouquet_services.update_bouquet)
+#     except HTTPException as ex:
+#         log.exception(f"Error", exc_info=ex)
+#         raise ex
 
 
 def run_server():

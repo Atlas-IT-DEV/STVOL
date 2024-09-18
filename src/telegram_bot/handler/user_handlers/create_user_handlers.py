@@ -69,7 +69,7 @@ class CreateUserHandler(BaseCommandHandler):
 
                 await _inf_response(update, response,
                                     "Пользователь создан успешно.",
-                                    "Ошибка при создании пользователя.")
+                                    f"Ошибка при создании пользователя: \n{response.text}")
 
                 del self.DATA[user_id]
                 return ConversationHandler.END

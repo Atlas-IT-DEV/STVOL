@@ -12,7 +12,7 @@ class EditUserHandler(BaseCommandHandler):
     FORMA = ("<code>/edit_user</code>\n"
              "<code>user_id=&lt;ID&gt;</code>    <i>обязательный</i>\n"
              "<code>name=&lt;Имя&gt;</code>    <i>необязательный</i>\n"
-             "<code>telegram_id=&lt;ID&gt;</code>    <i>необязательный</i>\n"
+             "<code>telegram_id=&lt;ID&gt;</code>    <i>обязательный</i>\n"
              "<code>phone=&lt;Номер телеофона&gt;</code>    <i>необязательный</i>\n"
              "<code>count_bonus=&lt;Бонусы пользователя&gt;</code>    <i>необязательный</i>\n"
              "<code>referal=&lt;Приглашал ли пользователь друзей? (True/False)&gt;</code>    <i>необязательный</i>\n\n")
@@ -82,7 +82,7 @@ class EditUserHandler(BaseCommandHandler):
 
                 await _inf_response(update, response,
                                     "Пользователь изменен успешно.",
-                                    "Ошибка при изменении пользователя.")
+                                    f"Ошибка при изменении пользователя: \n{response.text}")
 
                 del self.DATA[user_id]
                 return ConversationHandler.END

@@ -51,7 +51,7 @@ class GetUsersListHandler(BaseCommandHandler):
             for message in messages:
                 await _inf_response(update, response,
                                     f"{message}",
-                                    "Ошибка при получении списка пользователей.")
+                                    f"Ошибка при получении списка пользователей: \n{response.text}")
 
             return ConversationHandler.END
         except Exception as ex:

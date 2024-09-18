@@ -87,14 +87,14 @@ class CreateBouquetHandler(BaseCommandHandler):
                 }
 
                 response = requests.post(
-                    f'http://{self.HOST}:{self.SERVER_PORT}/uploadfile/create_bouquet/',
+                    f'http://{self.HOST}:{self.SERVER_PORT}/image_upload/bouquet',
                     files={'file': ('bouquet.jpg', file_data)},
                     data=bouquet_data
                 )
 
                 await _inf_response(update, response,
                                     "Букет создан успешно.",
-                                    "Ошибка при создании букета.")
+                                    f"Ошибка при создании букета: \n{response.text}")
 
                 del self.DATA[user_id]
                 return ConversationHandler.END

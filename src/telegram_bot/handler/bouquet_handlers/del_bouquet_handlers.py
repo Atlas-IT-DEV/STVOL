@@ -56,7 +56,7 @@ class DelBouquetHandler(BaseCommandHandler):
 
                 await _inf_response(update, response,
                                     "Букет удален успешно.",
-                                    "Ошибка при удалении букета.")
+                                    f"Ошибка при удалении букета: \n{response.text}")
 
                 del self.DATA[user_id]
                 return ConversationHandler.END

@@ -56,7 +56,7 @@ class DelUserHandler(BaseCommandHandler):
 
                 await _inf_response(update, response,
                                     "Пользователь удален успешно.",
-                                    "Ошибка при удалении пользователя.")
+                                    f"Ошибка при удалении пользователя: \n{response.text}")
 
                 del self.DATA[user_id]
                 return ConversationHandler.END

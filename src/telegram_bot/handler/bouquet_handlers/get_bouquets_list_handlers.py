@@ -52,7 +52,7 @@ class GetBouquetsListHandler(BaseCommandHandler):
             for message in messages:
                 await _inf_response(update, response,
                                     f"{message}",
-                                    "Ошибка при получении списка букетов.")
+                                    f"Ошибка при получении списка букетов: \n{response.text}")
 
             return ConversationHandler.END
         except Exception as ex:
