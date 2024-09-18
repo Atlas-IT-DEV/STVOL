@@ -1,0 +1,57 @@
+.container {
+  width: 235px;
+}
+.container .slideTrack {
+  display: flex;
+  padding: 0 0 30px 0 !important;
+}
+.container .slideTrack .slider {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.container .nameProductText {
+  color: white;
+  font-size: 20px;
+  font-family: TTNorms400;
+  margin-top: 10px;
+}
+.container .priceView {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+.container .priceView .priceText {
+  color: #c81768;
+  font-size: 25px;
+  font-family: TTNorms700;
+}
+.container .priceView .oldPriceText {
+  font-size: 20px;
+  color: #afafaf;
+  font-family: TTNorms400;
+  text-decoration: line-through;
+}
+.container .priceView .discountText {
+  font-family: TTNorms800;
+  color: white;
+  background-color: #c81768;
+  height: 25px;
+  padding: 0 6px 0 6px;
+  border-radius: 16px;
+}
+.container .addButtonText {
+  height: 40px;
+  color: black;
+  background-color: #c81768;
+  padding: 0 16px 0 16px;
+  font-family: TTNorms800;
+  font-size: 18px;
+  width: max-content;
+  align-content: center;
+  border-radius: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+}

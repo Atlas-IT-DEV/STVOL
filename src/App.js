@@ -6,6 +6,8 @@ import AboutPage from "./pages/about_page/about_page";
 import CatalogPage from "./pages/catalog_page/catalog_page";
 import LoyalityRulesPage from "./pages/rules_loyality_page/loyality_rules_page";
 import ProductPage from "./pages/product_page/product_page";
+import CartPage from "./pages/cart_page/cart_page";
+import CheckoutPage from "./pages/checkout_page/checkout_page";
 
 const router = createMemoryRouter([
   {
@@ -51,10 +53,26 @@ const router = createMemoryRouter([
   {
     element: (
       <PageContainer>
-        <ProductPage/>
+        <ProductPage />
       </PageContainer>
     ),
     path: "/product",
+  },
+  {
+    element: (
+      <PageContainer>
+        <CartPage />
+      </PageContainer>
+    ),
+    path: "/cart",
+  },
+  {
+    element: (
+      <PageContainer>
+        <CheckoutPage />
+      </PageContainer>
+    ),
+    path: "/checkout",
   },
 ]);
 function App() {

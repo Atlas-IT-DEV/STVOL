@@ -1,0 +1,108 @@
+@font400: TTNorms400;
+@font500: TTNorms500;
+@font700: TTNorms700;
+@font800: TTNorms800;
+
+.container {
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  position: relative;
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: relative;
+    margin: 30px 36px 0 36px;
+    .backButton {
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 0;
+      img {
+        height: 24px;
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .namePageText {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 27px;
+    color: rgba(175, 175, 175, 1);
+    font-family: @font800;
+  }
+  main {
+    margin: 24px 36px 0 0px !important;
+    .userInfo {
+      .nameText {
+        color: white;
+        font-family: @font800;
+        font-size: 22px;
+      }
+      .contactsText {
+        color: rgba(175, 175, 175, 1);
+        font-family: @font400;
+        font-size: 20px;
+      }
+    }
+    .adressText {
+      margin-top: 20px;
+      font-family: @font700;
+      font-size: 24px;
+      color: white;
+    }
+    .adressData {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 28px;
+      .street {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 1;
+      }
+      .flat {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 2;
+      }
+      .floor {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 2;
+      }
+      .entrance {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 3;
+        grid-row-end: 3;
+      }
+      .intercom {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 3;
+        grid-row-end: 3;
+      }
+      .comment {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 4;
+        grid-row-end: 4;
+      }
+
+      input {
+        background-color: black;
+        outline: none;
+        border-bottom: 1px solid rgba(156, 156, 156, 1);
+        font-size: 22px;
+        font-family: @font400;
+        color: rgba(156, 156, 156, 1);
+      }
+    }
+  }
+}

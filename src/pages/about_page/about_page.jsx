@@ -19,7 +19,7 @@ const AboutPage = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <img src={logo} alt="" />
-        <div className={styles.cartButton}>
+        <div className={styles.cartButton} onClick={() => navigate("/cart")}>
           <img src={cartIcon} alt="" />
         </div>
       </div>
