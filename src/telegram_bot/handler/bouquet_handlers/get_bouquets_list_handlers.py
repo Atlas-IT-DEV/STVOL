@@ -9,7 +9,9 @@ log = setup_logging()
 
 class GetBouquetsListHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-    FORMA = "<code>/get_bouquets_list</code> \n\n"
+    FORMA = ("<pre>"
+             "/get_bouquets_list"
+             "</pre>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command get_bouquets_list")

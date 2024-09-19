@@ -8,8 +8,11 @@ log = setup_logging()
 
 class DelBouquetHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-    FORMA = ("<code>/del_bouquet</code>\n"
-             "<code>bouquet_id=&lt;ID&gt;</code>    <i>обязательный</i>\n\n")
+    FORMA = ("<pre>"
+             "/del_bouquet\n"
+             "bouquet_id=ID"
+             "</pre>\n\n"
+             "<code>bouquet_id обязательный</code>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command del_bouquet")

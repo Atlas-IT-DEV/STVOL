@@ -9,13 +9,22 @@ log = setup_logging()
 
 class EditUserHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-    FORMA = ("<code>/edit_user</code>\n"
-             "<code>user_id=&lt;ID&gt;</code>    <i>обязательный</i>\n"
-             "<code>name=&lt;Имя&gt;</code>    <i>необязательный</i>\n"
-             "<code>telegram_id=&lt;ID&gt;</code>    <i>обязательный</i>\n"
-             "<code>phone=&lt;Номер телеофона&gt;</code>    <i>необязательный</i>\n"
-             "<code>count_bonus=&lt;Бонусы пользователя&gt;</code>    <i>необязательный</i>\n"
-             "<code>referal=&lt;Приглашал ли пользователь друзей? (True/False)&gt;</code>    <i>необязательный</i>\n\n")
+
+    FORMA = ("<pre>"
+             "/edit_user\n"
+             "user_id=ID\n"
+             "name=Имя\n"
+             "telegram_id=ID\n"
+             "phone=Номер телефона\n"
+             "count_bonus=Количество бонусов пользователя\n"
+             "referal=Пригласил ли пользователь друга? (True/False)"
+             "</pre>\n\n"
+             "<code>UserID обязательный</code>\n"
+             "<code>Name необязательный</code>\n"
+             "<code>TelegramID обязательный</code>\n"
+             "<code>Phone необязательный</code>\n"
+             "<code>CountBonus необязательный</code>\n"
+             "<code>Referal необязательный</code>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command edit_user")

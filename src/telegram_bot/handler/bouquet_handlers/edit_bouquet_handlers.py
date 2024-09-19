@@ -9,10 +9,16 @@ log = setup_logging()
 
 class EditBouquetHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-    FORMA = ("<code>/edit_bouquet</code>\n"
-             "<code>bouquet_id=&lt;ID&gt;</code>    <i>обязательный</i>\n"
-             "<code>name=&lt;Название&gt;</code>    <i>обязательный</i>\n"
-             "<code>price=&lt;Цена&gt;</code>    <i>обязательный</i>\n\n")
+
+    FORMA = ("<pre>"
+             "/edit_bouquet\n"
+             "bouquet_id=ID\n"
+             "name=Название\n"
+             "price=Цена"
+             "</pre>\n\n"
+             "<code>BouquetID обязательный</code>\n"
+             "<code>Name обязательный</code>\n"
+             "<code>Price обязательный</code>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command create_bouquet")

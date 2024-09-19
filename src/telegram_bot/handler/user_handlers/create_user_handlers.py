@@ -9,12 +9,20 @@ log = setup_logging()
 
 class CreateUserHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-    FORMA = ("<code>/create_user</code>\n"
-             "<code>name=&lt;Имя&gt;</code>    <i>необязательный</i>\n"
-             "<code>telegram_id=&lt;ID&gt;</code>    <i>обязательный</i>\n"
-             "<code>phone=&lt;Номер телефона&gt;</code>    <i>обязательный</i>\n"
-             "<code>count_bonus=&lt;Количество бонусов пользователя&gt;</code>    <i>необязательный</i>\n"
-             "<code>referal=&lt;Пригласил ли пользователь друга? (True/False)&gt;</code>    <i>необязательный</i>\n\n")
+
+    FORMA = ("<pre>"
+             "/create_user\n"
+             "name=Имя\n"
+             "telegram_id=ID\n"
+             "phone=Номер телефона\n"
+             "count_bonus=Количество бонусов пользователя\n"
+             "referal=Пригласил ли пользователь друга? (True/False)"
+             "</pre>\n\n"
+             "<code>Name необязательный</code>\n"
+             "<code>TelegramID обязательный</code>\n"
+             "<code>Phone обязательный</code>\n"
+             "<code>CountBonus необязательный</code>\n"
+             "<code>Referal необязательный</code>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command create_user")

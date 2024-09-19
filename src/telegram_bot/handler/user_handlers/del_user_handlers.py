@@ -8,8 +8,12 @@ log = setup_logging()
 
 class DelUserHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-    FORMA = ("<code>/del_user</code>\n"
-             "<code>user_id=&lt;ID&gt;</code>    <i>обязательный</i>\n\n")
+
+    FORMA = ("<pre>"
+             "/del_user\n"
+             "user_id=ID"
+             "</pre>\n\n"
+             "<code>UserID обязательный</code>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command del_user")

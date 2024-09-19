@@ -8,7 +8,10 @@ log = setup_logging()
 
 class GetUsersListHandler(BaseCommandHandler):
     CHOOSING, WAITING_FOR_PHOTO = range(2)
-    FORMA = "<code>/get_users_list</code> \n\n"
+
+    FORMA = ("<pre>"
+             "/get_users_list"
+             "</pre>\n\n")
 
     async def start(self, update: Update, context: CallbackContext) -> int:
         log.info("Command get_users_list")
