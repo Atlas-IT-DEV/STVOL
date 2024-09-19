@@ -10,10 +10,22 @@ import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router";
 import useWindowDimensions from "../hooks/windowDimensions";
+import { useEffect, useState } from "react";
+import { getAllBouquets } from "../fetches";
 
 const ProductCard = () => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
+
+  const [bouquet, setBouquet] = useState([]);
+
+  const getBouquets = async () => {
+    const data = await getAllBouquets();
+    setBouquet(getAllBouquets());
+  };
+  useEffect(() => {
+    getBouquets();
+  }, []);
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <Swiper
