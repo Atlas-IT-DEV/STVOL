@@ -11,7 +11,7 @@ import { FreeMode, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router";
 import useWindowDimensions from "../hooks/windowDimensions";
 
-const CartProductCard = () => {
+const CartProductCard = ({}) => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   return (

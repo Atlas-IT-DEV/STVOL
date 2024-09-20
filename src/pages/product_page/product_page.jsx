@@ -90,7 +90,7 @@ const ProductPage = () => {
         <div className={isOpen[0] ? styles.viewOpen : styles.viewClose}>
           <p className={styles.detailsText}>
             Цветы: <br />
-            <span>Ромашки, розы и фиалки</span> <br />
+            <span>{bouquet?.flowers}</span> <br />
             <br />
             Высота: <br /> <span>35 см</span> <br /> <br />
             Диаметр: <br /> <span>50 см</span> <br /> <br />

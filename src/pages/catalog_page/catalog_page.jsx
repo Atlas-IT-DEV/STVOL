@@ -129,7 +129,16 @@ const CatalogPage = () => {
       <div className={styles.products}>
         <div className={styles.productsView}>
           {bouquets?.map((elem) => (
-            <ProductCard name={elem.name} price={elem.price} uri={elem.url} />
+            <ProductCard
+              name={elem.name}
+              price={elem.price}
+              uri={elem.url}
+              id={elem.id}
+              oldPrice={elem.old_price}
+              discount={elem.discount}
+              flowers={elem.flowers}
+              object={elem}
+            />
           ))}
         </div>
       </div>
