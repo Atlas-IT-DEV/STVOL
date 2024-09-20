@@ -129,7 +129,14 @@ const CatalogPage = () => {
         <div className={styles.typeOfBouqets}>
           <p className={styles.nameFilterText}>Летние букеты</p>
           <div className={styles.productsView}>
-            {bouquets?.map((elem) => <ProductCard name={elem.name} price={elem.price} uri={elem.url}/>)}
+            {bouquets?.map((elem) => (
+              <ProductCard
+                name={elem.name}
+                price={elem.price}
+                uri={elem.url}
+                id={elem.id}
+              />
+            ))}
           </div>
         </div>
       </div>

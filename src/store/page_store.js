@@ -7,31 +7,15 @@ class PageStore {
   phone = null;
   count_bonus = null;
   referal = null;
+  cart = [];
 
   constructor() {
     makeAutoObservable(this);
   }
-  updateLang = (newLang) => {
-    this.lang = newLang;
+  updateCart = (newCart) => {
+    this.cart = newCart;
   };
-  updateToken = (newToken) => {
-    this.token = newToken;
-  };
-  updateName = (newName) => {
-    this.name = newName;
-  };
-  updateUsername = (newUsername) => {
-    this.username = newUsername;
-  };
-  updateRoleId = (newRole) => {
-    this.role_id = newRole;
-  };
-  updateRoleName = (newRole) => {
-    this.role_name = newRole;
-  };
-  updateCustomerType = (newType) => {
-    this.customer_type = newType;
-  };
+  
   firstCreateUser = async (values) => {
     const result = await createUser(values);
     this.count_bonus = result.count_bonus;
@@ -49,7 +33,7 @@ class PageStore {
       }
     );
     const result = await response.json();
-    console.log(response)
+    console.log(response);
     if (response.status == 404) {
       await this.firstCreateUser(values);
     } else if (response.status == 200) {

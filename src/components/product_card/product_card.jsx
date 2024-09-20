@@ -13,6 +13,7 @@ const ProductCard = ({
   name,
   price,
   uri,
+  id = 1,
   oldPrice = null,
   discount = null,
 }) => {
@@ -21,7 +22,7 @@ const ProductCard = ({
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <Swiper
-        onClick={() => navigate("/product")}
+        onClick={() => navigate("/product", { state: { product_id: id } })}
         style={{
           "--swiper-pagination-color": "rgba(237, 237, 237, 1)",
           "--swiper-pagination-bullet-inactive-color": "rgba(131, 131, 131, 1)",

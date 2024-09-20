@@ -165,7 +165,7 @@ export const getHistoryOrder = async (id) => {
   return result;
 };
 
-export const getBouquetByUserId = async (id) => {
+export const getBouquetById = async (id) => {
   const response = await fetch(baseUrl + `/bouquets/bouquet_id/${id}`, {
     method: "GET",
     headers: {
@@ -176,7 +176,7 @@ export const getBouquetByUserId = async (id) => {
   return result;
 };
 
-export const getBouquetByUserIdFull = async (id) => {
+export const getBouquetByIdFull = async (id) => {
   const response = await fetch(baseUrl + `/bouquets/bouquet_id/full/${id}`, {
     method: "GET",
     headers: {

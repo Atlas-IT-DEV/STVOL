@@ -2,17 +2,27 @@ import Header from "../../components/header/header";
 import styles from "./product_page.module.css";
 import arrowGray from "../../images/gray_right_arrow.svg";
 import arrowWhite from "../../images/arrow_white.svg";
-import bouqet from "../../images/buket1.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import useWindowDimensions from "../../components/hooks/windowDimensions";
+import { getBouquetByIdFull } from "../../components/fetches";
 
 const ProductPage = () => {
   const [count, setCount] = useState(1);
   const [isOpen, setIsOpen] = useState([false, false, false, false]);
   const copyIsOpen = Array.from(isOpen);
   const navigate = useNavigate();
+  const [bouquet, setBouquet] = useState({});
+  const getBouquetInfo = async () => {
+    setBouquet(await getBouquetByIdFull(location.state.product_id));
+  };
+  useEffect(() => {
+    getBouquetInfo();
+  }, []);
+
   const { width } = useWindowDimensions();
+  const location = useLocation();
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
@@ -22,12 +32,12 @@ const ProductPage = () => {
         <img src={arrowGray} alt="" />
       </div>
       <div className={styles.imageProduct}>
-        <img src={bouqet} alt="" />
+        <img src={bouquet?.url} alt="" />
       </div>
       <main>
-        <p className={styles.nameProductText}>STVOL 17</p>
+        <p className={styles.nameProductText}>{bouquet?.name}</p>
         <div className={styles.sumView}>
-          <p className={styles.sumText}>{3000 * count} ₽</p>
+          <p className={styles.sumText}>{bouquet?.price * count} ₽</p>
           <div className={styles.countView}>
             <p
               onClick={() => {
