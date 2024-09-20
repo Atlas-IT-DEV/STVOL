@@ -1,12 +1,12 @@
 import Header from "../../components/header/header";
 import styles from "./catalog_page.module.css";
-import sortIcon from "../../images/sort_icon.svg";
 import filterIcon from "../../images/filter_icon.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BottomMenu from "../../components/bottom_menu/bottomMenu";
 import ProductCard from "../../components/product_card/product_card";
 import SortModal from "../../components/sort_modal/sort_modal";
 import useWindowDimensions from "../../components/hooks/windowDimensions";
+import { getAllBouquetsFull } from "../../components/fetches";
 
 const CatalogPage = () => {
   const [isPressed, setIsPressed] = useState([
@@ -15,6 +15,14 @@ const CatalogPage = () => {
   ]);
   let copyIsPressed = Array.from(isPressed);
   const { width } = useWindowDimensions();
+  const [bouquets, setBouquets] = useState([]);
+
+  const getBouquetsFull = async () => {
+    setBouquets(await getAllBouquetsFull());
+  };
+  useEffect(() => {
+    getBouquetsFull();
+  }, []);
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
@@ -121,10 +129,7 @@ const CatalogPage = () => {
         <div className={styles.typeOfBouqets}>
           <p className={styles.nameFilterText}>Летние букеты</p>
           <div className={styles.productsView}>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {bouquets?.map((elem) => <ProductCard name={elem.name} price={elem.price} uri={elem.url}/>)}
           </div>
         </div>
       </div>

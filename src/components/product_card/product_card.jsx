@@ -1,6 +1,4 @@
 import styles from "./product_card.module.css";
-
-import bouqet from "../../images/buket1.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
@@ -10,22 +8,16 @@ import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router";
 import useWindowDimensions from "../hooks/windowDimensions";
-import { useEffect, useState } from "react";
-import { getAllBouquets } from "../fetches";
 
-const ProductCard = () => {
+const ProductCard = ({
+  name,
+  price,
+  uri,
+  oldPrice = null,
+  discount = null,
+}) => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
-
-  const [bouquet, setBouquet] = useState([]);
-
-  const getBouquets = async () => {
-    const data = await getAllBouquets();
-    setBouquet(getAllBouquets());
-  };
-  useEffect(() => {
-    getBouquets();
-  }, []);
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <Swiper
@@ -44,20 +36,14 @@ const ProductCard = () => {
         pagination={true}
       >
         <SwiperSlide className={styles.slider}>
-          <img src={bouqet} alt="" />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <img src={bouqet} alt="" />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <img src={bouqet} alt="" />
+          <img src={uri} alt="" />
         </SwiperSlide>
       </Swiper>
-      <p className={styles.nameProductText}>Букет из роз, фиалок и ромашек</p>
+      <p className={styles.nameProductText}>{name}</p>
       <div className={styles.priceView}>
-        <p className={styles.priceText}>3050 ₽</p>
-        <p className={styles.oldPriceText}>3050₽</p>
-        <p className={styles.discountText}>-15%</p>
+        <p className={styles.priceText}>{price}₽</p>
+        {oldPrice && <p className={styles.oldPriceText}>{oldPrice}₽</p>}
+        {discount && <p className={styles.discountText}>-{discount}%</p>}
       </div>
       <p className={styles.addButtonText}>В корзину</p>
     </div>

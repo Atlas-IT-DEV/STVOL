@@ -1,4 +1,4 @@
-const baseUrl = "http://212.193.30.68:8888";
+const baseUrl = "https://stvol.garden:8888";
 
 export const getAllUsers = async () => {
   const response = await fetch(baseUrl + "/users/", {
@@ -253,21 +253,14 @@ export const getImageById = async (id) => {
   return result;
 };
 
-export const createUser = async () => {
+export const createUser = async (values) => {
   const response = await fetch(baseUrl + "/users/", {
     method: "POST",
     headers: {
       accept: "application/json",
       "Content-type": "application/json",
     },
-    body: JSON.stringify({
-      id: 0,
-      name: "",
-      telegram_id: 0,
-      phone: "",
-      count_bonus: 0,
-      referal: 0,
-    }),
+    body: JSON.stringify(values),
   });
   const result = await response.json();
   return result;

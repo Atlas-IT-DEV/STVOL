@@ -21,7 +21,7 @@ const SelectFlower = () => {
         className={styles.slideTrack}
         modules={[FreeMode, Navigation, Grid]}
         spaceBetween={36}
-        freeMode={false}
+        freeMode={true}
         navigation={true}
         slidesPerView={3}
         grid={{ rows: 2, fill: "row" }}
