@@ -160,14 +160,16 @@
 }
 .container375 .backButton img {
   transform: rotate(180deg);
-  height: 24px;
+  height: 14px;
 }
 .container375 .imageProduct {
   display: flex;
   justify-content: center;
 }
 .container375 .imageProduct img {
-  width: 260px;
+  width: 215px;
+  height: 215px;
+  object-fit: contain;
 }
 .container375 main {
   margin: 30px;
@@ -175,7 +177,7 @@
 .container375 main .nameProductText {
   color: #9c9c9c;
   font-family: TTNorms800;
-  font-size: 24px;
+  font-size: 16px;
 }
 .container375 main .sumView {
   margin-top: 18px;
@@ -184,7 +186,7 @@
 }
 .container375 main .sumView .sumText {
   color: white;
-  font-size: 29px;
+  font-size: 20px;
   font-family: TTNorms700;
   width: 150px;
 }
@@ -196,7 +198,7 @@
 }
 .container375 main .sumView .countView p {
   color: white;
-  font-size: 22px;
+  font-size: 14px;
   font-family: TTNorms800;
   padding: 5px;
   cursor: pointer;
@@ -217,34 +219,40 @@
   margin-top: 30px;
 }
 .container375 main .orderButtons .addCartText {
+  display: flex;
+  align-items: center;
   background-color: white;
   color: black;
   font-family: TTNorms800;
-  font-size: 18px;
+  font-size: 14px;
   padding: 0 16px 0 16px;
   border-radius: 16px;
   cursor: pointer;
+  height: 30px;
 }
 .container375 main .orderButtons .fastOrderText {
+  display: flex;
+  align-items: center;
   border: 1px solid white;
   color: white;
   font-family: TTNorms800;
-  font-size: 18px;
+  font-size: 14px;
   padding: 0 16px 0 16px;
   border-radius: 16px;
   cursor: pointer;
+  height: 30px;
 }
 .container375 main .subheaderText {
   color: white;
   font-family: TTNorms700;
-  font-size: 24px;
+  font-size: 16px;
 }
 .container375 main .descriptionHeader {
   margin-top: 45px;
 }
 .container375 main .descriptionText {
   color: white;
-  font-size: 22px;
+  font-size: 14px;
   font-family: TTNorms400;
 }
 .container375 main .descriptionText span {
@@ -282,7 +290,7 @@
   margin-top: 12px;
   color: white;
   font-family: TTNorms400;
-  font-size: 22px;
+  font-size: 14px;
 }
 .container375 main .detailsText span {
   color: #9c9c9c;
@@ -290,6 +298,6 @@
 .container375 main .saveText {
   color: #9c9c9c;
   font-family: TTNorms400;
-  font-size: 22px;
+  font-size: 14px;
   margin-top: 12px;
 }
