@@ -3,11 +3,13 @@ import logo from "../../images/logo.svg";
 import cartIcon from "../../images/cart_icon.svg";
 import whiteArrow from "../../images/arrow_white.svg";
 import { useNavigate } from "react-router";
+import useWindowDimensions from "../../components/hooks/windowDimensions";
 
 const LoyalityRulesPage = () => {
   const navigate = useNavigate();
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
         <img src={logo} alt="" />
         <div className={styles.cartButton} onClick={() => navigate("/cart")}>

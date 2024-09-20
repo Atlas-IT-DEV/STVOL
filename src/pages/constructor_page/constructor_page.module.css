@@ -59,3 +59,68 @@
 .container .helpText span {
   font-weight: 500;
 }
+.container375 {
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container375 .header {
+  margin-top: 30px;
+  width: 100%;
+}
+.container375 .namePageText {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  color: #afafaf;
+}
+.container375 .bouquetContainer {
+  min-width: 165px;
+  min-height: 165px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.container375 .bouquetContainer p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #505050;
+}
+.container375 .addButton {
+  height: 45px;
+  background-color: #ededed;
+  border-radius: 16px;
+  padding: 0 16px 0 16px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.container375 .addButton img {
+  object-fit: contain;
+}
+.container375 .addButton p {
+  font-weight: 800;
+  font-size: 16px;
+  color: black;
+}
+.container375 .flowerSelect {
+  width: 100%;
+  margin-top: 52px;
+}
+.container375 .helpText {
+  margin-bottom: 110px;
+  margin-top: 40px;
+  color: #505050;
+  font-size: 16px;
+}
+.container375 .helpText span {
+  font-weight: 500;
+}

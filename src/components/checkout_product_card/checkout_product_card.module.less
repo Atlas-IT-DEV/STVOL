@@ -54,3 +54,62 @@
     height: 168px;
   }
 }
+
+.container375 {
+  width: 100%;
+  height: 220px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 41px;
+  display: flex;
+  justify-content: space-between;
+  .nameProductText {
+    color: black;
+    font-family: @font700;
+    font-size: 18px;
+  }
+  .descriptionProductText {
+    font-size: 18px;
+    font-family: @font400;
+    color: black;
+  }
+  .sumProductText {
+    margin-top: 10px;
+    font-size: 18px;
+    font-family: @font700;
+    color: black;
+  }
+  .countProduct {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-top: 18px;
+    .selectCountProductText {
+      color: black;
+      font-size: 18px;
+      font-family: @font800;
+      cursor: pointer;
+    }
+    .countProductText {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      font-family: @font800;
+      background-color: black;
+      height: 35px;
+      width: 55px;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+  }
+  .imageProduct {
+    img {
+      width: 118px;
+      height: 118px;
+      object-fit: contain;
+    }
+  }
+}

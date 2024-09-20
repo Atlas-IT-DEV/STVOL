@@ -4,15 +4,24 @@
 @font800: TTNorms800;
 
 .container {
-  width: 235px;
+  width: 215px;
+  height: 410px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   .slideTrack {
-    display: flex;
     padding: 0 0 30px 0 !important;
+    width: 215px;
+    display: flex;
     .slider {
-      width: 100%;
       display: flex;
-      justify-content: center;
+      width: 215px;
       cursor: pointer;
+      img {
+        width: 215px;
+        height: 215px;
+        object-fit: contain;
+      }
     }
   }
   .nameProductText {
@@ -62,14 +71,23 @@
 }
 .container375 {
   width: 165px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
   .slideTrack {
     display: flex;
-    padding: 0 0 30px 0 !important;
+    width: 165px;
+    padding: 0 0 200px 0 !important;
     .slider {
-      width: 100%;
+      width: 165px;
       display: flex;
       justify-content: center;
       cursor: pointer;
+      img {
+        width: 165px;
+        height: 165px;
+        object-fit: contain;
+      }
     }
   }
   .nameProductText {
@@ -85,11 +103,11 @@
     margin-top: 10px;
     .priceText {
       color: rgba(200, 23, 104, 1);
-      font-size: 16px;
+      font-size: 14px;
       font-family: @font700;
     }
     .oldPriceText {
-      font-size: 14px;
+      font-size: 13px;
       color: rgba(175, 175, 175, 1);
       font-family: @font400;
       text-decoration: line-through;
@@ -99,7 +117,6 @@
       color: white;
       background-color: rgba(200, 23, 104, 1);
       height: 25px;
-
       padding: 0 4px 0 4px;
       border-radius: 16px;
     }
@@ -110,7 +127,7 @@
     background-color: white;
     padding: 0 16px 0 16px;
     font-family: @font800;
-    font-size: 18px;
+    font-size: 14px;
     width: max-content;
     align-content: center;
     border-radius: 16px;

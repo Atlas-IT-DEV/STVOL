@@ -172,11 +172,19 @@ const ProductPage = () => {
         <div className={isOpen[2] ? styles.viewOpen : styles.viewClose}>
           <table>
             <tr
-              style={{
-                color: "rgba(55, 55, 55, 1)",
-                fontSize: 20,
-                fontFamily: "TTNorms700",
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(55, 55, 55, 1)",
+                      fontSize: 20,
+                      fontFamily: "TTNorms700",
+                    }
+                  : {
+                      color: "rgba(55, 55, 55, 1)",
+                      fontSize: 14,
+                      fontFamily: "TTNorms700",
+                    }
+              }
             >
               <td>Интервал</td>
               <td>Москва</td>
@@ -184,38 +192,67 @@ const ProductPage = () => {
             </tr>
 
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                borderBottom: "1px solid rgba(55, 55, 55, 1)",
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 35,
+                    }
+              }
             >
               <td>Трехчасовой</td>
               <td>Бесплатно</td>
               <td>399+40₽/км</td>
             </tr>
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                borderBottom: "1px solid rgba(55, 55, 55, 1)",
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 35,
+                    }
+              }
             >
               <td>Часовой</td>
               <td>499 ₽</td>
               <td>699+40₽/км</td>
             </tr>
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      height: 45,
+                    }
+              }
             >
               <td>Точное время</td>
               <td>999 ₽</td>
@@ -240,11 +277,19 @@ const ProductPage = () => {
         <div className={isOpen[3] ? styles.viewOpen : styles.viewClose}>
           <table>
             <tr
-              style={{
-                color: "rgba(55, 55, 55, 1)",
-                fontSize: 20,
-                fontFamily: "TTNorms700",
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(55, 55, 55, 1)",
+                      fontSize: 20,
+                      fontFamily: "TTNorms700",
+                    }
+                  : {
+                      color: "rgba(55, 55, 55, 1)",
+                      fontSize: 14,
+                      fontFamily: "TTNorms700",
+                    }
+              }
             >
               <td>Интервал</td>
               <td></td>
@@ -252,38 +297,69 @@ const ProductPage = () => {
             </tr>
 
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                borderBottom: "1px solid rgba(55, 55, 55, 1)",
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 35,
+                    }
+              }
             >
               <td>Трехчасовой</td>
               <td></td>
               <td>699 ₽</td>
             </tr>
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                borderBottom: "1px solid rgba(55, 55, 55, 1)",
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 35,
+                    }
+              }
             >
               <td>Часовой</td>
               <td></td>
               <td>999 ₽</td>
             </tr>
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 35,
+                    }
+              }
             >
               <td>Точное время</td>
               <td></td>

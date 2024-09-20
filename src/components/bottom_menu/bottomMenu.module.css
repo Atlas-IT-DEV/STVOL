@@ -21,6 +21,38 @@
   cursor: pointer;
 }
 .container .button p {
-  font: 18px;
+  font-size: 18px;
   color: #afafaf;
+}
+.container375 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  z-index: 1;
+}
+.container375 .button {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 25%;
+  border-right: 1px solid #232323;
+  border-top: 1px solid #232323;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+.container375 .button p {
+  font-size: 14px;
+  color: #afafaf;
+}
+.container375 .button .profileIcon {
+  width: 35px;
+}
+.container375 .button .catalogIcon {
+  width: 30px;
 }

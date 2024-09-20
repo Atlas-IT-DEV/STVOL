@@ -81,3 +81,86 @@
   margin-top: 50px;
   margin-bottom: 120px;
 }
+.container375 {
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.container375 .header {
+  margin-top: 30px;
+}
+.container375 .namePageText {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  color: #afafaf;
+  font-family: TTNorms800;
+}
+.container375 .profileInfo {
+  margin-top: 16px;
+  margin-left: 38px;
+}
+.container375 .profileInfo .editButton {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  gap: 8px;
+  cursor: pointer;
+}
+.container375 .profileInfo .editButton p {
+  font-size: 22px;
+  color: #afafaf;
+  font-family: TTNorms400;
+  line-height: 26px;
+}
+.container375 .profileInfo .editButton img {
+  height: 10px;
+}
+.container375 .profileInfo .nameProfileText {
+  margin-top: 10px;
+  font-family: TTNorms800;
+  font-size: 14px;
+  color: #afafaf;
+}
+.container375 .profileInfo .phoneNumberText {
+  font-size: 14px;
+  font-family: TTNorms400;
+  color: #afafaf;
+  margin-top: 4px;
+}
+.container375 .statusLoyalityText {
+  text-align: center;
+  font-size: 16px;
+  color: #afafaf;
+  font-family: TTNorms800;
+  margin-top: 20px;
+}
+.container375 .statusView {
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  padding: 0 16px 0 16px;
+  background: linear-gradient(90deg, #df7b42, #7a3e1c);
+  width: max-content;
+  border-radius: 16px;
+}
+.container375 .statusView p {
+  font-family: TTNorms800;
+  font-size: 14px;
+  color: black;
+}
+.container375 .orderText {
+  text-align: center;
+  font-family: TTNorms800;
+  color: #afafaf;
+  font-size: 18px;
+  margin-top: 20px;
+}
+.container375 .orders {
+  margin-top: 50px;
+  margin-bottom: 120px;
+}

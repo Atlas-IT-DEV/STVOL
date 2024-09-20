@@ -10,3 +10,21 @@
   top: 0;
   cursor: pointer;
 }
+.container375 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+}
+.container375 .logoImg {
+  width: 121px;
+}
+.container375 .cartButton {
+  position: absolute;
+  right: 22px;
+  top: 0;
+  cursor: pointer;
+}
+.container375 .cartButton img {
+  width: 33px;
+}

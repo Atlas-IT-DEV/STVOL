@@ -1,15 +1,26 @@
 .container {
-  width: 235px;
+  width: 215px;
+  height: 410px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .container .slideTrack {
   display: flex;
   padding: 0 0 30px 0 !important;
+  width: 215px;
 }
 .container .slideTrack .slider {
   width: 100%;
   display: flex;
   justify-content: center;
+  width: 215px;
   cursor: pointer;
+}
+.container .slideTrack .slider img {
+  width: 215px;
+  height: 215px;
+  object-fit: contain;
 }
 .container .nameProductText {
   color: white;
@@ -57,16 +68,25 @@
 }
 .container375 {
   width: 165px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
 }
 .container375 .slideTrack {
   display: flex;
-  padding: 0 0 30px 0 !important;
+  width: 165px;
+  padding: 0 0 200px 0 !important;
 }
 .container375 .slideTrack .slider {
-  width: 100%;
+  width: 165px;
   display: flex;
   justify-content: center;
   cursor: pointer;
+}
+.container375 .slideTrack .slider img {
+  width: 165px;
+  height: 165px;
+  object-fit: contain;
 }
 .container375 .nameProductText {
   color: white;
@@ -82,11 +102,11 @@
 }
 .container375 .priceView .priceText {
   color: #c81768;
-  font-size: 16px;
+  font-size: 14px;
   font-family: TTNorms700;
 }
 .container375 .priceView .oldPriceText {
-  font-size: 14px;
+  font-size: 13px;
   color: #afafaf;
   font-family: TTNorms400;
   text-decoration: line-through;
@@ -96,16 +116,16 @@
   color: white;
   background-color: #c81768;
   height: 25px;
-  padding: 0 6px 0 6px;
+  padding: 0 4px 0 4px;
   border-radius: 16px;
 }
 .container375 .addButtonText {
-  height: 40px;
+  height: 45px;
   color: black;
   background-color: #c81768;
   padding: 0 16px 0 16px;
   font-family: TTNorms800;
-  font-size: 18px;
+  font-size: 16px;
   width: max-content;
   align-content: center;
   border-radius: 16px;

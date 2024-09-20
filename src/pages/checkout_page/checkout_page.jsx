@@ -1,5 +1,5 @@
 import styles from "./checkout_page.module.css";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo.svg";
 import arrowGray from "../../images/gray_right_arrow.svg";
 import arrowWhite from "../../images/arrow_white.svg";
 import inActiveApplyIcon from "../../images/inactive_apply_icon.svg";
@@ -32,7 +32,7 @@ const CheckoutPage = () => {
   let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
         <img src={logo} alt="" />
         <div className={styles.backButton} onClick={() => navigate(-1)}>

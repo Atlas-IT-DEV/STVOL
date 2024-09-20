@@ -181,6 +181,12 @@
     margin: 30px 36px 0 36px;
     .cartButton {
       cursor: pointer;
+      img {
+        width: 33px;
+      }
+    }
+    .logoImg {
+      width: 121px;
     }
   }
   .infoBlock {
@@ -188,7 +194,7 @@
     .mainInfoText {
       color: white;
       font-family: @font700;
-      font-size: 24px;
+      font-size: 16px;
     }
   }
   .descriptionBlock {
@@ -198,21 +204,24 @@
     gap: 15px;
     p {
       color: rgba(156, 156, 156, 1);
-      font-size: 22px;
+      font-size: 16px;
       font-family: @font400;
     }
   }
   main {
     .buttonShowHide {
       color: white;
-      font-size: 24px;
+      font-size: 16px;
       font-family: @font700;
-      margin: 50px 0 0 36px;
+      margin: 30px 36px 0 36px;
       display: flex;
       align-items: end;
       gap: 10px;
       cursor: pointer;
       width: max-content;
+      img {
+        height: 20px;
+      }
     }
     .arrowDown {
       transform: rotate(180deg);
@@ -233,7 +242,7 @@
       margin: 12px 36px 0 36px;
 
       .priceText {
-        font-size: 20px;
+        font-size: 14px;
         color: rgba(106, 106, 106, 1);
         font-family: @font400;
       }
@@ -246,7 +255,7 @@
     .deliveryView {
       p {
         color: rgba(156, 156, 156, 1);
-        font-size: 22px;
+        font-size: 14px;
         font-family: @font400;
       }
     }
@@ -255,13 +264,13 @@
         display: flex;
         .nameText {
           color: rgba(156, 156, 156, 1);
-          font-size: 22px;
+          font-size: 14px;
           font-family: @font400;
           width: 270px;
         }
         .discountText {
           color: rgba(156, 156, 156, 1);
-          font-size: 22px;
+          font-size: 14px;
           font-family: @font400;
         }
       }
@@ -269,8 +278,8 @@
     .rulesText {
       color: rgba(106, 106, 106, 1);
       font-family: @font400;
-      font-size: 20px;
-      margin-top: 22px;
+      font-size: 14px;
+      margin-top: 15px;
       border-bottom: 1px solid rgba(106, 106, 106, 1);
       width: max-content;
       cursor: pointer;
@@ -280,24 +289,24 @@
     display: flex;
     justify-content: space-between;
     align-items: end;
-    margin: 52px 36px 150px 36px;
+    margin: 52px 36px 110px 36px;
     .aboutCompany {
       display: flex;
       flex-direction: column;
       gap: 15px;
       .attributeCompanyText {
-        font-size: 22px;
+        font-size: 14px;
         color: rgba(156, 156, 156, 1);
         font-family: @font400;
       }
       .valueCompanyText {
-        font-size: 20px;
+        font-size: 14px;
         color: rgba(156, 156, 156, 1);
         font-family: @font400;
       }
 
       .tgButton {
-        height: 45px;
+        height: 35px;
         display: flex;
         background-color: white;
         align-items: center;
@@ -308,29 +317,38 @@
         p {
           color: black;
           font-family: @font700;
-          font-size: 22px;
+          font-size: 14px;
+        }
+        img {
+          width: 28px;
         }
       }
       .phoneButton {
         cursor: pointer;
         display: flex;
-        gap: 12px;
+        gap: 4px;
         align-items: center;
         p {
           color: rgba(156, 156, 156, 1);
-          font-size: 22px;
+          font-size: 14px;
           font-family: @font400;
+        }
+        img {
+          width: 28px;
         }
       }
       .emailButton {
         cursor: pointer;
         display: flex;
-        gap: 12px;
+        gap: 4px;
         align-items: center;
         p {
           color: rgba(156, 156, 156, 1);
-          font-size: 22px;
+          font-size: 14px;
           font-family: @font400;
+        }
+        img {
+          width: 28px;
         }
       }
     }
