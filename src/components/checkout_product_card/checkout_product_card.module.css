@@ -48,3 +48,59 @@
   width: 168px;
   height: 168px;
 }
+.container375 {
+  width: 100%;
+  height: 220px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 41px;
+  display: flex;
+  justify-content: space-between;
+}
+.container375 .nameProductText {
+  color: black;
+  font-family: TTNorms700;
+  font-size: 18px;
+}
+.container375 .descriptionProductText {
+  font-size: 18px;
+  font-family: TTNorms400;
+  color: black;
+}
+.container375 .sumProductText {
+  margin-top: 10px;
+  font-size: 18px;
+  font-family: TTNorms700;
+  color: black;
+}
+.container375 .countProduct {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 18px;
+}
+.container375 .countProduct .selectCountProductText {
+  color: black;
+  font-size: 18px;
+  font-family: TTNorms800;
+  cursor: pointer;
+}
+.container375 .countProduct .countProductText {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-family: TTNorms800;
+  background-color: black;
+  height: 35px;
+  width: 55px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.container375 .imageProduct img {
+  width: 118px;
+  height: 118px;
+  object-fit: contain;
+}

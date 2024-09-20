@@ -20,7 +20,7 @@ const AboutPage = () => {
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
-        <img src={logo} alt="" className={styles.logoImg}/>
+        <img src={logo} alt="" className={styles.logoImg} />
         <div className={styles.cartButton} onClick={() => navigate("/cart")}>
           <img src={cartIcon} alt="" />
         </div>
@@ -59,11 +59,19 @@ const AboutPage = () => {
         <div className={isHide[0] ? styles.viewOpen : styles.viewClose}>
           <table>
             <tr
-              style={{
-                color: "rgba(55, 55, 55, 1)",
-                fontSize: 20,
-                fontFamily: "TTNorms500",
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(55, 55, 55, 1)",
+                      fontSize: 20,
+                      fontFamily: "TTNorms500",
+                    }
+                  : {
+                      color: "rgba(55, 55, 55, 1)",
+                      fontSize: 14,
+                      fontFamily: "TTNorms500",
+                    }
+              }
             >
               <td>Интервал</td>
               <td>Москва</td>
@@ -71,38 +79,69 @@ const AboutPage = () => {
             </tr>
 
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                borderBottom: "1px solid rgba(55, 55, 55, 1)",
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+              }
             >
               <td>Трехчасовой</td>
               <td>Бесплатно</td>
               <td>399+40₽/км</td>
             </tr>
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                borderBottom: "1px solid rgba(55, 55, 55, 1)",
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+              }
             >
               <td>Часовой</td>
               <td>499 ₽</td>
               <td>699+40₽/км</td>
             </tr>
             <tr
-              style={{
-                color: "rgba(156, 156, 156, 1)",
-                fontFamily: "TTNorms400",
-                fontSize: 20,
-                height: 45,
-              }}
+              style={
+                width >= 500
+                  ? {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 20,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+                  : {
+                      color: "rgba(156, 156, 156, 1)",
+                      fontFamily: "TTNorms400",
+                      fontSize: 14,
+                      borderBottom: "1px solid rgba(55, 55, 55, 1)",
+                      height: 45,
+                    }
+              }
             >
               <td>Точное время</td>
               <td>999 ₽</td>

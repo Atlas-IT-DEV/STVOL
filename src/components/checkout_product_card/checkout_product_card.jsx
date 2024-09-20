@@ -1,11 +1,13 @@
 import { useState } from "react";
 import styles from "./checkout_product_card.module.css";
 import bouqet from "../../images/buket1.png";
+import useWindowDimensions from "../hooks/windowDimensions";
 
 const CheckoutProductCard = () => {
   const [count, setCount] = useState(1);
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div>
         <p className={styles.nameProductText}>STVOL 17</p>
         <p className={styles.descriptionProductText}>Букет из роз и ромашек</p>
