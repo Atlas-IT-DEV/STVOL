@@ -39,3 +39,52 @@
   font-size: 22px;
   font-family: TTNorms700;
 }
+.container375 {
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.container375 .header {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 36px 0 36px;
+}
+.container375 .header .cartButton {
+  cursor: pointer;
+}
+.container375 .header .cartButton img {
+  width: 33px;
+}
+.container375 .header .logoImg {
+  width: 121px;
+}
+.container375 .namePageText {
+  color: white;
+  font-size: 16px;
+  font-family: TTNorms700;
+  margin: 18px 0 0 36px;
+}
+.container375 .mainText {
+  margin: 18px 36px 0 36px;
+  font-size: 14px;
+  color: #9c9c9c;
+  font-family: TTNorms400;
+}
+.container375 .backButton {
+  display: flex;
+  align-items: center;
+  margin: 40px 0 80px 36px;
+  cursor: pointer;
+  gap: 10px;
+  width: max-content;
+}
+.container375 .backButton img {
+  transform: rotate(270deg);
+  width: 12px;
+}
+.container375 .backButton p {
+  color: white;
+  font-size: 16px;
+  font-family: TTNorms700;
+}

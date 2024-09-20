@@ -20,7 +20,7 @@ const AboutPage = () => {
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
-        <img src={logo} alt="" />
+        <img src={logo} alt="" className={styles.logoImg}/>
         <div className={styles.cartButton} onClick={() => navigate("/cart")}>
           <img src={cartIcon} alt="" />
         </div>
@@ -199,7 +199,10 @@ const AboutPage = () => {
         <div className={styles.aboutCompany}>
           <div>
             <p className={styles.attributeCompanyText}>ИП</p>
-            <p className={styles.valueCompanyText}>ИП Алиев Али Рауф Оглы</p>
+            <p className={styles.valueCompanyText}>
+              ИП Алиев <br />
+              Али Рауф Оглы
+            </p>
           </div>
           <div>
             <p className={styles.attributeCompanyText}>ОКВЭД</p>

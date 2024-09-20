@@ -170,13 +170,19 @@
 .container375 .header .cartButton {
   cursor: pointer;
 }
+.container375 .header .cartButton img {
+  width: 33px;
+}
+.container375 .header .logoImg {
+  width: 121px;
+}
 .container375 .infoBlock {
   margin: 18px 36px 0 36px;
 }
 .container375 .infoBlock .mainInfoText {
   color: white;
   font-family: TTNorms700;
-  font-size: 24px;
+  font-size: 16px;
 }
 .container375 .descriptionBlock {
   margin-top: 20px;
@@ -186,12 +192,12 @@
 }
 .container375 .descriptionBlock p {
   color: #9c9c9c;
-  font-size: 22px;
+  font-size: 16px;
   font-family: TTNorms400;
 }
 .container375 main .buttonShowHide {
   color: white;
-  font-size: 24px;
+  font-size: 16px;
   font-family: TTNorms700;
   margin: 50px 0 0 36px;
   display: flex;
@@ -199,6 +205,9 @@
   gap: 10px;
   cursor: pointer;
   width: max-content;
+}
+.container375 main .buttonShowHide img {
+  height: 20px;
 }
 .container375 main .arrowDown {
   transform: rotate(180deg);
@@ -230,7 +239,7 @@
 }
 .container375 main .deliveryView p {
   color: #9c9c9c;
-  font-size: 22px;
+  font-size: 14px;
   font-family: TTNorms400;
 }
 .container375 main .loyalityView .descriptionLoyality {
@@ -238,19 +247,19 @@
 }
 .container375 main .loyalityView .descriptionLoyality .nameText {
   color: #9c9c9c;
-  font-size: 22px;
+  font-size: 14px;
   font-family: TTNorms400;
   width: 270px;
 }
 .container375 main .loyalityView .descriptionLoyality .discountText {
   color: #9c9c9c;
-  font-size: 22px;
+  font-size: 14px;
   font-family: TTNorms400;
 }
 .container375 main .rulesText {
   color: #6a6a6a;
   font-family: TTNorms400;
-  font-size: 20px;
+  font-size: 14px;
   margin-top: 22px;
   border-bottom: 1px solid #6a6a6a;
   width: max-content;
@@ -268,17 +277,17 @@
   gap: 15px;
 }
 .container375 .footer .aboutCompany .attributeCompanyText {
-  font-size: 22px;
+  font-size: 14px;
   color: #9c9c9c;
   font-family: TTNorms400;
 }
 .container375 .footer .aboutCompany .valueCompanyText {
-  font-size: 20px;
+  font-size: 14px;
   color: #9c9c9c;
   font-family: TTNorms400;
 }
 .container375 .footer .aboutCompany .tgButton {
-  height: 45px;
+  height: 35px;
   display: flex;
   background-color: white;
   align-items: center;
@@ -290,27 +299,36 @@
 .container375 .footer .aboutCompany .tgButton p {
   color: black;
   font-family: TTNorms700;
-  font-size: 22px;
+  font-size: 14px;
+}
+.container375 .footer .aboutCompany .tgButton img {
+  width: 28px;
 }
 .container375 .footer .aboutCompany .phoneButton {
   cursor: pointer;
   display: flex;
-  gap: 12px;
+  gap: 4px;
   align-items: center;
 }
 .container375 .footer .aboutCompany .phoneButton p {
   color: #9c9c9c;
-  font-size: 22px;
+  font-size: 14px;
   font-family: TTNorms400;
+}
+.container375 .footer .aboutCompany .phoneButton img {
+  width: 28px;
 }
 .container375 .footer .aboutCompany .emailButton {
   cursor: pointer;
   display: flex;
-  gap: 12px;
+  gap: 4px;
   align-items: center;
 }
 .container375 .footer .aboutCompany .emailButton p {
   color: #9c9c9c;
-  font-size: 22px;
+  font-size: 14px;
   font-family: TTNorms400;
+}
+.container375 .footer .aboutCompany .emailButton img {
+  width: 28px;
 }
