@@ -1,5 +1,5 @@
 import styles from "./loyality_rules_page.module.css";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo.svg";
 import cartIcon from "../../images/cart_icon.svg";
 import whiteArrow from "../../images/arrow_white.svg";
 import { useNavigate } from "react-router";

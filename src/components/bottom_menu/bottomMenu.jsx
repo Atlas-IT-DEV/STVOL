@@ -1,8 +1,8 @@
 import { useState } from "react";
-import constructorIcon from "../../images/constructor_icon.png";
+import constructorIcon from "../../images/constructor_icon.svg";
 import profileIcon from "../../images/profile_icon.svg";
 import catalogIcon from "../../images/catalog_icon.svg";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo.svg";
 import { useNavigate } from "react-router";
 import styles from "./bottomMenu.module.css";
 

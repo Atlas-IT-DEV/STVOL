@@ -1,6 +1,6 @@
 import styles from "./header.module.css";
 
-import logo from "../../images/logo.png";
+import logo from "../../images/logo.svg";
 import cartIcon from "../../images/cart_icon.svg";
 import { useNavigate } from "react-router";
 
