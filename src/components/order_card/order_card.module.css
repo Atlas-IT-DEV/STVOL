@@ -16,7 +16,7 @@
 .container .orderButton {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 5px;
 }
 .container .orderButton p {
   color: #afafaf;
@@ -34,23 +34,23 @@
   align-items: center;
 }
 .container375 img {
-  width: 205px;
-  height: 203px;
+  width: 165px;
+  height: 165px;
 }
 .container375 .dateText {
   font-family: TTNorms400;
-  font-size: 20px;
+  font-size: 14px;
   color: #434343;
   margin-top: 20px;
 }
 .container375 .orderButton {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 5px;
 }
 .container375 .orderButton p {
   color: #afafaf;
-  font-size: 20px;
+  font-size: 14px;
   font-family: TTNorms400;
   border-bottom: 1px solid #afafaf;
 }

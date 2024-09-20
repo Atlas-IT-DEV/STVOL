@@ -125,12 +125,12 @@ const CatalogPage = () => {
           Герберы
         </p>
       </div>
+      <p className={styles.nameFilterText}>Летние букеты</p>
       <div className={styles.products}>
-        <div className={styles.typeOfBouqets}>
-          <p className={styles.nameFilterText}>Летние букеты</p>
-          <div className={styles.productsView}>
-            {bouquets?.map((elem) => <ProductCard name={elem.name} price={elem.price} uri={elem.url}/>)}
-          </div>
+        <div className={styles.productsView}>
+          {bouquets?.map((elem) => (
+            <ProductCard name={elem.name} price={elem.price} uri={elem.url} />
+          ))}
         </div>
       </div>
       <BottomMenu />

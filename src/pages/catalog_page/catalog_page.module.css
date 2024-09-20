@@ -62,29 +62,26 @@
     opacity: 1;
   }
 }
+.container .nameFilterText {
+  color: #afafaf;
+  font-family: TTNorms800;
+  font-size: 27px;
+  margin: 10px 26px 0 26px;
+}
 .container .filtersClose {
   display: none;
 }
 .container .products {
-  margin-top: 25px;
-  margin-left: 26px;
-  gap: 30px;
-}
-.container .products .typeOfBouqets {
+  margin: 15px 26px 0 26px;
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-.container .products .typeOfBouqets .nameFilterText {
-  color: #afafaf;
-  font-family: TTNorms800;
-  font-size: 27px;
-}
-.container .products .typeOfBouqets .productsView {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   justify-content: center;
-  row-gap: 50px;
+}
+.container .products .productsView {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 30px;
+  column-gap: 0px;
   margin-bottom: 140px;
 }
 .container375 {
@@ -100,7 +97,7 @@
   margin-top: 20px;
   text-align: center;
   font-weight: 800;
-  font-size: 27px;
+  font-size: 18px;
   color: #afafaf;
   font-family: TTNorms800;
 }
@@ -114,9 +111,11 @@
 }
 .container375 .SortFilterButtons .sortButton {
   cursor: pointer;
+  width: 28px;
 }
 .container375 .SortFilterButtons .filterButton {
   cursor: pointer;
+  width: 23px;
 }
 .container375 .filtersOpen {
   display: grid;
@@ -137,13 +136,13 @@
 .container375 .filtersOpen .inActiveFilterButton {
   background-color: #3d3d3d;
   color: white;
-  font-size: 20px;
+  font-size: 14px;
   font-family: TTNorms400;
 }
 .container375 .filtersOpen .activeFilterButton {
   background-color: white;
   color: black;
-  font-size: 20px;
+  font-size: 14px;
   font-family: TTNorms400;
 }
 @keyframes fadeIn {
@@ -154,25 +153,22 @@
 .container375 .filtersClose {
   display: none;
 }
-.container375 .products {
-  margin-top: 25px;
-  margin-left: 26px;
-  gap: 30px;
-}
-.container375 .products .typeOfBouqets {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-.container375 .products .typeOfBouqets .nameFilterText {
+.container375 .nameFilterText {
   color: #afafaf;
   font-family: TTNorms800;
-  font-size: 27px;
+  font-size: 16px;
+  margin: 10px 26px 0 26px;
 }
-.container375 .products .typeOfBouqets .productsView {
+.container375 .products {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+.container375 .products .productsView {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   row-gap: 50px;
+  column-gap: 10px;
   margin-bottom: 140px;
 }

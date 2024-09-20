@@ -12,7 +12,7 @@ const OrderSlider = () => {
       <Swiper
         style={{
           "--swiper-navigation-color": "rgba(167, 167, 167, 1)",
-          "--swiper-navigation-size": "20px",
+          "--swiper-navigation-size": "14px",
         }}
         className={styles.slideTrack}
         modules={[FreeMode, Navigation]}

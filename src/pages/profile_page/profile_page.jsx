@@ -5,11 +5,13 @@ import styles from "./profile_page.module.css";
 import grayArrowRight from "../../images/gray_right_arrow.svg";
 import OrderSlider from "../../components/order_slider/order_slider";
 import { useStores } from "../../store/store_context";
+import useWindowDimensions from "../../components/hooks/windowDimensions";
 
 const ProfilePage = ({ status = "Бронзовый ствол — 5%" }) => {
   const { pageStore } = useStores();
+  const { width } = useWindowDimensions();
   return (
-    <div className={styles.container}>
+    <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
         <Header />
       </div>
