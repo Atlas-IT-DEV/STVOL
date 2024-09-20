@@ -241,6 +241,7 @@
 .container main .resultDelivery .deliveryView {
   display: flex;
   justify-content: space-between;
+  align-items: end;
 }
 .container main .resultDelivery .deliveryView .attributeDeliveryText {
   color: #cccccc;
@@ -549,6 +550,7 @@
 .container375 main .resultDelivery .deliveryView {
   display: flex;
   justify-content: space-between;
+  align-items: end;
 }
 .container375 main .resultDelivery .deliveryView .attributeDeliveryText {
   color: #cccccc;
