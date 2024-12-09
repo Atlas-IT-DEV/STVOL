@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Modal } from "@chakra-ui/react";
 import useWindowDimensions from "../hooks/windowDimensions";
 
-const SortModal = () => {
+const SortModal = ({ ascending, setAscending }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { width } = useWindowDimensions();
   return (
@@ -22,13 +22,32 @@ const SortModal = () => {
             <div className={styles.typesSort}>
               <p className={styles.nameModalText}>Сортировка</p>
               <div className={styles.divideLine} />
-              <p className={styles.buttonText}>Cначала дешевле</p>
+              <p
+                className={styles.buttonText}
+                onClick={() => {
+                  setAscending(1);
+                  setModalVisible(false);
+                }}
+              >
+                Cначала дешевле
+              </p>
               <div className={styles.divideLine} />
-              <p className={styles.buttonText}>Cначала дороже</p>
+              <p
+                className={styles.buttonText}
+                onClick={() => {
+                  setAscending(2);
+                  setModalVisible(false);
+                }}
+              >
+                Cначала дороже
+              </p>
             </div>
             <div
               className={styles.cancelButton}
-              onClick={() => setModalVisible(false)}
+              onClick={() => {
+                setAscending(0);
+                setModalVisible(false);
+              }}
             >
               <p className={styles.buttonText}>Отмена</p>
             </div>

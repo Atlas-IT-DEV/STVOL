@@ -15,7 +15,7 @@ const router = createMemoryRouter([
   {
     element: (
       <PageContainer>
-        <ConstructorPage />
+        <CatalogPage />
       </PageContainer>
     ),
     path: "/",
@@ -39,10 +39,10 @@ const router = createMemoryRouter([
   {
     element: (
       <PageContainer>
-        <CatalogPage />
+        <ConstructorPage />
       </PageContainer>
     ),
-    path: "/catalog",
+    path: "/constructor",
   },
   {
     element: (
@@ -85,7 +85,7 @@ function App() {
   useEffect(() => {
     if (!tg.isExpanded) tg.expand();
   });
-  tg.disableVerticalSwipes()
+  tg.disableVerticalSwipes();
   tg.onEvent("viewportChanged", () => tg.expand());
   useEffect(() => {
     pageStore.signIn(

@@ -7,8 +7,12 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
 import useWindowDimensions from "../../components/hooks/windowDimensions";
 import { getBouquetByIdFull } from "../../components/fetches";
+import { useStores } from "../../store/store_context";
+import { observer } from "mobx-react-lite";
+import { useToast } from "@chakra-ui/react";
+import { VStack, Text } from "@chakra-ui/react";
 
-const ProductPage = () => {
+const ProductPage = observer(() => {
   const [count, setCount] = useState(1);
   const [isOpen, setIsOpen] = useState([false, false, false, false]);
   const copyIsOpen = Array.from(isOpen);
@@ -20,6 +24,8 @@ const ProductPage = () => {
   useEffect(() => {
     getBouquetInfo();
   }, []);
+  const { pageStore } = useStores();
+  const toast = useToast();
 
   const { width } = useWindowDimensions();
   const location = useLocation();
@@ -52,27 +58,37 @@ const ProductPage = () => {
           </div>
         </div>
         <div className={styles.orderButtons}>
-          <p className={styles.addCartText}>В корзину</p>
-          <p className={styles.fastOrderText}>Быстрый заказ</p>
+          <p
+            className={styles.addCartText}
+            onClick={() => {
+              let buffer = Array.from(pageStore.cart);
+              for (let i = 0; i < count; i++) {
+                buffer.push(bouquet);
+              }
+
+              toast({
+                render: () => (
+                  <VStack
+                    color="white"
+                    p={3}
+                    bg="black"
+                    borderRadius={"12px"}
+                    border={"2px solid #c81768"}
+                  >
+                    <Text color={"white"}>Букет(ы) добавлен(ы) в корзину</Text>
+                  </VStack>
+                ),
+                duration: 2000,
+                isClosable: true,
+                position: "bottom",
+              });
+
+              pageStore.updateCart(buffer);
+            }}
+          >
+            В корзину
+          </p>
         </div>
-        <p className={`${styles.subheaderText} ${styles.descriptionHeader}`}>
-          Описание
-        </p>
-        <p className={styles.descriptionText}>
-          Бесплатная доставка по городу: <br />
-          <span>
-            Осуществляется бесплатно в четырехчасовой интервал в пределах МКАО
-          </span>{" "}
-          <br />
-          <br /> Аквапак для букетов: <br />{" "}
-          <span>
-            Осуществляется бесплатно в четырехчасовой интервал в пределах МКАО
-          </span>{" "}
-          <br /> <br /> Анонимная доставка: <br />
-          <span>
-            Осуществляется бесплатно в четырехчасовой интервал в пределах МКАО
-          </span>
-        </p>
         <div
           className={styles.hideButtons}
           onClick={() => {
@@ -91,13 +107,6 @@ const ProductPage = () => {
           <p className={styles.detailsText}>
             Цветы: <br />
             <span>{bouquet?.flowers}</span> <br />
-            <br />
-            Высота: <br /> <span>35 см</span> <br /> <br />
-            Диаметр: <br /> <span>50 см</span> <br /> <br />
-            Упаковка: <br />{" "}
-            <span>
-              Осуществляется бесплатно в четырехчасовой интервал в пределах МКАО
-            </span>
           </p>
         </div>
         <div
@@ -370,6 +379,6 @@ const ProductPage = () => {
       </main>
     </div>
   );
-};
+});
 
 export default ProductPage;

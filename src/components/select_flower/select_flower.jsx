@@ -8,6 +8,9 @@ import "swiper/css/grid";
 import { FreeMode, Navigation, Grid } from "swiper/modules";
 import FlowerCard from "../flower_card/flower_card";
 import useWindowDimensions from "../hooks/windowDimensions";
+import proteya from "./../../images/proteya.jpeg";
+import chris from "./../../images/chris.jpeg";
+import artishok from "./../../images/artishok.jpeg";
 
 const SelectFlower = () => {
   const { width } = useWindowDimensions();
@@ -24,43 +27,16 @@ const SelectFlower = () => {
         freeMode={true}
         navigation={true}
         slidesPerView={3}
-        grid={{ rows: 2, fill: "row" }}
+        grid={{ rows: 1, fill: "row" }}
       >
         <SwiperSlide className={styles.slider}>
-          <FlowerCard />
+          <FlowerCard image={artishok} name={"Артишок"} price={"-"} />
         </SwiperSlide>
         <SwiperSlide className={styles.slider}>
-          <FlowerCard />
+          <FlowerCard image={chris} name={"Хризантема"} price={"-"} />
         </SwiperSlide>
         <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
-        </SwiperSlide>
-        <SwiperSlide className={styles.slider}>
-          <FlowerCard />
+          <FlowerCard image={proteya} name={"Протея"} price={"-"} />
         </SwiperSlide>
       </Swiper>
     </div>

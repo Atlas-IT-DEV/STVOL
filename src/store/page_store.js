@@ -8,6 +8,7 @@ class PageStore {
   count_bonus = null;
   referal = null;
   cart = [];
+  user = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -15,7 +16,7 @@ class PageStore {
   updateCart = (newCart) => {
     this.cart = newCart;
   };
-  
+
   firstCreateUser = async (values) => {
     const result = await createUser(values);
     this.count_bonus = result.count_bonus;
@@ -23,6 +24,7 @@ class PageStore {
     this.phone = result.phone;
     this.referal = result.referal;
     this.telegram_id = result.telegram_id;
+    this.user = result?.user;
   };
   signIn = async (telegram_id, values) => {
     const response = await fetch(
@@ -37,6 +39,7 @@ class PageStore {
     if (response.status == 404) {
       await this.firstCreateUser(values);
     } else if (response.status == 200) {
+      this.user = result?.user;
       this.count_bonus = result?.count_bonus;
       this.name = result?.name;
       this.phone = result?.phone;

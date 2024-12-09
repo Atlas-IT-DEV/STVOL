@@ -1,6 +1,6 @@
 import styles from "./about_page.module.css";
 
-import logo from "../../images/logo.svg";
+import logo from "../../images/logo.png";
 import cartIcon from "../../images/cart_icon.svg";
 import arrowWhite from "../../images/arrow_white.svg";
 import tgIcon from "../../images/tg_icon.svg";

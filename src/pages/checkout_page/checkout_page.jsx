@@ -1,5 +1,5 @@
 import styles from "./checkout_page.module.css";
-import logo from "../../images/logo.svg";
+import logo from "../../images/logo.png";
 import arrowGray from "../../images/gray_right_arrow.svg";
 import arrowWhite from "../../images/arrow_white.svg";
 import inActiveApplyIcon from "../../images/inactive_apply_icon.svg";
@@ -10,13 +10,15 @@ import "swiper/css/navigation";
 import "swiper/css/grid";
 
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Grid } from "swiper/modules";
 import CheckoutProductCard from "../../components/checkout_product_card/checkout_product_card";
 import useWindowDimensions from "../../components/hooks/windowDimensions";
+import { useStores } from "../../store/store_context";
+import { observer } from "mobx-react-lite";
 
-const CheckoutPage = () => {
+const CheckoutPage = observer(() => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState([
     [false],
@@ -25,11 +27,118 @@ const CheckoutPage = () => {
     [1, 0],
     [false, false],
   ]);
+  const [loading, setLoading] = useState(false);
   const copyVisible = Array.from(visible);
   const { width } = useWindowDimensions();
+  const { pageStore } = useStores();
+  const [groupedCart, setGroupedCart] = useState([{}]);
 
   const date = new Date();
   let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+
+  const groupById = (arr) => {
+    const grouped = {};
+
+    arr.forEach((elem) => {
+      if (!grouped[elem.id]) {
+        grouped[elem.id] = []; // Если такой id еще не встречался, создаем массив
+      }
+      grouped[elem.id].push(elem); // Добавляем элемент в массив для данного id
+    });
+
+    return grouped;
+  };
+  useEffect(() => {
+    setGroupedCart(
+      Object.entries(groupById(Array.from(pageStore.cart))).map(
+        ([id, items]) => {
+          console.log(`ID: ${id}`);
+          console.log(items.length);
+          console.log(pageStore.cart);
+          return {
+            Name: items[0].name,
+            Price: items[0].price * 100,
+            Quantity: items.length,
+            Amount: items[0].price * items.length * 100,
+            PaymentMethod: "full_payment",
+            PaymentObject: "service",
+            Tax: "none",
+          };
+        }
+      )
+    );
+    console.log(
+      Object.entries(groupById(Array.from(pageStore.cart))).map(
+        ([id, items]) => {
+          console.log(`ID: ${id}`);
+          console.log(items.length);
+          console.log(pageStore.cart);
+          return {
+            Name: items[0].name,
+            Price: items[0].price,
+            Quantity: items.length,
+            Amount: items[0].price * items.length,
+            PaymentMethod: "full_payment",
+            PaymentObject: "service",
+            Tax: "none",
+          };
+        }
+      )
+    );
+  }, [pageStore.cart]);
+
+  // Функция для оформления заказа
+  const handleCheckout = async () => {
+    setLoading(true);
+    console.log(groupedCart);
+    console.log(groupedCart[0], groupedCart[0].Amount);
+    console.log(
+      groupedCart.reduce((acc, elem) => {
+        console.log(acc, elem.Amount, acc + elem.Amount);
+        return acc + elem.Amount;
+      }, 0)
+    );
+    const orderData = {
+      amount: groupedCart.reduce((acc, elem) => acc + elem.Amount, 0),
+      order_id: String(Math.random() * 1000 + Math.random() * 100),
+      description: `Заказ ${groupedCart.reduce(
+        (acc, elem) => acc + `${elem.Name} ${elem.Quantity} ${elem.Amount} `,
+        ""
+      )} street: ${document.querySelector("input[name='street']").value},
+        flat: ${document.querySelector("input[name='flat']").value},
+        floor: ${document.querySelector("input[name='floor']").value},
+        entrance: ${document.querySelector("input[name='entrance']").value},
+        intercom: ${document.querySelector("input[name='intercom']").value},
+        comment: ${document.querySelector("input[name='comment']").value},`,
+      phone: "+71234567890",
+      email: "a@test.com",
+      items: groupedCart,
+    };
+
+    try {
+      const response = await fetch("https://stvol.garden:8888/init-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert("Заказ успешно оформлен!");
+        console.log(result); // Вывод ответа сервера
+        window.location.href = result.payment_url;
+      } else {
+        alert("Ошибка при оформлении заказа!");
+      }
+    } catch (error) {
+      console.error("Ошибка:", error);
+      alert("Не удалось оформить заказ!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
@@ -43,338 +152,39 @@ const CheckoutPage = () => {
       <p className={styles.namePageText}>Оформление заказа</p>
       <main>
         <div className={styles.userInfo}>
-          <p className={styles.nameText}>Имя Фамилия</p>
-          <p className={styles.contactsText}>+7 961 842 40 82</p>
-          <p className={styles.contactsText}>kjncks@kmcla.ru</p>
+          <p className={styles.nameText}>{pageStore?.name}</p>
+          <p className={styles.contactsText}>{pageStore?.phone}</p>
         </div>
         <p className={styles.adressText}>Адрес доставки</p>
         <div className={styles.adressData}>
-          <input type="text" name="street" id="" placeholder="Улица" required />
+          <input type="text" name="street" placeholder="Улица" required />
           <div className={styles.adressRow}>
-            <input
-              type="number"
-              name="flat"
-              id=""
-              placeholder="Квартира"
-              required
-            />
-            <input
-              type="number"
-              name="floor"
-              id=""
-              placeholder="Этаж"
-              required
-            />
+            <input type="number" name="flat" placeholder="Квартира" required />
+            <input type="number" name="floor" placeholder="Этаж" required />
           </div>
           <div className={styles.adressRow}>
             <input
               type="number"
               name="entrance"
-              id=""
               placeholder="Подъезд"
               required
             />
-            <input
-              type="text"
-              name="intercom"
-              id=""
-              placeholder="Домофон"
-              required
-            />
+            <input type="text" name="intercom" placeholder="Домофон" required />
           </div>
           <input
             type="text"
             name="comment"
-            id=""
             placeholder="Комментарий для курьера"
           />
         </div>
-        <p className={styles.timeText}>Время доставки</p>
-        <div
-          className={styles.intervalButton}
-          onClick={() => {
-            copyVisible[0][0] = !copyVisible[0][0];
-            setVisible(copyVisible);
-          }}
-        >
-          <p>Интервал</p>
-          <img
-            src={arrowWhite}
-            alt=""
-            className={visible[0][0] ? styles.arrowUp : styles.arrowDown}
-          />
-        </div>
-        <div className={visible[0][0] ? styles.viewOpen : styles.viewClose}>
-          <div className={styles.timeInterval}>
-            <p
-              className={`${styles.typeHourText} ${
-                visible[1][0] == 1 ? styles.activeType : styles.inActiveType
-              }`}
-              onClick={() => {
-                copyVisible[1] = [1, 0, 0];
-                setVisible(copyVisible);
-              }}
-            >
-              Трехчасовой
-            </p>
-            <div
-              className={
-                visible[1][0] == 1
-                  ? styles.selectIntervalTime
-                  : styles.viewClose
-              }
-            >
-              <input type="time" name="" id="" />
-              <p>-</p>
-              <input type="time" name="" id="" />
-            </div>
-          </div>
-          <div className={styles.timeInterval}>
-            <p
-              className={`${styles.typeHourText} ${
-                visible[1][1] == 1 ? styles.activeType : styles.inActiveType
-              }`}
-              onClick={() => {
-                copyVisible[1] = [0, 1, 0];
-                setVisible(copyVisible);
-              }}
-            >
-              Часовой
-            </p>
-            <div
-              className={
-                visible[1][1] == 1
-                  ? styles.selectIntervalTime
-                  : styles.viewClose
-              }
-            >
-              <input type="time" name="" id="" />
-              <p>-</p>
-              <input type="time" name="" id="" />
-            </div>
-          </div>
-          <div className={styles.timeInterval}>
-            <p
-              className={`${styles.typeHourText} ${
-                visible[1][2] == 1 ? styles.activeType : styles.inActiveType
-              }`}
-              onClick={() => {
-                copyVisible[1] = [0, 0, 1];
-                setVisible(copyVisible);
-              }}
-            >
-              Точное время:
-            </p>
-            <div
-              className={
-                visible[1][2] == 1
-                  ? styles.selectIntervalTime
-                  : styles.viewClose
-              }
-            >
-              <input type="time" name="" id="" />
-            </div>
-          </div>
-        </div>
-        <div className={styles.selectDate}>
-          <Swiper
-            style={{
-              "--swiper-navigation-color": "rgba(167, 167, 167, 1)",
-              "--swiper-navigation-size": "20px",
-            }}
-            className={styles.slideTrack}
-            modules={[FreeMode, Navigation, Grid]}
-            spaceBetween={36}
-            freeMode={false}
-            navigation={true}
-            slidesPerView={width >= 500 ? 3 : 2}
-          >
-            <SwiperSlide
-              className={styles.slider}
-              onClick={() => {
-                copyVisible[2] = [1, 0, 0, 0];
-                setVisible(copyVisible);
-              }}
-            >
-              <div
-                className={`${styles.dateCard} ${
-                  visible[2][0] == 1
-                    ? styles.activeDateCard
-                    : styles.inActiveDateCard
-                }`}
-              >
-                <p id="today">{date.getDate()}</p>
-                <p>Сегодня</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide
-              className={styles.slider}
-              onClick={() => {
-                copyVisible[2] = [0, 1, 0, 0];
-                setVisible(copyVisible);
-              }}
-            >
-              <div
-                className={`${styles.dateCard} ${
-                  visible[2][1] == 1
-                    ? styles.activeDateCard
-                    : styles.inActiveDateCard
-                }`}
-              >
-                <p>{date.getDate() + 1}</p>
-                <p>Завтра</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide
-              className={styles.slider}
-              onClick={() => {
-                copyVisible[2] = [0, 0, 1, 0];
-                setVisible(copyVisible);
-              }}
-            >
-              <div
-                className={`${styles.dateCard} ${
-                  visible[2][2] == 1
-                    ? styles.activeDateCard
-                    : styles.inActiveDateCard
-                }`}
-              >
-                <p>{date.getDate() + 2}</p>
-                <p>{days[date.getDay() + 2]}</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide
-              className={styles.slider}
-              onClick={() => {
-                copyVisible[2] = [0, 0, 0, 1];
-                setVisible(copyVisible);
-              }}
-            >
-              <div
-                className={`${styles.dateCard} ${
-                  visible[2][3] == 1
-                    ? styles.activeDateCard
-                    : styles.inActiveDateCard
-                }`}
-              >
-                <p>{date.getDate() + 3}</p>
-                <p>{days[date.getDay() + 3]}</p>
-              </div>
-            </SwiperSlide>
-          </Swiper>
-        </div>
-        <div>
-          <p className={styles.recipientText}>Получатель</p>
-          <div className={styles.recipientView}>
-            <div
-              className={styles.selectRecipientButton}
-              onClick={() => {
-                copyVisible[3] = [1, 0];
-                setVisible(copyVisible);
-              }}
-            >
-              <p>Я получу заказ</p>
-              <img
-                src={visible[3][0] == 1 ? activeApplyIcon : inActiveApplyIcon}
-                alt=""
-              />
-            </div>
-            <div
-              className={styles.selectRecipientButton}
-              onClick={() => {
-                copyVisible[3] = [0, 1];
-                setVisible(copyVisible);
-              }}
-            >
-              <p>Другой получатель</p>
-              <img
-                src={visible[3][1] == 1 ? activeApplyIcon : inActiveApplyIcon}
-                alt=""
-              />
-            </div>
-          </div>
-          <div className={styles.inputRecipient}>
-            <input type="text" name="" id="" placeholder="Имя получателя" />
-            <input
-              type="number"
-              name=""
-              id=""
-              placeholder="Телефон получателя"
-            />
-          </div>
 
-          <div className={styles.sendButtons}>
-            <div
-              className={styles.sendButton}
-              onClick={() => {
-                copyVisible[4][0] = !copyVisible[4][0];
-                setVisible(copyVisible);
-              }}
-            >
-              <p>Отправить анонимно</p>
-              <img
-                src={visible[4][0] ? activeApplyIcon : inActiveApplyIcon}
-                alt=""
-              />
-            </div>
-            <div
-              className={styles.sendButton}
-              onClick={() => {
-                copyVisible[4][1] = !copyVisible[4][1];
-                setVisible(copyVisible);
-              }}
-            >
-              <p>Отправить фото перед доставкой</p>
-              <img
-                src={visible[4][1] ? activeApplyIcon : inActiveApplyIcon}
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-        <div className={styles.productCards}>
-          <CheckoutProductCard />
-          <CheckoutProductCard />
-        </div>
-        <div className={styles.resultDelivery}>
-          <p className={styles.resultDeliveryText}>Итог:</p>
-          <div className={styles.deliveryView}>
-            <p
-              className={`${styles.attributeDeliveryText} ${styles.deliveryText}`}
-            >
-              Доставка
-            </p>
-            <p className={`${styles.valueDeliveryText} ${styles.deliveryText}`}>
-              599 ₽
-            </p>
-          </div>
-          <div className={styles.deliveryView}>
-            <p className={styles.attributeDeliveryText}>Cкидка</p>
-            <p className={styles.valueDeliveryText}>5%</p>
-          </div>
-          <div className={styles.deliveryView}>
-            <p
-              className={`${styles.attributeDeliveryText} ${styles.sumDeliveryText}`}
-            >
-              Сумму заказа
-            </p>
-            <p
-              className={`${styles.valueDeliveryText} ${styles.sumDeliveryText}`}
-            >
-              10 198 ₽
-            </p>
-          </div>
-        </div>
-        <div className={styles.promocodeButton}>
-          <p>Введите промокод</p>
-          <img src={blackArrow} alt="" />
-        </div>
-        <div className={styles.checkoutOrderButton}>
-          <p>Оформить заказ</p>
+        {/* Остальная верстка */}
+        <div className={styles.checkoutOrderButton} onClick={handleCheckout}>
+          {loading ? <p>Оформляем заказ...</p> : <p>Оформить заказ</p>}
         </div>
       </main>
     </div>
   );
-};
+});
 
 export default CheckoutPage;

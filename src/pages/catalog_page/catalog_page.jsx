@@ -13,6 +13,7 @@ const CatalogPage = () => {
     [true],
     [false, false, false, false, false, false],
   ]);
+  const [ascending, setAscending] = useState(0);
   let copyIsPressed = Array.from(isPressed);
   const { width } = useWindowDimensions();
   const [bouquets, setBouquets] = useState([]);
@@ -23,6 +24,15 @@ const CatalogPage = () => {
   useEffect(() => {
     getBouquetsFull();
   }, []);
+  useEffect(() => {
+    let copy_bouquets = Array.from(bouquets);
+    if (ascending == 1) {
+      copy_bouquets = copy_bouquets.sort((a, b) => a.price - b.price);
+    } else if (ascending == 2) {
+      copy_bouquets = copy_bouquets.sort((a, b) => b.price - a.price);
+    }
+    setBouquets(copy_bouquets);
+  }, [ascending, bouquets]);
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
@@ -31,8 +41,8 @@ const CatalogPage = () => {
       <p className={styles.namePageText}>Каталог</p>
 
       <div className={styles.SortFilterButtons}>
-        <SortModal />
-        <div
+        <SortModal ascending={ascending} setAscending={setAscending} />
+        {/*         <div
           className={styles.filterButton}
           onClick={() => {
             copyIsPressed[0][0] = !copyIsPressed[0][0];
@@ -40,10 +50,10 @@ const CatalogPage = () => {
           }}
         >
           <img src={filterIcon} alt="" />
-        </div>
+        </div> */}
       </div>
 
-      <div
+      {/* <div
         className={isPressed[0][0] ? styles.filtersOpen : styles.filtersClose}
       >
         <p
@@ -124,7 +134,7 @@ const CatalogPage = () => {
         >
           Герберы
         </p>
-      </div>
+      </div> */}
       <p className={styles.nameFilterText}>Летние букеты</p>
       <div className={styles.products}>
         <div className={styles.productsView}>

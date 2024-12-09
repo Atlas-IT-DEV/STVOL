@@ -62,8 +62,12 @@ const ProductCard = ({
       <p className={styles.nameProductText}>{name}</p>
       <div className={styles.priceView}>
         <p className={styles.priceText}>{price}₽</p>
-        {oldPrice && <p className={styles.oldPriceText}>{oldPrice}₽</p>}
-        {discount && <p className={styles.discountText}>-{discount}%</p>}
+        {discount != null && discount != undefined && discount != 0 ? (
+          <p className={styles.oldPriceText}>{oldPrice}₽</p>
+        ) : null}
+        {discount != null && discount != undefined && discount != 0 ? (
+          <p className={styles.discountText}>-{discount}%</p>
+        ) : null}
       </div>
       {!isCart ? (
         <p

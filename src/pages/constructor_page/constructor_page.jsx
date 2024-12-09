@@ -3,9 +3,12 @@ import Header from "../../components/header/header";
 import useWindowDimensions from "../../components/hooks/windowDimensions";
 import SelectFlower from "../../components/select_flower/select_flower";
 import styles from "./constructor_page.module.css";
+import { useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 
 const ConstructorPage = () => {
   const { width } = useWindowDimensions();
+  const toast = useToast();
   return (
     <div className={width > 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
