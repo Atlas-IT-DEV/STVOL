@@ -104,14 +104,16 @@ const CheckoutPage = observer(() => {
       description: `Заказ ${groupedCart.reduce(
         (acc, elem) => acc + `${elem.Name} ${elem.Quantity} ${elem.Amount} `,
         ""
-      )} street: ${document.querySelector("input[name='street']").value},
-        flat: ${document.querySelector("input[name='flat']").value},
-        floor: ${document.querySelector("input[name='floor']").value},
-        entrance: ${document.querySelector("input[name='entrance']").value},
-        intercom: ${document.querySelector("input[name='intercom']").value},
-        comment: ${document.querySelector("input[name='comment']").value},`,
-      phone: "+71234567890",
-      email: "a@test.com",
+      )} Улица: ${document.querySelector("input[name='street']").value},
+        Квартира: ${document.querySelector("input[name='flat']").value},
+        Этаж: ${document.querySelector("input[name='floor']").value},
+        Подьезд: ${document.querySelector("input[name='entrance']").value},
+        Домофон: ${document.querySelector("input[name='intercom']").value},
+        Комментарий к заказу: ${
+          document.querySelector("input[name='comment']").value
+        },`,
+      phone: document.querySelector("input[name='phone']").value,
+      email: document.querySelector("input[name='email']").value,
       items: groupedCart,
     };
 
@@ -176,9 +178,10 @@ const CheckoutPage = observer(() => {
             name="comment"
             placeholder="Комментарий для курьера"
           />
+          <input type="text" name="email" placeholder="Почта" />
+          <input type="text" name="phone" placeholder="Телефон" />
         </div>
 
-        {/* Остальная верстка */}
         <div className={styles.checkoutOrderButton} onClick={handleCheckout}>
           {loading ? <p>Оформляем заказ...</p> : <p>Оформить заказ</p>}
         </div>

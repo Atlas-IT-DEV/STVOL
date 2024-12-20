@@ -102,6 +102,7 @@ function App() {
         referal: 0,
       }
     );
+    pageStore.getAllBouquetsFull();
   }, []);
   return <RouterProvider router={router} />;
 }

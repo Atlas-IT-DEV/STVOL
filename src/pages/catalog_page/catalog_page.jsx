@@ -7,8 +7,12 @@ import ProductCard from "../../components/product_card/product_card";
 import SortModal from "../../components/sort_modal/sort_modal";
 import useWindowDimensions from "../../components/hooks/windowDimensions";
 import { getAllBouquetsFull } from "../../components/fetches";
+import { useStores } from "../../store/store_context";
+import { useLocation } from "react-router";
+import { observer } from "mobx-react-lite";
 
-const CatalogPage = () => {
+const CatalogPage = observer(() => {
+  const { pageStore } = useStores();
   const [isPressed, setIsPressed] = useState([
     [true],
     [false, false, false, false, false, false],
@@ -17,13 +21,6 @@ const CatalogPage = () => {
   let copyIsPressed = Array.from(isPressed);
   const { width } = useWindowDimensions();
   const [bouquets, setBouquets] = useState([]);
-
-  const getBouquetsFull = async () => {
-    setBouquets(await getAllBouquetsFull());
-  };
-  useEffect(() => {
-    getBouquetsFull();
-  }, []);
   useEffect(() => {
     let copy_bouquets = Array.from(bouquets);
     if (ascending == 1) {
@@ -33,6 +30,38 @@ const CatalogPage = () => {
     }
     setBouquets(copy_bouquets);
   }, [ascending, bouquets]);
+
+  useEffect(() => {
+    setBouquets(pageStore.bouquets);
+  }, [pageStore.bouquets]);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Сохранение позиции при уходе со страницы
+    const saveScrollPosition = () => {
+      sessionStorage.setItem(
+        "catalogScrollPosition",
+        window.scrollY.toString()
+      );
+    };
+
+    window.addEventListener("beforeunload", saveScrollPosition);
+
+    return () => {
+      saveScrollPosition();
+      window.removeEventListener("beforeunload", saveScrollPosition);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Восстановление позиции при возвращении
+    const savedPosition = sessionStorage.getItem("catalogScrollPosition");
+    if (savedPosition) {
+      window.scrollTo(0, parseInt(savedPosition, 10));
+    }
+  }, [location]);
+
   return (
     <div className={width >= 500 ? styles.container : styles.container375}>
       <div className={styles.header}>
@@ -142,7 +171,7 @@ const CatalogPage = () => {
             <ProductCard
               name={elem.name}
               price={elem.price}
-              uri={elem.url}
+              uri={elem.urls[0]}
               id={elem.id}
               oldPrice={elem.old_price}
               discount={elem.discount}
@@ -155,6 +184,6 @@ const CatalogPage = () => {
       <BottomMenu />
     </div>
   );
-};
+});
 
 export default CatalogPage;

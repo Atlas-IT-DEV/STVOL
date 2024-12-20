@@ -7,7 +7,7 @@ const FlowerCard = ({ image, name, price }) => {
     <div className={width >= 500 ? styles.container : styles.container375_450}>
       <img src={image} alt="" className={styles.imageProduct} />
       <p className={styles.nameFlowerText}>{name}</p>
-      <p className={styles.priceText}>{price} ₽</p>
+      {price != "-" && <p className={styles.priceText}>{price} ₽</p>}
     </div>
   );
 };

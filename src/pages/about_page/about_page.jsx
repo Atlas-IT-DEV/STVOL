@@ -239,17 +239,23 @@ const AboutPage = () => {
           <div>
             <p className={styles.attributeCompanyText}>ИП</p>
             <p className={styles.valueCompanyText}>
-              ИП Алиев <br />
+              Алиев <br />
               Али Рауф Оглы
             </p>
           </div>
           <div>
-            <p className={styles.attributeCompanyText}>ОКВЭД</p>
-            <p className={styles.valueCompanyText}>ИП STVOL букет</p>
+            <p className={styles.attributeCompanyText}>РС</p>
+            <p className={styles.valueCompanyText}>40802810802370011013</p>
+            <p className={styles.attributeCompanyText}>КС</p>
+            <p className={styles.valueCompanyText}>30101810200000000593</p>
           </div>
           <div>
             <p className={styles.attributeCompanyText}>ИНН</p>
-            <p className={styles.valueCompanyText}>34567865436</p>
+            <p className={styles.valueCompanyText}>771819647318</p>
+            <p className={styles.valueCompanyText}>БИК 044525593</p>
+            <p className={styles.valueCompanyText}>
+              г.Москва ул.Бабаевская 1/8 стр.3 кв.48
+            </p>
           </div>
         </div>
         <div className={styles.aboutCompany}>

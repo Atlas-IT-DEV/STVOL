@@ -40,7 +40,7 @@ const BottomMenu = () => {
                 <Text color={"white"}>Конструктор в разработке</Text>
               </VStack>
             ),
-            duration: 3000,
+            duration: 1500,
             isClosable: true,
             position: "top",
           });

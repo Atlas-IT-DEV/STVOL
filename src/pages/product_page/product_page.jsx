@@ -1,4 +1,12 @@
 import Header from "../../components/header/header";
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import { Hstack } from "@chakra-ui/react";
+
+// import "swiper/css/navigation";
+import { FreeMode, Pagination } from "swiper/modules";
 import styles from "./product_page.module.css";
 import arrowGray from "../../images/gray_right_arrow.svg";
 import arrowWhite from "../../images/arrow_white.svg";
@@ -38,7 +46,18 @@ const ProductPage = observer(() => {
         <img src={arrowGray} alt="" />
       </div>
       <div className={styles.imageProduct}>
-        <img src={bouquet?.url} alt="" />
+        <Swiper
+          className={styles.slideTrack}
+          modules={[FreeMode, Pagination]}
+          spaceBetween={50}
+          freeMode={true}
+        >
+          {bouquet?.urls?.map((elem) => (
+            <SwiperSlide>
+              <img src={`${elem}`} alt="" style={{ width: "100%" }} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       <main>
         <p className={styles.nameProductText}>{bouquet?.name}</p>

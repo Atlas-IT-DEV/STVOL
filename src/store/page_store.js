@@ -9,6 +9,7 @@ class PageStore {
   referal = null;
   cart = [];
   user = {};
+  bouquets = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -46,6 +47,16 @@ class PageStore {
       this.referal = result?.referal;
       this.telegram_id = result?.telegram_id;
     }
+  };
+  getAllBouquetsFull = async () => {
+    const response = await fetch("https://stvol.garden:8888/bouquets/full", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    });
+    const result = await response.json();
+    this.bouquets = result;
   };
 }
 

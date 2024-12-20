@@ -11,7 +11,6 @@ import { useNavigate } from "react-router";
 import useWindowDimensions from "../hooks/windowDimensions";
 import { useStores } from "../../store/store_context";
 import { background, useToast } from "@chakra-ui/react";
-import { color } from "framer-motion";
 import { useEffect, useState } from "react";
 const ProductCard = ({
   name,
@@ -55,9 +54,11 @@ const ProductCard = ({
         freeMode={false}
         pagination={true}
       >
-        <SwiperSlide className={styles.slider}>
-          <img src={uri} alt="" />
-        </SwiperSlide>
+        {object?.urls?.map((elem) => (
+          <SwiperSlide className={styles.slider}>
+            <img src={`${elem}`} alt="" />
+          </SwiperSlide>
+        ))}
       </Swiper>
       <p className={styles.nameProductText}>{name}</p>
       <div className={styles.priceView}>
@@ -88,7 +89,7 @@ const ProductCard = ({
                   <Text color={"white"}>Букет добавлен в корзину</Text>
                 </VStack>
               ),
-              duration: 2000,
+              duration: 1000,
               isClosable: true,
               position: "bottom",
             });

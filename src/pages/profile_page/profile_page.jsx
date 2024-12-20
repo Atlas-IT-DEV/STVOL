@@ -6,8 +6,9 @@ import grayArrowRight from "../../images/gray_right_arrow.svg";
 import OrderSlider from "../../components/order_slider/order_slider";
 import { useStores } from "../../store/store_context";
 import useWindowDimensions from "../../components/hooks/windowDimensions";
+import { observer } from "mobx-react-lite";
 
-const ProfilePage = ({ status = "Бронзовый ствол — 5%" }) => {
+const ProfilePage = observer(({ status = "Бронзовый ствол — 5%" }) => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   return (
@@ -23,7 +24,7 @@ const ProfilePage = ({ status = "Бронзовый ствол — 5%" }) => {
           <img src={grayArrowRight} alt="" />
         </div> */}
         <p className={styles.nameProfileText}>{pageStore.name}</p>
-        <p className={styles.phoneNumberText}>+7 961 842 40 82</p>
+        <p className={styles.phoneNumberText}>{pageStore.phone}</p>
       </div>
       <p className={styles.statusLoyalityText}>Статус программы лояльности</p>
       <div className={styles.statusView}>
@@ -37,6 +38,6 @@ const ProfilePage = ({ status = "Бронзовый ствол — 5%" }) => {
       <BottomMenu />
     </div>
   );
-};
+});
 
 export default ProfilePage;
