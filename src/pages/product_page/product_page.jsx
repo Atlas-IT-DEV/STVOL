@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { Hstack } from "@chakra-ui/react";
 
 // import "swiper/css/navigation";
 import { FreeMode, Pagination } from "swiper/modules";
@@ -50,7 +49,7 @@ const ProductPage = observer(() => {
           className={styles.slideTrack}
           modules={[FreeMode, Pagination]}
           spaceBetween={50}
-          freeMode={true}
+          freeMode={false}
         >
           {bouquet?.urls?.map((elem) => (
             <SwiperSlide>
